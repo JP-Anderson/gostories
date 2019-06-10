@@ -14,7 +14,7 @@ func main() {
 	if err != nil {
 
 	}
-	engine.NewLine(in)
+	engine.SimpleParse(in)
 }
 
 func catRoom() things.Area {
