@@ -25,6 +25,17 @@ func SimpleParse() (parser.Action, string) {
 		// todo
 	}
 	split := strings.Split(input, " ")
-	// trim right for Windows. "\n" for Linux
-	return parser.ParseInput(split[0], strings.TrimRight(split[1], "\r\n"))
+	if len(split) >= 2 {
+		return parser.ParseInput(split[0], trim(split[1]))
+	} else if len(split) == 1 {
+		return parser.ParseInput(trim(split[0]), "")
+	}
+	return parser.Unknown(), ""
+}
+
+const linuxCutset = "\n"
+const windowsCutset = "\r"+linuxCutset
+
+func trim(input string) string {
+	return strings.TrimRight(input, windowsCutset)
 }
