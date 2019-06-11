@@ -8,6 +8,8 @@ import (
 func main() {
 	catRoom := catRoom()
 	storeRoom := storeRoom()
+
+	// Add Exits
 	catRoomToStockRoomExit := things.Exit{
 		To: storeRoom,
 		From: catRoom,
@@ -16,9 +18,15 @@ func main() {
 		To: catRoom,
 		From: storeRoom,
 	}
-
 	catRoom.Exits[things.West] = catRoomToStockRoomExit
 	storeRoom.Exits[things.East] = storeRoomToCatRoomExit
+
+	// Add item
+	collar := things.CatCollarItem{}
+	collar.Hide()
+	storeRoom.Items = append(storeRoom.Items, collar)
+
+	// TODO add some sort of feature which needs to be looked at to reveal item
 
 	stage := engine.Stage{}
 	stage.Start(catRoom)
