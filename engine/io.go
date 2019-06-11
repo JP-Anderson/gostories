@@ -17,12 +17,14 @@ func NewLinef(output string, args ...interface{}) {
 	NewLine(fmt.Sprintf(output, args...))
 }
 
-var Reader = bufio.NewReader(os.Stdin)
+var reader = bufio.NewReader(os.Stdin)
 
-func SimpleParse(input string) (parser.Action, string) {
+func SimpleParse() (parser.Action, string) {
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		// todo
+	}
 	split := strings.Split(input, " ")
-	//debug
-	NewLine("0 -> " + split[0])
-	NewLine("1 -> " + split[1])
+	// trim right for Windows. "\n" for Linux
 	return parser.ParseInput(split[0], strings.TrimRight(split[1], "\r\n"))
 }

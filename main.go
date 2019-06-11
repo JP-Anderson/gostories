@@ -14,23 +14,19 @@ func main() {
 		CurrentArea: area,
 	}
 	engine.NewLine(context.CurrentArea.Look)
-	in, err := engine.Reader.ReadString('\n')
-	if err != nil {
-
-	}
-
-	engine.NewLine("OK!")
 
 	// TODO: move this to engine
-	action, noun := engine.SimpleParse(in)
-
+	action, noun := engine.SimpleParse()
 	if action.Name == "talk" {
+		found := false
 		for _, being := range context.CurrentArea.Beings {
-			engine.NewLinef("%v is being compared to %v", being.Name, noun)
 			if strings.ToLower(being.Name) == strings.ToLower(noun) {
-				engine.NewLine("ok")
+				found = true
 				engine.NewLine(being.Speech[0])
 			}
+		}
+		if !found {
+			engine.NewLinef("Could not find a %v to talk to!", noun)
 		}
 	} else {
 		engine.NewLinef("Unknown action %v", action.Name)
