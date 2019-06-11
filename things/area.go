@@ -8,8 +8,8 @@ type Area struct {
 }
 
 type Exit struct {
-	To   Area
-	From Area
+	To   *Area
+	From *Area
 }
 
 type Direction string

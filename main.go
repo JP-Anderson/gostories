@@ -11,12 +11,12 @@ func main() {
 
 	// Add Exits
 	catRoomToStockRoomExit := things.Exit{
-		To: storeRoom,
-		From: catRoom,
+		To: &storeRoom,
+		From: &catRoom,
 	}
 	storeRoomToCatRoomExit := things.Exit{
-		To: catRoom,
-		From: storeRoom,
+		To: &catRoom,
+		From: &storeRoom,
 	}
 	catRoom.Exits[things.West] = catRoomToStockRoomExit
 	storeRoom.Exits[things.East] = storeRoomToCatRoomExit
@@ -38,6 +38,7 @@ func catRoom() things.Area {
 		Look: "You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
 		Beings: []things.Being{ *cat() },
 		Exits: make(map[things.Direction]things.Exit),
+		Items: []things.Item{},
 	}
 }
 
@@ -46,6 +47,7 @@ func storeRoom() things.Area {
 		Look: "You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
 		Beings: []things.Being{},
 		Exits: make(map[things.Direction]things.Exit),
+		Items: []things.Item{},
 	}
 }
 
