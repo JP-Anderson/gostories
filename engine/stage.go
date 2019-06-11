@@ -11,10 +11,8 @@ type Stage struct {
 }
 
 func (s Stage) Start(area things.Area) {
-	context := Context{
-		CurrentArea: area,
-	}
-	NewLine(context.CurrentArea.Look)
+	s.context = Context{ CurrentArea: area }
+	NewLine(s.context.CurrentArea.Look)
 	for {
 		action, noun := SimpleParse()
 		if action.Name == "exit" {
@@ -22,7 +20,7 @@ func (s Stage) Start(area things.Area) {
 		}
 		if action.Name == "talk" {
 			found := false
-			for _, being := range context.CurrentArea.Beings {
+			for _, being := range s.context.CurrentArea.Beings {
 				if strings.ToLower(being.Name) == strings.ToLower(noun) {
 					found = true
 					NewLine(being.Speech[0])
