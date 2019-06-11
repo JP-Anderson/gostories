@@ -9,14 +9,21 @@ func actionFromString(in string) Action {
 	action, found := actions[in]; if found {
 		return action
 	}
-	return UnknownAction
+	return unknownAction
 }
 
 var actions = map[string]Action{
-	"speak" : TalkAction,
-	"talk" : TalkAction,
-	"chat" : TalkAction,
+	"speak" : talkAction,
+	"talk" :  talkAction,
+	"chat" :  talkAction,
+	"quit" :  exitAction,
+	"exit" :  exitAction,
 }
 
-var UnknownAction = Action{ "unknown" }
-var TalkAction = Action{ "talk" }
+var unknownAction = Action{"unknown" }
+var talkAction = Action{"talk" }
+var exitAction = Action {"exit" }
+
+func Unknown() Action {
+	return unknownAction
+}

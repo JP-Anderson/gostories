@@ -16,20 +16,25 @@ func main() {
 	engine.NewLine(context.CurrentArea.Look)
 
 	// TODO: move this to engine
-	action, noun := engine.SimpleParse()
-	if action.Name == "talk" {
-		found := false
-		for _, being := range context.CurrentArea.Beings {
-			if strings.ToLower(being.Name) == strings.ToLower(noun) {
-				found = true
-				engine.NewLine(being.Speech[0])
+	for {
+		action, noun := engine.SimpleParse()
+		if action.Name == "exit" {
+			break
+		}
+		if action.Name == "talk" {
+			found := false
+			for _, being := range context.CurrentArea.Beings {
+				if strings.ToLower(being.Name) == strings.ToLower(noun) {
+					found = true
+					engine.NewLine(being.Speech[0])
+				}
 			}
+			if !found {
+				engine.NewLinef("Could not find a %v to talk to!", noun)
+			}
+		} else {
+			engine.NewLinef("Unknown action %v", action.Name)
 		}
-		if !found {
-			engine.NewLinef("Could not find a %v to talk to!", noun)
-		}
-	} else {
-		engine.NewLinef("Unknown action %v", action.Name)
 	}
 }
 
