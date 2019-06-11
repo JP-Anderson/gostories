@@ -13,16 +13,18 @@ func actionFromString(in string) Action {
 }
 
 var actions = map[string]Action{
-	"speak" : talkAction,
-	"talk" :  talkAction,
-	"chat" :  talkAction,
-	"quit" :  exitAction,
-	"exit" :  exitAction,
+	"speak" :  talkAction,
+	"talk" :   talkAction,
+	"chat" :   talkAction,
+	"quit" :   quitAction,
+	"exit" :   travelAction,
+	"travel" : travelAction,
 }
 
 var unknownAction = Action{"unknown" }
 var talkAction = Action{"talk" }
-var exitAction = Action {"exit" }
+var quitAction = Action {"quit" }
+var travelAction = Action { "travel" }
 
 func Unknown() Action {
 	return unknownAction

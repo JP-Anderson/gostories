@@ -2,7 +2,7 @@ package things
 
 type Area struct {
 	Look   string
-	Exits  []Exit
+	Exits  map[Direction]Exit
 	Beings []Being
 }
 
@@ -11,4 +11,10 @@ type Exit struct {
 	From Area
 }
 
-
+type Direction string
+const (
+	North = "north"
+	East = "east"
+	South = "south"
+	West = "west"
+)

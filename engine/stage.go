@@ -12,13 +12,19 @@ type Stage struct {
 
 func (s Stage) Start(area things.Area) {
 	s.context = Context{ CurrentArea: area }
-	NewLine(s.context.CurrentArea.Look)
 	for {
+		NewLine(s.context.CurrentArea.Look)
 		action, noun := SimpleParse()
-		if action.Name == "exit" {
-			break
-		}
-		if action.Name == "talk" {
+		if action.Name == "travel" {
+			trimmed := trim(strings.ToLower(noun))
+			exit, exists := s.context.CurrentArea.Exits[things.Direction(trimmed)]
+			if exists {
+				NewLinef("Found exit")
+				s.context.CurrentArea = exit.To
+			} else {
+				NewLinef("Could not find an exit to the %v", noun)
+			}
+		} else if action.Name == "talk" {
 			found := false
 			for _, being := range s.context.CurrentArea.Beings {
 				if strings.ToLower(being.Name) == strings.ToLower(noun) {
@@ -29,7 +35,9 @@ func (s Stage) Start(area things.Area) {
 			if !found {
 				NewLinef("Could not find a %v to talk to!", noun)
 			}
-		} else {
+		} else if action.Name == "exit" {
+			break
+		}  else {
 			NewLine("Unknown action")
 		}
 	}
