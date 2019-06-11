@@ -16,15 +16,24 @@ var actions = map[string]Action{
 	"speak" :  talkAction,
 	"talk" :   talkAction,
 	"chat" :   talkAction,
-	"quit" :   quitAction,
+
+	"look" :   lookAction,
+	"examine" :   lookAction,
+	"search" :   lookAction,
+	"scan" :   lookAction,
+
 	"exit" :   travelAction,
+	"walk" :   travelAction,
 	"travel" : travelAction,
+
+	"quit" :   quitAction,
 }
 
 var unknownAction = Action{"unknown" }
 var talkAction = Action{"talk" }
-var quitAction = Action {"quit" }
+var lookAction = Action { "look" }
 var travelAction = Action { "travel" }
+var quitAction = Action {"quit" }
 
 func Unknown() Action {
 	return unknownAction

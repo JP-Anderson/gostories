@@ -15,7 +15,7 @@ type CatCollarItem struct {
 	Thing
 }
 
-func (c CatCollarItem) GetName() string { return "cat_collar" }
+func (c CatCollarItem) GetName() string { return "collar" }
 
 func  (c CatCollarItem) GetLookText() string {
 	return "A small red cat collar with a bell."
