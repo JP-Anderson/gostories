@@ -1,15 +1,10 @@
 package parser
 
-func ParseInput(in string) (Action, Noun)  {
-	return actionFromString(in), nil
+func ParseInput(arg1, arg2 string) (Action, string)  {
+	return actionFromString(arg1), arg2
 }
 
 type Action struct { Name string }
-
-type Noun interface {
-
-}
-
 func actionFromString(in string) Action {
 	action, found := actions[in]; if found {
 		return action

@@ -1,20 +1,40 @@
 package main
 
 import (
+	"strings"
+
 	"gostories/engine"
 	"gostories/things"
 )
 
 func main() {
+	area := catRoom()
+	engine.NewLine(area.Beings[0].Name)
 	context := engine.Context{
-		CurrentArea: catRoom(),
+		CurrentArea: area,
 	}
 	engine.NewLine(context.CurrentArea.Look)
 	in, err := engine.Reader.ReadString('\n')
 	if err != nil {
 
 	}
-	engine.SimpleParse(in)
+
+	engine.NewLine("OK!")
+
+	// TODO: move this to engine
+	action, noun := engine.SimpleParse(in)
+
+	if action.Name == "talk" {
+		for _, being := range context.CurrentArea.Beings {
+			engine.NewLinef("%v is being compared to %v", being.Name, noun)
+			if strings.ToLower(being.Name) == strings.ToLower(noun) {
+				engine.NewLine("ok")
+				engine.NewLine(being.Speech[0])
+			}
+		}
+	} else {
+		engine.NewLinef("Unknown action %v", action.Name)
+	}
 }
 
 func catRoom() things.Area {
