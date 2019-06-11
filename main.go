@@ -1,41 +1,14 @@
 package main
 
 import (
-	"strings"
-
 	"gostories/engine"
 	"gostories/things"
 )
 
 func main() {
 	area := catRoom()
-	engine.NewLine(area.Beings[0].Name)
-	context := engine.Context{
-		CurrentArea: area,
-	}
-	engine.NewLine(context.CurrentArea.Look)
-
-	// TODO: move this to engine
-	for {
-		action, noun := engine.SimpleParse()
-		if action.Name == "exit" {
-			break
-		}
-		if action.Name == "talk" {
-			found := false
-			for _, being := range context.CurrentArea.Beings {
-				if strings.ToLower(being.Name) == strings.ToLower(noun) {
-					found = true
-					engine.NewLine(being.Speech[0])
-				}
-			}
-			if !found {
-				engine.NewLinef("Could not find a %v to talk to!", noun)
-			}
-		} else {
-			engine.NewLinef("Unknown action %v", action.Name)
-		}
-	}
+	stage := engine.Stage{}
+	stage.Start(area)
 }
 
 func catRoom() things.Area {
