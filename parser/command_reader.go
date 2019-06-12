@@ -1,39 +1,41 @@
 package parser
 
-func ParseInput(arg1, arg2 string) (Action, string)  {
+func ParseInput(arg1, arg2 string) (Action, string) {
 	return actionFromString(arg1), arg2
 }
 
-type Action struct { Name string }
+type Action struct{ Name string }
+
 func actionFromString(in string) Action {
-	action, found := actions[in]; if found {
+	action, found := actions[in]
+	if found {
 		return action
 	}
 	return unknownAction
 }
 
 var actions = map[string]Action{
-	"speak" :  talkAction,
-	"talk" :   talkAction,
-	"chat" :   talkAction,
+	"speak": talkAction,
+	"talk":  talkAction,
+	"chat":  talkAction,
 
-	"look" :   lookAction,
-	"examine" :   lookAction,
-	"search" :   lookAction,
-	"scan" :   lookAction,
+	"look":    lookAction,
+	"examine": lookAction,
+	"search":  lookAction,
+	"scan":    lookAction,
 
-	"exit" :   travelAction,
-	"walk" :   travelAction,
-	"travel" : travelAction,
+	"exit":   travelAction,
+	"walk":   travelAction,
+	"travel": travelAction,
 
-	"quit" :   quitAction,
+	"quit": quitAction,
 }
 
-var unknownAction = Action{"unknown" }
-var talkAction = Action{"talk" }
-var lookAction = Action { "look" }
-var travelAction = Action { "travel" }
-var quitAction = Action {"quit" }
+var unknownAction = Action{"unknown"}
+var talkAction = Action{"talk"}
+var lookAction = Action{"look"}
+var travelAction = Action{"travel"}
+var quitAction = Action{"quit"}
 
 func Unknown() Action {
 	return unknownAction

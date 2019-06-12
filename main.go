@@ -11,11 +11,11 @@ func main() {
 
 	// Add Exits
 	catRoomToStockRoomExit := things.Exit{
-		To: &storeRoom,
+		To:   &storeRoom,
 		From: &catRoom,
 	}
 	storeRoomToCatRoomExit := things.Exit{
-		To: &catRoom,
+		To:   &catRoom,
 		From: &storeRoom,
 	}
 	catRoom.Exits[things.West] = catRoomToStockRoomExit
@@ -35,19 +35,19 @@ func main() {
 // TODO move area construction out of main
 func catRoom() things.Area {
 	return things.Area{
-		Look: "You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
-		Beings: []things.Being{ *cat() },
-		Exits: make(map[things.Direction]things.Exit),
-		Items: []things.Item{},
+		Look:   "You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
+		Beings: []things.Being{*cat()},
+		Exits:  make(map[things.Direction]things.Exit),
+		Items:  []things.Item{},
 	}
 }
 
 func storeRoom() things.Area {
 	return things.Area{
-		Look: "You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
+		Look:   "You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
 		Beings: []things.Being{},
-		Exits: make(map[things.Direction]things.Exit),
-		Items: []things.Item{},
+		Exits:  make(map[things.Direction]things.Exit),
+		Items:  []things.Item{},
 	}
 }
 
@@ -55,7 +55,7 @@ func storeRoom() things.Area {
 // Will either construct these from XML in future or find some way to autogenerate
 func cat() *things.Being {
 	return &things.Being{
-		Name: "Bubbles",
+		Name:    "Bubbles",
 		Species: "Cat",
 		Speech: []string{
 			"Meeeeeeeeow!",

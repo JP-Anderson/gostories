@@ -11,7 +11,7 @@ type Stage struct {
 }
 
 func (s Stage) Start(area things.Area) {
-	s.context = Context{ CurrentArea: area }
+	s.context = Context{CurrentArea: area}
 	newArea := true
 	for {
 		if newArea {
@@ -57,7 +57,7 @@ func (s Stage) Start(area things.Area) {
 			}
 		} else if action.Name == "exit" {
 			break
-		}  else {
+		} else {
 			NewLine("Unknown action")
 		}
 	}

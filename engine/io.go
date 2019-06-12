@@ -34,7 +34,7 @@ func SimpleParse() (parser.Action, string) {
 }
 
 const linuxCutset = "\n"
-const windowsCutset = "\r"+linuxCutset
+const windowsCutset = "\r" + linuxCutset
 
 func trim(input string) string {
 	return strings.TrimRight(input, windowsCutset)

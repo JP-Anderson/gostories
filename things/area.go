@@ -3,7 +3,7 @@ package things
 type Area struct {
 	Look   string
 	Exits  map[Direction]Exit
-	Items []Item
+	Items  []Item
 	Beings []Being
 }
 
@@ -13,9 +13,10 @@ type Exit struct {
 }
 
 type Direction string
+
 const (
 	North = "north"
-	East = "east"
+	East  = "east"
 	South = "south"
-	West = "west"
+	West  = "west"
 )
