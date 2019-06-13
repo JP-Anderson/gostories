@@ -32,9 +32,9 @@ var actions = map[string]Action{
 	"grab": takeAction,
 
 	"inventory": inventoryAction,
-	"bag": inventoryAction,
-	"pack": inventoryAction,
-	"i": inventoryAction,
+	"bag":       inventoryAction,
+	"pack":      inventoryAction,
+	"i":         inventoryAction,
 
 	"quit": quitAction,
 }

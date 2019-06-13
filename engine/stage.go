@@ -13,7 +13,7 @@ type Stage struct {
 func (s Stage) Start(area things.Area) {
 	s.context = Context{
 		CurrentArea: area,
-		Inventory: NewInventory(),
+		Inventory:   NewInventory(),
 	}
 	newArea := true
 	for {
