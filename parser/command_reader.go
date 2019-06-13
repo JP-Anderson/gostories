@@ -28,6 +28,14 @@ var actions = map[string]Action{
 	"walk":   travelAction,
 	"travel": travelAction,
 
+	"take": takeAction,
+	"grab": takeAction,
+
+	"inventory": inventoryAction,
+	"bag": inventoryAction,
+	"pack": inventoryAction,
+	"i": inventoryAction,
+
 	"quit": quitAction,
 }
 
@@ -35,6 +43,8 @@ var unknownAction = Action{"unknown"}
 var talkAction = Action{"talk"}
 var lookAction = Action{"look"}
 var travelAction = Action{"travel"}
+var takeAction = Action{"take"}
+var inventoryAction = Action{"inventory"}
 var quitAction = Action{"quit"}
 
 func Unknown() Action {

@@ -4,4 +4,5 @@ import "gostories/things"
 
 type Context struct {
 	CurrentArea things.Area
+	Inventory *Inventory
 }
