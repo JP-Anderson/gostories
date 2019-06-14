@@ -8,12 +8,12 @@ type Tree struct {
 // it should have 2 or more Response structs in `Responses` with user
 // selectable options leading to speech Events.
 type Event struct {
-	Next *Event
+	Next      *Event
 	Responses []*Response
-	Speech string
+	Speech    string
 }
 
 type Response struct {
 	Response string
-	Next *Event
+	Next     *Event
 }

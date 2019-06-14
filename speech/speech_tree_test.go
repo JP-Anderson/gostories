@@ -1,8 +1,9 @@
 package speech
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestSpeechTreeNext(t *testing.T) {
@@ -15,12 +16,14 @@ func TestSpeechTreeNext(t *testing.T) {
 
 func TestSpeechTreeResponses(t *testing.T) {
 	tree := buildTestTree()
-	two := tree.Root.Next
-	resp1 := two.Responses[0]
-	resp2 := two.Responses[1]
+	responseEvent := tree.Root.Next
+
+	resp1 := responseEvent.Responses[0]
 	assert.Equal(t, "Yes!", resp1.Response)
-	assert.Equal(t, "That would be an ecumenical matter.", resp2.Response)
 	assert.Equal(t, "Okay", resp1.Next.Speech)
+
+	resp2 := responseEvent.Responses[1]
+	assert.Equal(t, "That would be an ecumenical matter.", resp2.Response)
 	assert.Equal(t, "Yes, I suppose it would...", resp2.Next.Speech)
 }
 
@@ -32,14 +35,14 @@ func buildTestTree() Tree {
 			Responses: []*Response{
 				{
 					Response: "Yes!",
-					Next: &Event{Speech: "Okay"},
+					Next:     &Event{Speech: "Okay"},
 				},
 				{
 					Response: "That would be an ecumenical matter.",
-					Next: &Event{Speech: "Yes, I suppose it would..."},
+					Next:     &Event{Speech: "Yes, I suppose it would..."},
 				},
 			},
 		},
 	}
-	return Tree{ Root:root }
+	return Tree{Root: root}
 }
