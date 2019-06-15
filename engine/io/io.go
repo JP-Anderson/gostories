@@ -1,9 +1,10 @@
-package engine
+package io
 
 import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"gostories/parser"
@@ -19,16 +20,26 @@ func NewLinef(output string, args ...interface{}) {
 
 var reader = bufio.NewReader(os.Stdin)
 
-func SimpleParse() (parser.Action, string) {
+func ReadInt() (i int, e error) {
+	input := Trim(readString())
+	return strconv.Atoi(input)
+}
+
+func readString() string {
 	input, err := reader.ReadString('\n')
 	if err != nil {
-		// todo
+		NewLinef("ReadString error: %v", err)
 	}
+	return input
+}
+
+func SimpleParse() (parser.Action, string) {
+	input := readString()
 	split := strings.Split(input, " ")
 	if len(split) >= 2 {
-		return parser.ParseInput(split[0], trim(split[1]))
+		return parser.ParseInput(split[0], Trim(split[1]))
 	} else if len(split) == 1 {
-		return parser.ParseInput(trim(split[0]), "")
+		return parser.ParseInput(Trim(split[0]), "")
 	}
 	return parser.Unknown(), ""
 }
@@ -36,6 +47,6 @@ func SimpleParse() (parser.Action, string) {
 const linuxCutset = "\n"
 const windowsCutset = "\r" + linuxCutset
 
-func trim(input string) string {
+func Trim(input string) string {
 	return strings.TrimRight(input, windowsCutset)
 }

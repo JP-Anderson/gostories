@@ -2,6 +2,7 @@ package main
 
 import (
 	"gostories/engine"
+	"gostories/generator"
 	"gostories/things"
 )
 
@@ -54,13 +55,10 @@ func storeRoom() things.Area {
 // Simple examples constructed from code for now
 // Will either construct these from XML in future or find some way to autogenerate
 func cat() *things.Being {
+	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
 	return &things.Being{
 		Name:    "Bubbles",
 		Species: "Cat",
-		Speech: []string{
-			"Meeeeeeeeow!",
-			"...mew!",
-			"Rrrrrrewwwwwowow!",
-		},
+		Speech: catSpeech,
 	}
 }

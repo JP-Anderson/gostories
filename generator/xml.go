@@ -5,14 +5,14 @@ import (
 	"io/ioutil"
 	path "path/filepath"
 
-	"gostories/engine"
+	"gostories/engine/io"
 	"gostories/speech"
 )
 
 func SpeechFromXMLFile(filepath string) speech.Tree {
 	absPath, err := path.Abs(filepath)
 	if err != nil {
-		engine.NewLinef("Error finding absolute path for file [%v]: %v", filepath, err)
+		io.NewLinef("Error finding absolute path for file [%v]: %v", filepath, err)
 	}
 	bytes, err := ioutil.ReadFile(absPath)
 	if err != nil {
@@ -25,7 +25,7 @@ func SpeechFromXml(xmlBytes []byte) speech.Tree {
 	t := &speech.Tree{}
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
-		engine.NewLinef("SpeechFromXML failed: %v", err)
+		io.NewLinef("SpeechFromXML failed: %v", err)
 	}
 	return *t
 }
