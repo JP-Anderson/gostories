@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tree>
+<Event>
+	<Speech>What is your favourite colour?</Speech>
+	<Responses>
+		<Response>
+			<ResponseStr>Red</ResponseStr>
+			<Next>
+				<Event>
+					<Speech>Hmm okay...</Speech>
+				</Event>
+			</Next>
+		</Response>
+		<Response>
+			<ResponseStr>Blue</ResponseStr>
+			<Next>
+				<Event>
+					<Speech>That makes sense...</Speech>
+				</Event>
+			</Next>
+		</Response>
+	</Responses>
+</Event>
+</Tree>
