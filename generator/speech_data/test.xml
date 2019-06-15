@@ -5,19 +5,15 @@
 	<Responses>
 		<Response>
 			<ResponseStr>Red</ResponseStr>
-			<Next>
-				<Event>
-					<Speech>Hmm okay...</Speech>
-				</Event>
-			</Next>
+			<Event>
+				<Speech>Hmm okay...</Speech>
+			</Event>
 		</Response>
 		<Response>
 			<ResponseStr>Blue</ResponseStr>
-			<Next>
-				<Event>
-					<Speech>That makes sense...</Speech>
-				</Event>
-			</Next>
+			<Event>
+				<Speech>That makes sense...</Speech>
+			</Event>
 		</Response>
 	</Responses>
 </Event>

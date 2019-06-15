@@ -8,7 +8,9 @@ type Tree struct {
 // it should have 2 or more Response structs in `Responses` with user
 // selectable options leading to speech Events.
 type Event struct {
-	Next      *Event `xml:"Next"`
+	// optional
+	Next      *Event `xml:"Event"`
+	// optional
 	Responses []Response `xml:"Responses>Response"`
 	Speech    string `xml:"Speech"`
 }
