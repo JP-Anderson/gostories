@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tree>
+    <Event>
+        <Speech>Good day! I don't suppose you have any food I could eat do you? I'm famished!</Speech>
+        <Responses>
+            <Response>
+                <ResponseStr>Sorry, I couldn't find any.</ResponseStr>
+                <Event>
+                    <Speech>Have you tried up there?</Speech>
+                </Event>
+            </Response>
+            <Response>
+                <ResponseStr>Scram! Get away kitty!</ResponseStr>
+                <Event>
+                    <Speech>Well you are quite the ignoramus, aren't you...</Speech>
+                </Event>
+            </Response>
+        </Responses>
+    </Event>
+</Tree>
