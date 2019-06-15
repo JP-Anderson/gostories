@@ -15,6 +15,7 @@ func (s Stage) Start(area things.Area) {
 	s.context = Context{
 		CurrentArea: area,
 		Inventory:   NewInventory(),
+		EquippedItems: NewEquippedItems(),
 	}
 	newArea := true
 	for {
@@ -74,12 +75,27 @@ func (s Stage) Start(area things.Area) {
 			if !found {
 				io.NewLinef("Couldn't find a %v to pick up.", noun)
 			}
-		} else if action.Name == "inventory" {
-			io.NewLine("You take stock of your items.")
+		} else if action.Name == "equip" {
 			for _, item := range s.context.Inventory.items {
-				io.NewLine(item.GetName())
+				if ok := item.(things.Equippable); ok != nil {
+					s.context.Equip(item)
+				}
 			}
-
+		} else if action.Name == "inventory" {
+			if s.context.Inventory.Size() > 0 {
+				io.NewLine("You take stock of your items.")
+				for _, item := range s.context.Inventory.items {
+					io.NewLine(item.GetName())
+				}
+			} else {
+				io.NewLinef("You aren't carrying anything.")
+			}
+			if s.context.EquippedItems.Size() > 0 {
+				io.NewLine("You have the following equipped:")
+				for _, item := range s.context.EquippedItems.items {
+					io.NewLine(item.GetName())
+				}
+			}
 		} else if action.Name == "exit" {
 			break
 		} else {

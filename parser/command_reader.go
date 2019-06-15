@@ -31,6 +31,10 @@ var actions = map[string]Action{
 	"take": takeAction,
 	"grab": takeAction,
 
+	"equip": equipAction,
+	"wear": equipAction,
+	"hold": equipAction,
+
 	"inventory": inventoryAction,
 	"bag":       inventoryAction,
 	"pack":      inventoryAction,
@@ -44,6 +48,7 @@ var talkAction = Action{"talk"}
 var lookAction = Action{"look"}
 var travelAction = Action{"travel"}
 var takeAction = Action{"take"}
+var equipAction = Action{"equip"}
 var inventoryAction = Action{"inventory"}
 var quitAction = Action{"quit"}
 
