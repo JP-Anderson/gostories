@@ -47,6 +47,15 @@ func (i *ItemStore) Contains(desiredItem things.Item) bool {
 	return false
 }
 
+func (i *ItemStore) ContainsMatch(matcher func(item things.Item) bool) bool {
+	for _, item := range i.items {
+		if matcher(item) {
+			return true
+		}
+	}
+	return false
+}
+
 func (i *ItemStore) RemoveItem(item things.Item) error {
 	indexToRemove := find(i.items, item)
 	if indexToRemove >= len(i.items) {

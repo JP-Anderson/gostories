@@ -19,6 +19,11 @@ func TestSpeechFromXml(t *testing.T) {
 	assert.Equal(t, getExpectedSimpleResponseTree(), tree)
 }
 
+func TestConditional(t *testing.T) {
+	bubblesSpeech := SpeechFromXMLFile("./speech_data/bubbles_human.xml")
+	assert.Equal(t, "item-equipped(collar)", bubblesSpeech.Event.Condition)
+}
+
 func getExpectedSimpleResponseTree() speech.Tree {
 	return speech.Tree{
 		Event: speech.Event{

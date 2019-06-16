@@ -55,7 +55,8 @@ func storeRoom() things.Area {
 // Simple examples constructed from code for now
 // Will either construct these from XML in future or find some way to autogenerate
 func cat() *things.Being {
-	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
+	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles_human.xml")
+	//catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
 	return &things.Being{
 		Name:    "Bubbles",
 		Species: "Cat",

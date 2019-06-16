@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tree>
     <Event>
+        <Condition>item-equipped(collar)</Condition>
         <Speech>Good day! I don't suppose you have any food I could eat do you? I'm famished!</Speech>
         <Responses>
             <Response>

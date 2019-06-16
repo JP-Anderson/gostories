@@ -70,6 +70,28 @@ func TestRemoveItemRemovesCorrectItem(t *testing.T) {
 	assert.True(t, i.Contains(item2))
 }
 
+func TestContainsMatchWithTextMatcher(t *testing.T) {
+	i := NewInventory()
+	testItem := getAnotherTestItem()
+
+	shrubberyMatcher := func(item things.Item) bool {
+		if item.GetName() == "shrubbery" {
+			return true
+		}
+		return false
+	}
+
+	assert.False(t, i.ContainsMatch(shrubberyMatcher))
+
+	i.StoreItem(testItem)
+	assert.True(t, i.Contains(testItem))
+	assert.True(t, i.ContainsMatch(shrubberyMatcher))
+
+	err := i.RemoveItem(testItem)
+	assert.NoError(t, err)
+	assert.False(t, i.ContainsMatch(shrubberyMatcher))
+}
+
 func getTestItem() things.Item {
 	return things.CatCollarItem{}
 }

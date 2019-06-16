@@ -57,7 +57,7 @@ func (s Stage) Start(area things.Area) {
 				if strings.ToLower(being.Name) == strings.ToLower(noun) {
 					found = true
 					io.NewLinef("You speak to %v.", being.Name)
-					being.SpeakTo()
+					Run(being.Speech, s.context)
 				}
 			}
 			if !found {
