@@ -38,8 +38,9 @@ func Run(speech speech.Tree, gameContext Context) bool {
 			curr = &curr.Responses[choice].Next
 		} else if curr.Next != nil {
 			curr = curr.Next
+		} else {
+			return true
 		}
-		return true
 	}
 }
 
