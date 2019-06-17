@@ -43,15 +43,15 @@ func (c CatCollarItem) GetThing() Thing { return c.Thing }
 
 func (c CatCollarItem) Toggle() {}
 
-func (c *CatCollarItem) Show() {
+func (c CatCollarItem) Show() {
 	c.visible = true
 }
 
-func (c *CatCollarItem) Hide() {
+func (c CatCollarItem) Hide() {
 	c.visible = false
 }
 
-func (c *CatCollarItem) Visible() bool {
+func (c CatCollarItem) Visible() bool {
 	return c.visible
 }
 

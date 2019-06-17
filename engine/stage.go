@@ -45,10 +45,10 @@ func (s Stage) LoopUntilExit() {
 		} else if action.Name == "talk" {
 			found := false
 			for _, being := range s.context.CurrentArea.Beings {
-				io.NewLine(being.Name)
-				if strings.ToLower(being.Name) == strings.ToLower(noun) {
+				io.NewLine(being.Name())
+				if strings.ToLower(being.Name()) == strings.ToLower(noun) {
 					found = true
-					io.NewLinef("You speak to %v.", being.Name)
+					io.NewLinef("You speak to %v.", being.Name())
 					RunWithAlt(being.Speech, being.AltSpeech, s.context)
 				}
 			}
@@ -120,8 +120,11 @@ func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing
 		for _, f := range fs {
 			tings = append(tings, f.GetThing())
 		}
-
-		result := Find(tings, strings.ToLower(lookTarget))
+		bs := context.CurrentArea.Beings
+		for _, b := range bs {
+			tings = append(tings, b.GetThing())
+		}
+		result := Find(tings, lookTarget)
 		if result != nil {
 			target = *result
 			io.NewLine(result.LookText())
@@ -134,7 +137,7 @@ func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing
 
 func Find(ts []things.Thing, searchName string) *things.Thing {
 	for _, thing := range ts {
-		if thing.Name() == searchName {
+		if strings.ToLower(thing.Name()) == strings.ToLower(searchName) {
 			return &thing
 		}
 	}
