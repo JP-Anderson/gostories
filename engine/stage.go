@@ -32,29 +32,7 @@ func (s Stage) LoopUntilExit() {
 		// TODO: add targetedThing set to every noun. Refactor in the process!
 		var targetedThing things.Thing
 		if action.Name == "look" {
-			// TODO also Look at NPCs
-			if noun == "" {
-				io.NewLine(s.context.CurrentArea.Look)
-			} else {
-				found := false
-				for _, item := range s.context.CurrentArea.Items {
-					if strings.ToLower(item.GetName()) == strings.ToLower(noun) {
-						found = true
-						targetedThing = item.GetThing()
-						io.NewLine(item.GetLookText())
-					}
-				}
-				for _, feature := range s.context.CurrentArea.Features {
-					if strings.ToLower(feature.GetName()) == strings.ToLower(noun) {
-						found = true
-						targetedThing = feature.GetThing()
-						io.NewLine(feature.GetLookText())
-					}
-				}
-				if !found {
-					io.NewLinef("Couldn't find a %v to look at!", noun)
-				}
-			}
+			targetedThing = ExecuteLookCommand(noun, s.context)
 		} else if action.Name == "travel" {
 			trimmed := io.Trim(strings.ToLower(noun))
 			exit, exists := s.context.CurrentArea.Exits[things.Direction(trimmed)]
@@ -126,4 +104,39 @@ func (s Stage) LoopUntilExit() {
 			trigger.TriggerContextItem()
 		}
 	}
+}
+
+func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing) {
+	// TODO also Look at NPCs
+	if lookTarget == "" {
+		io.NewLine(context.CurrentArea.Look)
+	} else {
+		tings := []things.Thing{}
+		is := context.CurrentArea.Items
+		for _, i := range is {
+			tings = append(tings, i.GetThing())
+		}
+		fs := context.CurrentArea.Features
+		for _, f := range fs {
+			tings = append(tings, f.GetThing())
+		}
+
+		result := Find(tings, strings.ToLower(lookTarget))
+		if result != nil {
+			target = *result
+			io.NewLine(result.LookText())
+		} else {
+			io.NewLinef("Couldn't find a %v to look at!", lookTarget)
+		}
+	}
+	return
+}
+
+func Find(ts []things.Thing, searchName string) *things.Thing {
+	for _, thing := range ts {
+		if thing.Name() == searchName {
+			return &thing
+		}
+	}
+	return nil
 }
