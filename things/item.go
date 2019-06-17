@@ -32,6 +32,19 @@ func (c CatCollarItem) Take() {}
 
 func (c CatCollarItem) Toggle() {}
 
+func (c *CatCollarItem) Show() {
+	c.visible = true
+}
+
+func (c *CatCollarItem) Hide() {
+	c.visible = false
+}
+
+func (c *CatCollarItem) Visible() bool {
+	return c.visible
+}
+
+
 type ShrubberyItem struct {
 	Thing
 }
@@ -43,3 +56,15 @@ func (s ShrubberyItem) GetLookText() string {
 }
 
 func (s ShrubberyItem) Take() {}
+
+func (s ShrubberyItem) Show() {
+	s.visible = true
+}
+
+func (s ShrubberyItem) Hide() {
+	s.visible = false
+}
+
+func (s ShrubberyItem) Visible() bool {
+	return s.visible
+}

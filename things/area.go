@@ -5,6 +5,7 @@ type Area struct {
 	Exits  map[Direction]Exit
 	Items  []Item
 	Beings []Being
+	Features []Feature
 }
 
 type Exit struct {

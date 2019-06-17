@@ -49,6 +49,9 @@ func storeRoom() things.Area {
 		Beings: []things.Being{},
 		Exits:  make(map[things.Direction]things.Exit),
 		Items:  []things.Item{},
+		Features: []things.Feature{
+			things.NewShelfFeature(),
+		},
 	}
 }
 

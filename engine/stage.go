@@ -41,6 +41,12 @@ func (s Stage) LoopUntilExit() {
 						io.NewLine(item.GetLookText())
 					}
 				}
+				for _, feature := range s.context.CurrentArea.Features {
+					if strings.ToLower(feature.GetName()) == strings.ToLower(noun) {
+						found = true
+						io.NewLine(feature.GetLookText())
+					}
+				}
 				if !found {
 					io.NewLinef("Couldn't find a %v to look at!", noun)
 				}
@@ -74,6 +80,12 @@ func (s Stage) LoopUntilExit() {
 					found = true
 					io.NewLinef("You take the %v", item.GetName())
 					s.context.Inventory.StoreItem(item)
+				}
+			}
+			for _, feature := range s.context.CurrentArea.Features {
+				if strings.ToLower(feature.GetName()) == strings.ToLower(noun) {
+					found = true
+					io.NewLinef("You can't really take the %v...", feature.GetName())
 				}
 			}
 			if !found {

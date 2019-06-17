@@ -10,6 +10,16 @@ type Feature interface {
 }
 
 
+func NewShelfFeature() ShelfFeature {
+	return ShelfFeature{
+		Thing{Triggers: map[string]Trigger{
+			"" : RevealItemTrigger{
+				CatCollarItem{}.Thing,
+			},
+		}},
+	}
+}
+
 type ShelfFeature struct {
 	Thing
 }
