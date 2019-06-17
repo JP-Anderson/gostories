@@ -17,6 +17,10 @@ func (s Stage) Start(area things.Area) {
 		Inventory:     NewInventory(),
 		EquippedItems: NewEquippedItems(),
 	}
+	s.LoopUntilExit()
+}
+
+func (s Stage) LoopUntilExit() {
 	newArea := true
 	for {
 		if newArea {
