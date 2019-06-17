@@ -5,12 +5,16 @@ package things
 type Thing struct {
 	visible bool
 	Triggers Triggers
+	name string
+	lookText string
 }
 
-type Perceivable interface {
-	Show()
-	Hide()
-	Visible() bool
+func (t *Thing) Name() string {
+	return t.name
+}
+
+func (t *Thing) LookText() string {
+	return t.lookText
 }
 
 func (t *Thing) Show() {

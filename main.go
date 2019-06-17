@@ -23,7 +23,7 @@ func main() {
 	storeRoom.Exits[things.East] = storeRoomToCatRoomExit
 
 	// Add item
-	collar := things.CatCollarItem{}
+	collar := things.NewCatCollarItem()
 	collar.Hide()
 	storeRoom.Items = append(storeRoom.Items, collar)
 

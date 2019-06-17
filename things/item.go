@@ -26,11 +26,16 @@ type CatCollarItem struct {
 	Thing
 }
 
-func (c CatCollarItem) GetName() string { return "collar" }
-
-func (c CatCollarItem) GetLookText() string {
-	return "A small red cat collar with a bell."
+func NewCatCollarItem() CatCollarItem {
+	c := CatCollarItem{}
+	c.name = "collar"
+	c.lookText = "A small red cat collar with a bell."
+	return c
 }
+
+func (c CatCollarItem) GetName() string { return c.Name() }
+
+func (c CatCollarItem) GetLookText() string { return c.GetLookText() }
 
 func (c CatCollarItem) Take() {}
 
@@ -55,11 +60,16 @@ type ShrubberyItem struct {
 	Thing
 }
 
-func (s ShrubberyItem) GetName() string { return "shrubbery" }
-
-func (s ShrubberyItem) GetLookText() string {
-	return "A small but rather well cared for shrubbery."
+func NewShrubberyItem() ShrubberyItem {
+	s := ShrubberyItem{}
+	s.name = "shrubbery"
+	s.lookText = "A small but rather well cared for shrubbery."
+	return s
 }
+
+func (s ShrubberyItem) GetName() string { return s.Name() }
+
+func (s ShrubberyItem) GetLookText() string { return s.LookText() }
 
 func (s ShrubberyItem) Take() {}
 

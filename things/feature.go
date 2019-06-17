@@ -15,9 +15,12 @@ type Feature interface {
 
 func NewShelfFeature() ShelfFeature {
 	return ShelfFeature{
-		Thing{Triggers: map[string]Trigger{
+		Thing{
+			name: "shelf",
+			lookText: "The shelf seems to contain a few old magazines and a cat collar",
+			Triggers: map[string]Trigger{
 			"look" : RevealItemTrigger{
-				CatCollarItem{}.Thing,
+				NewCatCollarItem().Thing,
 			},
 		}},
 	}
@@ -27,10 +30,8 @@ type ShelfFeature struct {
 	Thing
 }
 
-func (s ShelfFeature) GetName() string { return "shelf" }
+func (s ShelfFeature) GetName() string { return s.Name() }
 
-func (s ShelfFeature) GetLookText() string {
-	return "The shelf seems to contain a few old magazines and a cat collar"
-}
+func (s ShelfFeature) GetLookText() string { return s.LookText() }
 
 func (s ShelfFeature) GetThing() Thing { return s.Thing }
