@@ -7,6 +7,8 @@ type Item interface {
 
 	// Description given when Looking at the item
 	GetLookText() string
+
+	Take()
 }
 
 type Equippable interface {
@@ -26,16 +28,18 @@ func (c CatCollarItem) GetLookText() string {
 	return "A small red cat collar with a bell."
 }
 
+func (c CatCollarItem) Take() {}
+
 func (c CatCollarItem) Toggle() {}
 
 type ShrubberyItem struct {
 	Thing
 }
 
-func (c ShrubberyItem) GetName() string { return "shrubbery" }
+func (s ShrubberyItem) GetName() string { return "shrubbery" }
 
-func (c ShrubberyItem) GetLookText() string {
+func (s ShrubberyItem) GetLookText() string {
 	return "A small but rather well cared for shrubbery."
 }
 
-func (c ShrubberyItem) Toggle() {}
+func (s ShrubberyItem) Take() {}

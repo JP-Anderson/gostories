@@ -5,6 +5,7 @@ import (
 )
 
 type Being struct {
+	Thing
 	Name      string
 	Species   string
 	Speech    speech.Tree
