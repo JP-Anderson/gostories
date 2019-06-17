@@ -26,8 +26,6 @@ func main() {
 	collar.Hide()
 	storeRoom.Items = append(storeRoom.Items, collar)
 
-	// TODO add some sort of feature which needs to be looked at to reveal item
-
 	stage := engine.Stage{}
 	stage.Start(catRoom)
 }

@@ -29,7 +29,7 @@ func (s Stage) LoopUntilExit() {
 		}
 		// TODO: move the action parsing to another file/function
 		action, noun := io.SimpleParse()
-		// TODO: add targetedThing set to every noun. Refactor in the process!
+		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing things.Thing
 		if action.Name == "look" {
 			targetedThing = ExecuteLookCommand(noun, s.context)
@@ -107,7 +107,6 @@ func (s Stage) LoopUntilExit() {
 }
 
 func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing) {
-	// TODO also Look at NPCs
 	if lookTarget == "" {
 		io.NewLine(context.CurrentArea.Look)
 	} else {
