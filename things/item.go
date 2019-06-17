@@ -8,7 +8,11 @@ type Item interface {
 	// Description given when Looking at the item
 	GetLookText() string
 
+	// Take the item into the inventory
 	Take()
+
+	// Get the Thing
+	GetThing() Thing
 }
 
 type Equippable interface {
@@ -29,6 +33,8 @@ func (c CatCollarItem) GetLookText() string {
 }
 
 func (c CatCollarItem) Take() {}
+
+func (c CatCollarItem) GetThing() Thing { return c.Thing }
 
 func (c CatCollarItem) Toggle() {}
 
@@ -56,6 +62,8 @@ func (s ShrubberyItem) GetLookText() string {
 }
 
 func (s ShrubberyItem) Take() {}
+
+func (s ShrubberyItem) GetThing() Thing { return s.Thing }
 
 func (s ShrubberyItem) Show() {
 	s.visible = true

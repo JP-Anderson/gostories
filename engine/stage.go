@@ -29,6 +29,8 @@ func (s Stage) LoopUntilExit() {
 		}
 		// TODO: move the action parsing to another file/function
 		action, noun := io.SimpleParse()
+		// TODO: add targetedThing set to every noun. Refactor in the process!
+		var targetedThing things.Thing
 		if action.Name == "look" {
 			// TODO also Look at NPCs
 			if noun == "" {
@@ -38,12 +40,14 @@ func (s Stage) LoopUntilExit() {
 				for _, item := range s.context.CurrentArea.Items {
 					if strings.ToLower(item.GetName()) == strings.ToLower(noun) {
 						found = true
+						targetedThing = item.GetThing()
 						io.NewLine(item.GetLookText())
 					}
 				}
 				for _, feature := range s.context.CurrentArea.Features {
 					if strings.ToLower(feature.GetName()) == strings.ToLower(noun) {
 						found = true
+						targetedThing = feature.GetThing()
 						io.NewLine(feature.GetLookText())
 					}
 				}
@@ -116,6 +120,10 @@ func (s Stage) LoopUntilExit() {
 			break
 		} else {
 			io.NewLine("Unknown action")
+		}
+		trigger := targetedThing.Triggers[action.Name]
+		if trigger != nil {
+			trigger.TriggerContextItem()
 		}
 	}
 }

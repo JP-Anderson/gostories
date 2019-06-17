@@ -4,6 +4,7 @@ package things
 // one Thing might be hidden until one or more pre-requisites have been met (e.g. player has an item, or a skill)
 type Thing struct {
 	visible bool
+	Triggers Triggers
 }
 
 type Perceivable interface {
