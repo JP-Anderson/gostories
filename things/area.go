@@ -1,10 +1,10 @@
 package things
 
 type Area struct {
-	Look   string
-	Exits  map[Direction]Exit
-	Items  []Item
-	Beings []Being
+	Look     string
+	Exits    map[Direction]Exit
+	Items    []Item
+	Beings   []Being
 	Features []Feature
 }
 

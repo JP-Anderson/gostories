@@ -19,7 +19,7 @@ func NewBubbles() Being {
 	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
 	return Being{
 		Thing: Thing{
-			name: "Bubbles",
+			name:     "Bubbles",
 			lookText: "The cat is reasonably small, ginger, and chunky.",
 		},
 		Species:   "Cat",

@@ -55,7 +55,6 @@ func (c CatCollarItem) Visible() bool {
 	return c.visible
 }
 
-
 type ShrubberyItem struct {
 	Thing
 }

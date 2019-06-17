@@ -3,10 +3,10 @@ package things
 // A Thing is anything in the game that can be interacted with in some way. All Things have a concept of visibility,
 // one Thing might be hidden until one or more pre-requisites have been met (e.g. player has an item, or a skill)
 type Thing struct {
-	visible bool
-	Triggers Triggers
-	name string
+	name     string
 	lookText string
+	visible  bool
+	Triggers Triggers
 }
 
 func (t *Thing) Name() string {
