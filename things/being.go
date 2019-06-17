@@ -5,8 +5,8 @@ import (
 )
 
 type Being struct {
-	Name    string
-	Species string
-	Speech speech.Tree
+	Name      string
+	Species   string
+	Speech    speech.Tree
 	AltSpeech *speech.Tree
 }

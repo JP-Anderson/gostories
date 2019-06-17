@@ -9,15 +9,15 @@ type Tree struct {
 // selectable options leading to speech Events.
 type Event struct {
 	// optional
-	Next      *Event `xml:"Event"`
+	Next *Event `xml:"Event"`
 	// optional
 	Responses []Response `xml:"Responses>Response"`
-	Speech    string `xml:"Speech"`
-	Condition string `xml:"Condition"`
+	Speech    string     `xml:"Speech"`
+	Condition string     `xml:"Condition"`
 }
 
 type Response struct {
 	ResponseStr string `xml:"ResponseStr"`
-	Next        Event `xml:"Event"`
-	Condition string `xml:"Condition"`
+	Next        Event  `xml:"Event"`
+	Condition   string `xml:"Condition"`
 }

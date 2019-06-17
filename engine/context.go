@@ -6,13 +6,13 @@ import (
 )
 
 type Context struct {
-	CurrentArea things.Area
-	Inventory   *Inventory
+	CurrentArea   things.Area
+	Inventory     *Inventory
 	EquippedItems *EquippedItems
 }
 
 func (c *Context) Equip(item things.Item) {
-	if ! c.Inventory.Contains(item) {
+	if !c.Inventory.Contains(item) {
 		io.NewLine("Cannot equip item not in inventory.")
 		return
 	}

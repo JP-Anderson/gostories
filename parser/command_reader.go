@@ -32,8 +32,8 @@ var actions = map[string]Action{
 	"grab": takeAction,
 
 	"equip": equipAction,
-	"wear": equipAction,
-	"hold": equipAction,
+	"wear":  equipAction,
+	"hold":  equipAction,
 
 	"inventory": inventoryAction,
 	"bag":       inventoryAction,

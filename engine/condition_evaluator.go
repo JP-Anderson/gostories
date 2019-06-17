@@ -8,12 +8,12 @@ import (
 
 func EvaluateCondition(gameContext Context, conditionStr string) bool {
 	conditionFunc := GetConditional(conditionStr)
-	targetStr := conditionStr[strings.Index(conditionStr, "(")+1:strings.Index(conditionStr, ")")]
+	targetStr := conditionStr[strings.Index(conditionStr, "(")+1 : strings.Index(conditionStr, ")")]
 	return conditionFunc(gameContext, targetStr)
 }
 
-var ConditionStringsMap = map[string]ConditionFn {
-	"item-equipped" : InventoryContainsItem,
+var ConditionStringsMap = map[string]ConditionFn{
+	"item-equipped": InventoryContainsItem,
 	//"item-in-inventory" : nil,
 }
 

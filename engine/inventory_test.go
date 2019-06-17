@@ -100,7 +100,7 @@ func TestContainsMatchNegative(t *testing.T) {
 		return false
 	}
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))
-	
+
 	i.StoreItem(collar)
 	assert.True(t, i.Contains(collar))
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))

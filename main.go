@@ -58,9 +58,9 @@ func cat() *things.Being {
 	translatedSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles_human.xml")
 	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
 	return &things.Being{
-		Name:    "Bubbles",
-		Species: "Cat",
-		Speech:  translatedSpeech,
+		Name:      "Bubbles",
+		Species:   "Cat",
+		Speech:    translatedSpeech,
 		AltSpeech: &catSpeech,
 	}
 }

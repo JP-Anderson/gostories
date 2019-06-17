@@ -49,7 +49,7 @@ func printResponsesAndGetChoice(responseOptions []speech.Response) int {
 	for i, option := range responseOptions {
 		io.NewLinef("%v - \"%v\"", i, option.ResponseStr)
 	}
-	last := len(responseOptions)-1
+	last := len(responseOptions) - 1
 	for {
 		selection, err := io.ReadInt()
 		if err != nil {
