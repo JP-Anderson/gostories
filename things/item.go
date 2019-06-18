@@ -2,7 +2,7 @@ package things
 
 type Item interface {
 
-	// Get the name of the item
+	// Get the Name of the item
 	GetName() string
 
 	// Description given when Looking at the item
@@ -28,12 +28,12 @@ type CatCollarItem struct {
 
 func NewCatCollarItem() CatCollarItem {
 	c := CatCollarItem{}
-	c.name = "collar"
-	c.lookText = "A small red cat collar with a bell."
+	c.Name = "collar"
+	c.LookText = "A small red cat collar with a bell."
 	return c
 }
 
-func (c CatCollarItem) GetName() string { return c.Name() }
+func (c CatCollarItem) GetName() string { return c.Name }
 
 func (c CatCollarItem) GetLookText() string { return c.GetLookText() }
 
@@ -44,15 +44,11 @@ func (c CatCollarItem) GetThing() Thing { return c.Thing }
 func (c CatCollarItem) Toggle() {}
 
 func (c CatCollarItem) Show() {
-	c.visible = true
+	c.Visible = true
 }
 
 func (c CatCollarItem) Hide() {
-	c.visible = false
-}
-
-func (c CatCollarItem) Visible() bool {
-	return c.visible
+	c.Visible = false
 }
 
 type ShrubberyItem struct {
@@ -61,27 +57,23 @@ type ShrubberyItem struct {
 
 func NewShrubberyItem() ShrubberyItem {
 	s := ShrubberyItem{}
-	s.name = "shrubbery"
-	s.lookText = "A small but rather well cared for shrubbery."
+	s.Name = "shrubbery"
+	s.LookText = "A small but rather well cared for shrubbery."
 	return s
 }
 
-func (s ShrubberyItem) GetName() string { return s.Name() }
+func (s ShrubberyItem) GetName() string { return s.Name }
 
-func (s ShrubberyItem) GetLookText() string { return s.LookText() }
+func (s ShrubberyItem) GetLookText() string { return s.LookText }
 
 func (s ShrubberyItem) Take() {}
 
 func (s ShrubberyItem) GetThing() Thing { return s.Thing }
 
 func (s ShrubberyItem) Show() {
-	s.visible = true
+	s.Visible = true
 }
 
 func (s ShrubberyItem) Hide() {
-	s.visible = false
-}
-
-func (s ShrubberyItem) Visible() bool {
-	return s.visible
+	s.Visible = false
 }
