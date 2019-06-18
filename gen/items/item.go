@@ -2,10 +2,10 @@ package items
 
 import (
 	"bytes"
-	io2 "gostories/engine/io"
 	"io/ioutil"
-
 	"strings"
+
+	io2 "gostories/engine/io"
 )
 
 func WriteItemsFile() {
@@ -21,7 +21,7 @@ func WriteItemsFile() {
 }
 
 func AddItem(itemName, lookText string, writer *bytes.Buffer) {
-	upperCaseItemName := strings.ToUpper(itemName[0:1])+ itemName[1:]
+	upperCaseItemName := strings.ToUpper(itemName[0:1]) + itemName[1:]
 	fileStr := `
 var Item_[N] = New[N]Item()
 
