@@ -137,7 +137,9 @@ func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing
 func Find(ts []things.Thing, searchName string) *things.Thing {
 	for _, thing := range ts {
 		if strings.ToLower(thing.Name) == strings.ToLower(searchName) {
-			return &thing
+			if thing.Visible {
+				return &thing
+			}
 		}
 	}
 	return nil

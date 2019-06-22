@@ -7,6 +7,7 @@ package items
 import "gostories/things"
 
 var Item_Collar = NewCollarItem()
+var collar_Item *CollarItem
 
 type CollarItem struct {
 	things.Thing
@@ -18,9 +19,9 @@ func (c CollarItem) GetLookText() string { return c.LookText }
 
 func (c CollarItem) Toggle() {}
 
-func (c CollarItem) Show() { c.Visible = true }
+func (c *CollarItem) Show() { c.Thing.Visible = true }
 
-func (c CollarItem) Hide() { c.Visible = false }
+func (c *CollarItem) Hide() { c.Thing.Visible = false }
 
 func (c CollarItem) GetThing() things.Thing { return c.Thing }
 
@@ -31,10 +32,12 @@ func NewCollarItem() CollarItem {
 	c := CollarItem{}
 	c.Name = "collar"
 	c.LookText = "A small red cat collar with a bell."
+
 	return c
 }
 
 var Item_Shrubbery = NewShrubberyItem()
+var shrubbery_Item *ShrubberyItem
 
 type ShrubberyItem struct {
 	things.Thing
@@ -46,9 +49,9 @@ func (c ShrubberyItem) GetLookText() string { return c.LookText }
 
 func (c ShrubberyItem) Toggle() {}
 
-func (c ShrubberyItem) Show() { c.Visible = true }
+func (c *ShrubberyItem) Show() { c.Thing.Visible = true }
 
-func (c ShrubberyItem) Hide() { c.Visible = false }
+func (c *ShrubberyItem) Hide() { c.Thing.Visible = false }
 
 func (c ShrubberyItem) GetThing() things.Thing { return c.Thing }
 
@@ -59,5 +62,8 @@ func NewShrubberyItem() ShrubberyItem {
 	c := ShrubberyItem{}
 	c.Name = "shrubbery"
 	c.LookText = "A small but rather well cared for shrubbery."
+
+	c.Show()
+
 	return c
 }

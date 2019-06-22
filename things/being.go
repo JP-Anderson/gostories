@@ -17,7 +17,7 @@ type Being struct {
 func NewBubbles() Being {
 	translatedSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles_human.xml")
 	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
-	return Being{
+	being := Being{
 		Thing: Thing{
 			Name:     "Bubbles",
 			LookText: "The cat is reasonably small, ginger, and chunky.",
@@ -26,6 +26,8 @@ func NewBubbles() Being {
 		Speech:    translatedSpeech,
 		AltSpeech: &catSpeech,
 	}
+	being.Show()
+	return being
 }
 
 func (b Being) GetName() string {

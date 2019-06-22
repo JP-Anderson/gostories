@@ -1,5 +1,7 @@
 package things
 
+import "gostories/engine/io"
+
 type Trigger interface {
 	TriggerContextItem()
 }
@@ -11,5 +13,8 @@ type RevealItemTrigger struct {
 }
 
 func (r RevealItemTrigger) TriggerContextItem() {
-	r.ItemToReveal.Show()
+	if !r.ItemToReveal.Visible {
+		r.ItemToReveal.Show()
+		io.NewLinef("Revealed %v", r.ItemToReveal.Name)
+	}
 }

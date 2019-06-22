@@ -7,6 +7,7 @@ package items
 import "gostories/things"
 
 var Feature_Shelf = NewShelfFeature()
+var shelf_Feature *ShelfFeature
 
 type ShelfFeature struct {
 	things.Thing
@@ -18,21 +19,25 @@ func (c ShelfFeature) GetLookText() string { return c.LookText }
 
 func (c ShelfFeature) Toggle() {}
 
-func (c ShelfFeature) Show() { c.Visible = true }
+func (c *ShelfFeature) Show() { c.Thing.Visible = true }
 
-func (c ShelfFeature) Hide() { c.Visible = false }
+func (c *ShelfFeature) Hide() { c.Thing.Visible = false }
 
 func (c ShelfFeature) GetThing() things.Thing { return c.Thing }
 
 
-func NewShelfFeature() ShelfFeature {
-	c := ShelfFeature{}
-	c.Name = "shelf"
-	c.LookText = "The shelf seems to contain a few old magazines and a cat collar."
-    c.Triggers = map[string]things.Trigger{
-		"look": things.RevealItemTrigger{
-			Item_Collar.Thing,
-		},
+func NewShelfFeature() *ShelfFeature {
+	if shelf_Feature == nil {
+		shelf_Feature = &ShelfFeature{}
+		shelf_Feature.Name = "shelf"
+		shelf_Feature.LookText = "The shelf seems to contain a few old magazines and a cat collar."
+    	shelf_Feature.Triggers = map[string]things.Trigger{
+			"look": things.RevealItemTrigger{
+				Item_Collar.Thing,
+			},
+		}
 	}
-	return c
+	
+	shelf_Feature.Show()
+	return shelf_Feature
 }
