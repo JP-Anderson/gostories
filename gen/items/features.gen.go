@@ -33,7 +33,7 @@ func NewShelfFeature() *ShelfFeature {
 		shelf_Feature.LookText = "The shelf seems to contain a few old magazines and a cat collar."
     	shelf_Feature.Triggers = map[string]things.Trigger{
 			"look": things.RevealItemTrigger{
-				Item_Collar.Thing,
+				ItemToReveal: &Item_Collar.Thing,
 			},
 		}
 	}

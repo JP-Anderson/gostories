@@ -98,20 +98,22 @@ type [N][TT] struct {
 
 func addItemConstructor(name, upperName, lookText, thingType string, visible bool, buffer *bytes.Buffer) {
 	fileStr := `
-func New[N][TT]() [N][TT] {
-	c := [N][TT]{}
-	c.Name = "[lc_N]"
-	c.LookText = "[LT]"
+func New[N][TT]() *[N][TT] {
+	if [lc_N]_[TT] == nil {
+		[lc_N]_[TT] = &[N][TT]{}
+		[lc_N]_[TT].Name = "[lc_N]"
+		[lc_N]_[TT].LookText = "[LT]"
+	}
 `
 	if visible {
 		fileStr = fileStr + `
-	c.Show()
+		[lc_N]_[TT].Show()
 `
 	}
 
 	fileStr = fileStr +
 		`
-	return c
+	return [lc_N]_[TT]
 }
 `
 
@@ -134,7 +136,7 @@ func New[N][TT]() *[N][TT] {
 		[lc_N]_[TT].LookText = "[LT]"
     	[lc_N]_[TT].Triggers = map[string]things.Trigger{
 			"look": things.RevealItemTrigger{
-				Item_Collar.Thing,
+				ItemToReveal: &Item_Collar.Thing,
 			},
 		}
 	}

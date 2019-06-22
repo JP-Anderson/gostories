@@ -9,7 +9,7 @@ type Trigger interface {
 type Triggers map[string]Trigger
 
 type RevealItemTrigger struct {
-	ItemToReveal Thing
+	ItemToReveal *Thing
 }
 
 func (r RevealItemTrigger) TriggerContextItem() {

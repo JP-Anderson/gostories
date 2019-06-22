@@ -28,12 +28,14 @@ func (c CollarItem) GetThing() things.Thing { return c.Thing }
 
 func (c CollarItem) Take() {}
 
-func NewCollarItem() CollarItem {
-	c := CollarItem{}
-	c.Name = "collar"
-	c.LookText = "A small red cat collar with a bell."
+func NewCollarItem() *CollarItem {
+	if collar_Item == nil {
+		collar_Item = &CollarItem{}
+		collar_Item.Name = "collar"
+		collar_Item.LookText = "A small red cat collar with a bell."
+	}
 
-	return c
+	return collar_Item
 }
 
 var Item_Shrubbery = NewShrubberyItem()
@@ -58,12 +60,14 @@ func (c ShrubberyItem) GetThing() things.Thing { return c.Thing }
 
 func (c ShrubberyItem) Take() {}
 
-func NewShrubberyItem() ShrubberyItem {
-	c := ShrubberyItem{}
-	c.Name = "shrubbery"
-	c.LookText = "A small but rather well cared for shrubbery."
+func NewShrubberyItem() *ShrubberyItem {
+	if shrubbery_Item == nil {
+		shrubbery_Item = &ShrubberyItem{}
+		shrubbery_Item.Name = "shrubbery"
+		shrubbery_Item.LookText = "A small but rather well cared for shrubbery."
+	}
 
-	c.Show()
+		shrubbery_Item.Show()
 
-	return c
+	return shrubbery_Item
 }
