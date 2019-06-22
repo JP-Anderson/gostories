@@ -48,20 +48,7 @@ func storeRoom() things.Area {
 		Exits:  make(map[things.Direction]things.Exit),
 		Items:  []things.Item{},
 		Features: []things.Feature{
-			NewShelfFeature(),
+			items.Feature_Shelf,
 		},
-	}
-}
-
-func NewShelfFeature() things.ShelfFeature {
-	return things.ShelfFeature{
-		Thing: things.Thing{
-			Name:     "shelf",
-			LookText: "The shelf seems to contain a few old magazines and a cat collar",
-			Triggers: map[string]things.Trigger{
-				"look": things.RevealItemTrigger{
-					items.Item_Collar.Thing,
-				},
-			}},
 	}
 }
