@@ -7,9 +7,9 @@ type Trigger interface {
 type Triggers map[string]Trigger
 
 type RevealItemTrigger struct {
-	itemToReveal Thing
+	ItemToReveal Thing
 }
 
 func (r RevealItemTrigger) TriggerContextItem() {
-	r.itemToReveal.Show()
+	r.ItemToReveal.Show()
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"gostories/gen/items"
 	"gostories/things"
 )
 
@@ -107,9 +108,9 @@ func TestContainsMatchNegative(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return things.NewCatCollarItem()
+	return items.Item_Collar
 }
 
 func getAnotherTestItem() things.Item {
-	return things.NewShrubberyItem()
+	return items.Item_Shrubbery
 }

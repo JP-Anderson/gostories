@@ -2,6 +2,7 @@ package main
 
 import (
 	"gostories/engine"
+	"gostories/gen/items"
 	"gostories/things"
 )
 
@@ -22,7 +23,7 @@ func main() {
 	storeRoom.Exits[things.East] = storeRoomToCatRoomExit
 
 	// Add item
-	collar := things.NewCatCollarItem()
+	collar := items.Item_Collar
 	collar.Hide()
 	storeRoom.Items = append(storeRoom.Items, collar)
 
@@ -47,7 +48,20 @@ func storeRoom() things.Area {
 		Exits:  make(map[things.Direction]things.Exit),
 		Items:  []things.Item{},
 		Features: []things.Feature{
-			things.NewShelfFeature(),
+			NewShelfFeature(),
 		},
+	}
+}
+
+func NewShelfFeature() things.ShelfFeature {
+	return things.ShelfFeature{
+		Thing: things.Thing{
+			Name:     "shelf",
+			LookText: "The shelf seems to contain a few old magazines and a cat collar",
+			Triggers: map[string]things.Trigger{
+				"look": things.RevealItemTrigger{
+					items.Item_Collar.Thing,
+				},
+			}},
 	}
 }
