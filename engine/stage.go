@@ -30,7 +30,7 @@ func (s Stage) LoopUntilExit() {
 		// TODO: move the action parsing to another file/function
 		action, noun := io.SimpleParse()
 		// TODO: set targetedThing to every noun item. Refactor in the process!
-		var targetedThing things.Thing
+		var targetedThing *things.Thing
 		if action.Name == "look" {
 			targetedThing = ExecuteLookCommand(noun, s.context)
 		} else if action.Name == "travel" {
@@ -99,6 +99,9 @@ func (s Stage) LoopUntilExit() {
 		} else {
 			io.NewLine("Unknown action")
 		}
+		if targetedThing == nil {
+			continue
+		}
 		trigger := targetedThing.Triggers[action.Name]
 		if trigger != nil {
 			trigger.TriggerContextItem()
@@ -106,31 +109,33 @@ func (s Stage) LoopUntilExit() {
 	}
 }
 
-func ExecuteLookCommand(lookTarget string, context Context) (target things.Thing) {
+func ExecuteLookCommand(lookTarget string, context Context) (target *things.Thing) {
+	defer func() {
+		if target != nil {
+			io.NewLine(target.LookText)
+		}
+	}()
+	
 	if lookTarget == "" {
 		io.NewLine(context.CurrentArea.Look)
-	} else {
-		tings := []things.Thing{}
-		is := context.CurrentArea.Items
-		for _, i := range is {
-			tings = append(tings, i.GetThing())
-		}
-		fs := context.CurrentArea.Features
-		for _, f := range fs {
-			tings = append(tings, f.GetThing())
-		}
-		bs := context.CurrentArea.Beings
-		for _, b := range bs {
-			tings = append(tings, b.GetThing())
-		}
-		result := Find(tings, lookTarget)
-		if result != nil {
-			target = *result
-			io.NewLine(result.LookText)
-		} else {
-			io.NewLinef("Couldn't find a %v to look at!", lookTarget)
-		}
 	}
+	
+	target = context.CurrentArea.CheckAreaItemsForThing(lookTarget)
+	if target != nil {
+		return
+	}
+	
+	target = context.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
+	if target != nil {
+		return
+	}
+
+	target = context.CurrentArea.CheckAreaBeingsForThing(lookTarget)
+	if target != nil {
+		return
+	}
+	
+	io.NewLinef("Couldn't find a %v to look at!", lookTarget)
 	return
 }
 
