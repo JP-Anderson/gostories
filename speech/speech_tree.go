@@ -14,10 +14,12 @@ type Event struct {
 	Responses []Response `xml:"Responses>Response"`
 	Speech    string     `xml:"Speech"`
 	Condition string     `xml:"Condition"`
+	Trigger   string     `xml:"Trigger"`
 }
 
 type Response struct {
 	ResponseStr string `xml:"ResponseStr"`
 	Next        Event  `xml:"Event"`
 	Condition   string `xml:"Condition"`
+	Trigger     string `xml:"Trigger"`
 }

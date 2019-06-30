@@ -21,6 +21,22 @@
                 <ResponseStr>Do you like fish?</ResponseStr>
                 <Event>
                     <Speech>Yes. Please give me the fish.</Speech>
+                    <Responses>
+                        <Response>
+                            <ResponseStr>Sure, here you go [GIVE FISH TO BUBBLES]</ResponseStr>
+                            <Trigger>remove-item(sardines)</Trigger>
+                            <Event>
+                                <Speech>Mmm... Mmpph..! Thanks so much. Here, take this</Speech>
+                                <Trigger>add-item(shrubbery)</Trigger>
+                            </Event>
+                        </Response>
+                        <Response>
+                            <ResponseStr>Sorry, No.</ResponseStr>
+                            <Event>
+                                <Speech>Hmph.</Speech>
+                            </Event>
+                        </Response>
+                    </Responses>
                 </Event>
             </Response>
             <Response>

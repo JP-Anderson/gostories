@@ -15,15 +15,18 @@ func EvaluateCondition(gameContext Context, conditionStr string) bool {
 var ConditionStringsMap = map[string]ConditionFn{
 	"item-equipped":           ConditionItemIsEquipped,
 	"inventory-contains-item": ConditionInventoryContainsItem,
-	//"item-in-inventory" : nil,
 }
 
 type ConditionFn = func(Context, string) bool
 
 func GetConditional(conditionStr string) ConditionFn {
-	conditionFuncStr := conditionStr[:strings.Index(conditionStr, "(")]
+	conditionFuncStr := parseSingleValueFuncName(conditionStr)
 	condition := ConditionStringsMap[conditionFuncStr]
 	return condition
+}
+
+func parseSingleValueFuncName(input string) string {
+	return input[:strings.Index(input, "(")]
 }
 
 func ConditionItemIsEquipped(ctx Context, itemName string) bool {

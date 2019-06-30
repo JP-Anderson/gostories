@@ -34,7 +34,13 @@ func Run(speech speech.Tree, gameContext Context) bool {
 		io.NewLine(curr.Speech)
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameContext)
-			io.NewLine(curr.Responses[choice].ResponseStr)
+			response := curr.Responses[choice]
+			io.NewLine(response.ResponseStr)
+			if response.Trigger != "" {
+				err := EvaluateTrigger(gameContext, response.Trigger); if err != nil {
+					io.NewLinef("%v", err)
+				}
+			}
 			curr = &curr.Responses[choice].Next
 		} else if curr.Next != nil {
 			curr = curr.Next
