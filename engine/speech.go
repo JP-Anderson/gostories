@@ -33,7 +33,7 @@ func Run(speech speech.Tree, gameContext Context) bool {
 		onFirstRun = false
 		io.NewLine(curr.Speech)
 		if curr.Responses != nil && len(curr.Responses) > 0 {
-			choice := printResponsesAndGetChoice(curr.Responses)
+			choice := printResponsesAndGetChoice(curr, gameContext)
 			io.NewLine(curr.Responses[choice].ResponseStr)
 			curr = &curr.Responses[choice].Next
 		} else if curr.Next != nil {
@@ -44,12 +44,21 @@ func Run(speech speech.Tree, gameContext Context) bool {
 	}
 }
 
-// TODO: Add Conditions to Responses
-func printResponsesAndGetChoice(responseOptions []speech.Response) int {
-	for i, option := range responseOptions {
+func printResponsesAndGetChoice(speechEvent *speech.Event, gameContext Context) int {
+	// Remove responses we don't pass the conditions for first.
+	availableResponses := []speech.Response{}
+	for _, x := range speechEvent.Responses {
+		if x.Condition == "" || EvaluateCondition(gameContext, x.Condition) {
+			availableResponses = append(availableResponses, x)
+		}
+	}
+
+	speechEvent.Responses = availableResponses
+	for i, option := range speechEvent.Responses {
 		io.NewLinef("%v - \"%v\"", i, option.ResponseStr)
 	}
-	last := len(responseOptions) - 1
+
+	last := len(speechEvent.Responses) - 1
 	for {
 		selection, err := io.ReadInt()
 		if err != nil {

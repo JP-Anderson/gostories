@@ -16,6 +16,19 @@
                     <Speech>Well you are quite the ignoramus, aren't you...</Speech>
                 </Event>
             </Response>
+            <Response>
+                <Condition>inventory-contains-item(sardines)</Condition>
+                <ResponseStr>Do you like fish?</ResponseStr>
+                <Event>
+                    <Speech>Yes. Please give me the fish.</Speech>
+                </Event>
+            </Response>
+            <Response>
+                <ResponseStr>Meow?</ResponseStr>
+                <Event>
+                    <Speech>Sorry old chap, didn't quite catch that. Once again?</Speech>
+                </Event>
+            </Response>
         </Responses>
     </Event>
 </Tree>
