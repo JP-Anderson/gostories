@@ -115,16 +115,16 @@ func ExecuteLookCommand(lookTarget string, context Context) (target *things.Thin
 			io.NewLine(target.LookText)
 		}
 	}()
-	
+
 	if lookTarget == "" {
 		io.NewLine(context.CurrentArea.Look)
 	}
-	
+
 	target = context.CurrentArea.CheckAreaItemsForThing(lookTarget)
 	if target != nil {
 		return
 	}
-	
+
 	target = context.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
 	if target != nil {
 		return
@@ -134,7 +134,7 @@ func ExecuteLookCommand(lookTarget string, context Context) (target *things.Thin
 	if target != nil {
 		return
 	}
-	
+
 	io.NewLinef("Couldn't find a %v to look at!", lookTarget)
 	return
 }

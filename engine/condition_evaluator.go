@@ -13,7 +13,7 @@ func EvaluateCondition(gameContext Context, conditionStr string) bool {
 }
 
 var ConditionStringsMap = map[string]ConditionFn{
-	"item-equipped": ConditionItemIsEquipped,
+	"item-equipped":           ConditionItemIsEquipped,
 	"inventory-contains-item": ConditionInventoryContainsItem,
 	//"item-in-inventory" : nil,
 }

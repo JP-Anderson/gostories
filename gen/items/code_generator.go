@@ -18,11 +18,11 @@ const (
 	TypeBeing   = "Being"
 
 	// package Names
-	PckgItem     = "items"
-	PckgFeatures = "features"
+	PckgItem         = "items"
+	PckgFeatures     = "features"
 	packageStatement = "package %v\n\n"
-	importThings = "import \"gostories/things\"\n"
-	importItems = "import \"gostories/gen/items/items\"\n"
+	importThings     = "import \"gostories/things\"\n"
+	importItems      = "import \"gostories/gen/items/items\"\n"
 )
 
 func WriteItemsFile() error {
@@ -55,7 +55,7 @@ func WriteFeaturesFile() error {
 }
 
 func GenGoLangFile(packageName string, buffer *bytes.Buffer) (err error) {
-	filename := "./"+packageName+"/"+generatedFileName(packageName)
+	filename := "./" + packageName + "/" + generatedFileName(packageName)
 	io2.NewLinef("Filename: %v", filename)
 	if err != nil {
 		return
@@ -79,7 +79,7 @@ func addPackagesInfo(buffer *bytes.Buffer, pckgName string, addItems bool) {
 	if addItems {
 		imports = imports + importItems
 	}
-	buffer.WriteString(fmt.Sprintf(packageStatement,pckgName)+imports)
+	buffer.WriteString(fmt.Sprintf(packageStatement, pckgName) + imports)
 }
 
 func addItemStruct(itemName, lookText string, visible bool, buffer *bytes.Buffer) {
@@ -129,13 +129,12 @@ func New[N][TT]() *[N][TT] {
 `
 	if visible {
 		fileStr = fileStr + `
-		[lc_N]_[TT].Show()
+	[lc_N]_[TT].Show()
 `
 	}
 
 	fileStr = fileStr +
-		`
-	return [lc_N]_[TT]
+		`	return [lc_N]_[TT]
 }
 `
 

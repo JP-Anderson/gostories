@@ -2,8 +2,8 @@ package main
 
 import (
 	"gostories/engine"
-	"gostories/gen/items/items"
 	"gostories/gen/items/features"
+	"gostories/gen/items/items"
 	"gostories/things"
 )
 
@@ -13,20 +13,20 @@ func main() {
 	kitchen := kitchenRoom()
 
 	// Add Exits
-	catRoomToStockRoomExit := things.Exit {
+	catRoomToStockRoomExit := things.Exit{
 		To:   &storeRoom,
 		From: &catRoom,
 	}
-	storeRoomToCatRoomExit := things.Exit {
+	storeRoomToCatRoomExit := things.Exit{
 		To:   &catRoom,
 		From: &storeRoom,
 	}
-	storeRoomToKitchenExit := things.Exit {
-		To: &kitchen,
+	storeRoomToKitchenExit := things.Exit{
+		To:   &kitchen,
 		From: &storeRoom,
 	}
-	kitchenToStoreRoomExit := things.Exit {
-		To: &storeRoom,
+	kitchenToStoreRoomExit := things.Exit{
+		To:   &storeRoom,
 		From: &kitchen,
 	}
 	catRoom.Exits[things.West] = catRoomToStockRoomExit
