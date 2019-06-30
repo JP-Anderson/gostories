@@ -13,7 +13,8 @@ func EvaluateCondition(gameContext Context, conditionStr string) bool {
 }
 
 var ConditionStringsMap = map[string]ConditionFn{
-	"item-equipped": InventoryContainsItem,
+	"item-equipped": ConditionItemIsEquipped,
+	"inventory-contains-item": ConditionInventoryContainsItem,
 	//"item-in-inventory" : nil,
 }
 
@@ -25,8 +26,17 @@ func GetConditional(conditionStr string) ConditionFn {
 	return condition
 }
 
-func InventoryContainsItem(ctx Context, itemName string) bool {
+func ConditionItemIsEquipped(ctx Context, itemName string) bool {
 	return ctx.EquippedItems.ContainsMatch(func(item things.Item) bool {
+		if item.GetName() == itemName {
+			return true
+		}
+		return false
+	})
+}
+
+func ConditionInventoryContainsItem(ctx Context, itemName string) bool {
+	return ctx.Inventory.ContainsMatch(func(item things.Item) bool {
 		if item.GetName() == itemName {
 			return true
 		}
