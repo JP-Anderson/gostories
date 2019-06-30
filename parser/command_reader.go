@@ -18,15 +18,19 @@ var actions = map[string]Action{
 	"speak": talkAction,
 	"talk":  talkAction,
 	"chat":  talkAction,
+	"t":     talkAction,
 
 	"look":    lookAction,
 	"examine": lookAction,
 	"search":  lookAction,
 	"scan":    lookAction,
+	"l":       lookAction,
 
 	"exit":   travelAction,
 	"walk":   travelAction,
 	"travel": travelAction,
+	"go":     travelAction,	
+	"w":      travelAction,
 
 	"take": takeAction,
 	"grab": takeAction,
@@ -34,6 +38,7 @@ var actions = map[string]Action{
 	"equip": equipAction,
 	"wear":  equipAction,
 	"hold":  equipAction,
+	"e":     equipAction,
 
 	"inventory": inventoryAction,
 	"bag":       inventoryAction,
