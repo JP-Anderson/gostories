@@ -22,7 +22,7 @@ const (
 	PckgFeatures     = "features"
 	packageStatement = "package %v\n\n"
 	importThings     = "import \"gostories/things\"\n"
-	importItems      = "import \"gostories/gen/items/items\"\n"
+	importItems      = "import \"gostories/gen/items\"\n"
 )
 
 func WriteItemsFile() error {

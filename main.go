@@ -2,8 +2,8 @@ package main
 
 import (
 	"gostories/engine"
-	"gostories/gen/items/features"
-	"gostories/gen/items/items"
+	"gostories/gen/features"
+	"gostories/gen/items"
 	"gostories/things"
 )
 
