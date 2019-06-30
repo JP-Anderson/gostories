@@ -2,7 +2,8 @@ package main
 
 import (
 	"gostories/engine"
-	"gostories/gen/items"
+	"gostories/gen/items/items"
+	"gostories/gen/items/features"
 	"gostories/things"
 )
 
@@ -65,7 +66,7 @@ func storeRoom() things.Area {
 		Exits:  make(map[things.Direction]things.Exit),
 		Items:  []things.Item{},
 		Features: []things.Feature{
-			items.Feature_Shelf,
+			features.Feature_Shelf,
 		},
 	}
 }
@@ -77,7 +78,7 @@ func kitchenRoom() things.Area {
 		Exits:  make(map[things.Direction]things.Exit),
 		Items:  []things.Item{},
 		Features: []things.Feature{
-			items.Feature_Fridge,
+			features.Feature_Fridge,
 		},
 	}
 }
