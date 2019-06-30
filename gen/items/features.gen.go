@@ -41,3 +41,39 @@ func NewShelfFeature() *ShelfFeature {
 	shelf_Feature.Show()
 	return shelf_Feature
 }
+
+var Feature_Fridge = NewFridgeFeature()
+var fridge_Feature *FridgeFeature
+
+type FridgeFeature struct {
+	things.Thing
+}
+
+func (c FridgeFeature) GetName() string { return c.Name }
+
+func (c FridgeFeature) GetLookText() string { return c.LookText }
+
+func (c FridgeFeature) Toggle() {}
+
+func (c *FridgeFeature) Show() { c.Thing.Visible = true }
+
+func (c *FridgeFeature) Hide() { c.Thing.Visible = false }
+
+func (c FridgeFeature) GetThing() things.Thing { return c.Thing }
+
+
+func NewFridgeFeature() *FridgeFeature {
+	if fridge_Feature == nil {
+		fridge_Feature = &FridgeFeature{}
+		fridge_Feature.Name = "fridge"
+		fridge_Feature.LookText = "The fridge is empty apart from a tin of sardines."
+    	fridge_Feature.Triggers = map[string]things.Trigger{
+			"look": things.RevealItemTrigger{
+				ItemToReveal: &Item_Sardines.Thing,
+			},
+		}
+	}
+	
+	fridge_Feature.Show()
+	return fridge_Feature
+}

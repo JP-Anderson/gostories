@@ -71,3 +71,37 @@ func NewShrubberyItem() *ShrubberyItem {
 
 	return shrubbery_Item
 }
+
+var Item_Sardines = NewSardinesItem()
+var sardines_Item *SardinesItem
+
+type SardinesItem struct {
+	things.Thing
+}
+
+func (c SardinesItem) GetName() string { return c.Name }
+
+func (c SardinesItem) GetLookText() string { return c.LookText }
+
+func (c SardinesItem) Toggle() {}
+
+func (c *SardinesItem) Show() { c.Thing.Visible = true }
+
+func (c *SardinesItem) Hide() { c.Thing.Visible = false }
+
+func (c SardinesItem) GetThing() things.Thing { return c.Thing }
+
+
+func (c SardinesItem) Take() {}
+
+func NewSardinesItem() *SardinesItem {
+	if sardines_Item == nil {
+		sardines_Item = &SardinesItem{}
+		sardines_Item.Name = "sardines"
+		sardines_Item.LookText = "A tin of tasty sardines preserved in olive oil."
+	}
+
+		sardines_Item.Show()
+
+	return sardines_Item
+}
