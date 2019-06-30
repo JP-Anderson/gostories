@@ -79,12 +79,7 @@ func (i *ItemStore) removeItemAtIndex(indexToRemove int) error {
 
 // find returns the smallest index i at which the desiredItem == a[i], or -1 if there is no such index.
 func find(items []things.Item, desiredItem things.Item) int {
-	for i, item := range items {
-		if desiredItem.GetName() == item.GetName() {
-			return i
-		}
-	}
-	return -1
+	return findByName(items, desiredItem.GetName())
 }
 
 // find returns the smallest index i at which the desiredItem == a[i], or -1 if there is no such index.

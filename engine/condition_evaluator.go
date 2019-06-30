@@ -6,18 +6,13 @@ import (
 	"gostories/things"
 )
 
+type ConditionFn = func(Context, string) bool
+
 func EvaluateCondition(gameContext Context, conditionStr string) bool {
 	conditionFunc := GetConditional(conditionStr)
-	targetStr := conditionStr[strings.Index(conditionStr, "(")+1 : strings.Index(conditionStr, ")")]
+	targetStr := parseFuncParam(conditionStr)
 	return conditionFunc(gameContext, targetStr)
 }
-
-var ConditionStringsMap = map[string]ConditionFn{
-	"item-equipped":           ConditionItemIsEquipped,
-	"inventory-contains-item": ConditionInventoryContainsItem,
-}
-
-type ConditionFn = func(Context, string) bool
 
 func GetConditional(conditionStr string) ConditionFn {
 	conditionFuncStr := parseSingleValueFuncName(conditionStr)
@@ -25,8 +20,17 @@ func GetConditional(conditionStr string) ConditionFn {
 	return condition
 }
 
+func parseFuncParam(input string) string {
+	return input[strings.Index(input, "(")+1 : strings.Index(input, ")")]
+}
+
 func parseSingleValueFuncName(input string) string {
 	return input[:strings.Index(input, "(")]
+}
+
+var ConditionStringsMap = map[string]ConditionFn{
+	"item-equipped":           ConditionItemIsEquipped,
+	"inventory-contains-item": ConditionInventoryContainsItem,
 }
 
 func ConditionItemIsEquipped(ctx Context, itemName string) bool {
