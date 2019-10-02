@@ -1,14 +1,18 @@
 package engine
 
+// EvaluateTrigger, given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger
+// function mapped to the value of TRIGGER. If it finds a trigger function, it will attempt to 
+// apply the trigger function on the noun/named object TARGET, which will have some side-effects on
+// the provided GameContext. All trigger funcs can also return an error.
 func EvaluateTrigger(gameContext Context, triggerStr string) error {
-	triggerFunc := GetTrigger(triggerStr)
+	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
 	return triggerFunc(gameContext, targetStr)
 }
 
-type TriggerFn = func(Context, string) error
+type triggerFn = func(Context, string) error
 
-func TriggerRemoveItem(gameContext Context, itemName string) error {
+func triggerRemoveItem(gameContext Context, itemName string) error {
 	err := gameContext.Inventory.RemoveItemWithName(itemName)
 	if err != nil {
 		return err
@@ -17,12 +21,12 @@ func TriggerRemoveItem(gameContext Context, itemName string) error {
 	return err
 }
 
-var TriggerStringsMap = map[string]TriggerFn{
-	"remove-item": TriggerRemoveItem,
+var triggerStringsMap = map[string]triggerFn{
+	"remove-item": triggerRemoveItem,
 }
 
-func GetTrigger(triggerStr string) TriggerFn {
+func getTrigger(triggerStr string) triggerFn {
 	triggerFuncStr := parseSingleValueFuncName(triggerStr)
-	trigger := TriggerStringsMap[triggerFuncStr]
+	trigger := triggerStringsMap[triggerFuncStr]
 	return trigger
 }

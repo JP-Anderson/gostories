@@ -6,17 +6,20 @@ import (
 	"gostories/things"
 )
 
-type ConditionFn = func(Context, string) bool
+type conditionFn = func(Context, string) bool
 
+// EvaluateCondition is given a string of format CONDITION(TARGET). CONDITION is matched to the name
+// of an available condition function, if found, the function will be ran with the string TARGET as
+// the parameter. A bool return signals if condition returns true or false for the target.
 func EvaluateCondition(gameContext Context, conditionStr string) bool {
-	conditionFunc := GetConditional(conditionStr)
+	conditionFunc := getConditional(conditionStr)
 	targetStr := parseFuncParam(conditionStr)
 	return conditionFunc(gameContext, targetStr)
 }
 
-func GetConditional(conditionStr string) ConditionFn {
+func getConditional(conditionStr string) conditionFn {
 	conditionFuncStr := parseSingleValueFuncName(conditionStr)
-	condition := ConditionStringsMap[conditionFuncStr]
+	condition := conditionStringsMap[conditionFuncStr]
 	return condition
 }
 
@@ -28,12 +31,12 @@ func parseSingleValueFuncName(input string) string {
 	return input[:strings.Index(input, "(")]
 }
 
-var ConditionStringsMap = map[string]ConditionFn{
-	"item-equipped":           ConditionItemIsEquipped,
-	"inventory-contains-item": ConditionInventoryContainsItem,
+var conditionStringsMap = map[string]conditionFn{
+	"item-equipped":           conditionItemIsEquipped,
+	"inventory-contains-item": conditionInventoryContainsItem,
 }
 
-func ConditionItemIsEquipped(ctx Context, itemName string) bool {
+func conditionItemIsEquipped(ctx Context, itemName string) bool {
 	return ctx.EquippedItems.ContainsMatch(func(item things.Item) bool {
 		if item.GetName() == itemName {
 			return true
@@ -42,7 +45,7 @@ func ConditionItemIsEquipped(ctx Context, itemName string) bool {
 	})
 }
 
-func ConditionInventoryContainsItem(ctx Context, itemName string) bool {
+func conditionInventoryContainsItem(ctx Context, itemName string) bool {
 	return ctx.Inventory.ContainsMatch(func(item things.Item) bool {
 		if item.GetName() == itemName {
 			return true
