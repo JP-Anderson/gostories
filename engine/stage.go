@@ -7,20 +7,22 @@ import (
 	"gostories/things"
 )
 
+// Stage holds the main game context and the game control loop.
 type Stage struct {
 	context Context
 }
 
+// Start initialise a Stage, it is passed an Area, which is used to initialise the game context.
 func (s Stage) Start(area things.Area) {
 	s.context = Context{
 		CurrentArea:   area,
 		Inventory:     NewInventory(),
 		EquippedItems: NewEquippedItems(),
 	}
-	s.LoopUntilExit()
+	s.loopUntilExit()
 }
 
-func (s Stage) LoopUntilExit() {
+func (s Stage) loopUntilExit() {
 	newArea := true
 	for {
 		if newArea {
@@ -32,7 +34,7 @@ func (s Stage) LoopUntilExit() {
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if action.Name == "look" {
-			targetedThing = ExecuteLookCommand(noun, s.context)
+			targetedThing = executeLookCommand(noun, s.context)
 		} else if action.Name == "travel" {
 			trimmed := io.Trim(strings.ToLower(noun))
 			exit, exists := s.context.CurrentArea.Exits[things.Direction(trimmed)]
@@ -109,7 +111,7 @@ func (s Stage) LoopUntilExit() {
 	}
 }
 
-func ExecuteLookCommand(lookTarget string, context Context) (target *things.Thing) {
+func executeLookCommand(lookTarget string, context Context) (target *things.Thing) {
 	defer func() {
 		if target != nil {
 			io.NewLine(target.LookText)
@@ -139,13 +141,3 @@ func ExecuteLookCommand(lookTarget string, context Context) (target *things.Thin
 	return
 }
 
-func Find(ts []things.Thing, searchName string) *things.Thing {
-	for _, thing := range ts {
-		if strings.ToLower(thing.Name) == strings.ToLower(searchName) {
-			if thing.Visible {
-				return &thing
-			}
-		}
-	}
-	return nil
-}
