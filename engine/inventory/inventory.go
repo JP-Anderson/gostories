@@ -68,29 +68,30 @@ func (i *ItemStore) ContainsMatch(matcher func(item things.Item) bool) bool {
 	return false
 }
 
-func (i *ItemStore) RemoveItem(item things.Item) error {
-	return i.removeItemAtIndex(find(i.items, item))
+func (i *ItemStore) RemoveItem(item things.Item) (*things.Item, error) {
+	return i.RemoveItemWithName(item.GetName())
 }
 
-func (i *ItemStore) RemoveItemWithName(itemName string) error {
-	return i.removeItemAtIndex(findByName(i.items, itemName))
+func (i *ItemStore) RemoveItemWithName(itemName string) (*things.Item, error) {
+	index := findByName(i.items, itemName)
+        if index < 0 {
+                return nil, errors.New("item not present")
+        }
+	return i.removeItemAtIndex(index)
 }
 
-func (i *ItemStore) removeItemAtIndex(indexToRemove int) error {
+func (i *ItemStore) removeItemAtIndex(indexToRemove int) (*things.Item, error) {
 	if indexToRemove >= len(i.items) {
-		return errors.New("Could not find item to remove.")
+		return nil, errors.New("Could not find item to remove.")
 	}
 	if indexToRemove < 0 {
-		return nil
+		return nil, errors.New("Index cannot be less than 0")
 	}
+	item := i.items[indexToRemove]
 	copy(i.items[indexToRemove:], i.items[indexToRemove+1:])
 	i.items[len(i.items)-1] = nil
 	i.items = i.items[:len(i.items)-1]
-	return nil
-}
-
-func find(items []things.Item, desiredItem things.Item) int {
-	return findByName(items, desiredItem.GetName())
+	return &item, nil
 }
 
 func findByName(items []things.Item, desiredItemName string) int {

@@ -78,14 +78,9 @@ func (s Stage) loopUntilExit() {
 				io.NewLinef("Couldn't find a %v to pick up.", noun)
 			}
 		} else if action.Name == "equip" {
-			itemInInventory := s.context.Inventory.ContainsMatch(
-				func (item things.Item) bool {
-					return item.GetName() == noun
-				},
-			)
-			if itemInInventory {
-				s.context.EquippedItems.RemoveItemWithName(noun)
-				//TODO above method needs to return an item, fix equip item
+			item, err := s.context.Inventory.RemoveItemWithName(noun)
+			if item != nil && err == nil {
+				s.context.EquippedItems.StoreItem(*item)
 			} else {
 				io.NewLinef("Do not have a %v to equip.", noun)
 			}

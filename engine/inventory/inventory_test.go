@@ -43,8 +43,9 @@ func TestRemoveItemRemovesItem(t *testing.T) {
 	i.StoreItem(item)
 	assert.Equal(t, 1, i.Size())
 	assert.True(t, i.Contains(item))
-	err := i.RemoveItem(item)
+	removed, err := i.RemoveItem(item)
 	assert.NoError(t, err)
+	assert.Equal(t, removed, &item)
 	assert.Equal(t, 0, i.Size())
 	assert.False(t, i.Contains(item))
 }
@@ -63,8 +64,9 @@ func TestRemoveItemRemovesCorrectItem(t *testing.T) {
 	assert.True(t, i.Contains(item))
 	assert.True(t, i.Contains(item2))
 
-	err := i.RemoveItem(item)
+	removed, err := i.RemoveItem(item)
 	assert.NoError(t, err)
+	assert.Equal(t, removed, &item)
 
 	assert.Equal(t, 1, i.Size())
 	assert.False(t, i.Contains(item))
@@ -86,7 +88,7 @@ func TestContainsMatchWithTextMatcher(t *testing.T) {
 	assert.True(t, i.Contains(shrubbery))
 	assert.True(t, i.ContainsMatch(shrubberyMatcher))
 
-	err := i.RemoveItem(shrubbery)
+	_, err := i.RemoveItem(shrubbery)
 	assert.NoError(t, err)
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))
 }

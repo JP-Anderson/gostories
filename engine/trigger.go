@@ -19,12 +19,16 @@ func EvaluateTrigger(gameContext context.Context, triggerStr string) error {
 type triggerFn = func(context.Context, string) error
 
 func triggerRemoveItem(gameContext context.Context, itemName string) error {
-	err := gameContext.Inventory.RemoveItemWithName(itemName)
+	_, err := gameContext.Inventory.RemoveItemWithName(itemName)
+	if err == nil {
+		// this should be fine as long as item is always removed from inventory on equip
+		return nil
+	}
+	_, err = gameContext.EquippedItems.RemoveItemWithName(itemName)
 	if err != nil {
 		return err
 	}
-	err = gameContext.EquippedItems.RemoveItemWithName(itemName)
-	return err
+	return nil
 }
 
 func triggerRevealItem(gameContext context.Context, itemName string) error {
