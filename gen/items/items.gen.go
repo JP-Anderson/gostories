@@ -6,8 +6,11 @@ package items
 import "gostories/things"
 
 var Items = map[string]things.Item {
-	"shrubbery": Item_Shrubbery,
+        "collar": Item_Collar,
+        "shrubbery": Item_Shrubbery,
+        "sardines": Item_Sardines,
 }
+
 
 var Item_Collar = NewCollarItem()
 var collar_Item *CollarItem
