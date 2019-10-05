@@ -1,14 +1,15 @@
-package engine
+package context
 
 import (
 	"gostories/engine/io"
+	"gostories/engine/inventory"
 	"gostories/things"
 )
 
 type Context struct {
 	CurrentArea   things.Area
-	Inventory     *Inventory
-	EquippedItems *EquippedItems
+	Inventory     *inventory.Inventory
+	EquippedItems *inventory.EquippedItems
 }
 
 func (c *Context) Equip(item things.Item) {

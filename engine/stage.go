@@ -3,21 +3,23 @@ package engine
 import (
 	"strings"
 
+	"gostories/engine/context"
+	"gostories/engine/inventory"
 	"gostories/engine/io"
 	"gostories/things"
 )
 
 // Stage holds the main game context and the game control loop.
 type Stage struct {
-	context Context
+	context context.Context
 }
 
 // Start initialise a Stage, it is passed an Area, which is used to initialise the game context.
 func (s Stage) Start(area things.Area) {
-	s.context = Context{
+	s.context = context.Context{
 		CurrentArea:   area,
-		Inventory:     NewInventory(),
-		EquippedItems: NewEquippedItems(),
+		Inventory:     inventory.NewInventory(),
+		EquippedItems: inventory.NewEquippedItems(),
 	}
 	s.loopUntilExit()
 }
@@ -76,26 +78,22 @@ func (s Stage) loopUntilExit() {
 				io.NewLinef("Couldn't find a %v to pick up.", noun)
 			}
 		} else if action.Name == "equip" {
-			for _, item := range s.context.Inventory.items {
-				if ok := item.(things.Equippable); ok != nil {
-					s.context.Equip(item)
-				}
+			itemInInventory := s.context.Inventory.ContainsMatch(
+				func (item things.Item) bool {
+					return item.GetName() == noun
+				},
+			)
+			if itemInInventory {
+				s.context.EquippedItems.RemoveItemWithName(noun)
+				//TODO above method needs to return an item, fix equip item
+			} else {
+				io.NewLinef("Do not have a %v to equip.", noun)
 			}
 		} else if action.Name == "inventory" {
-			if s.context.Inventory.Size() > 0 {
-				io.NewLine("You take stock of your items.")
-				for _, item := range s.context.Inventory.items {
-					io.NewLine(item.GetName())
-				}
-			} else {
-				io.NewLinef("You aren't carrying anything.")
-			}
-			if s.context.EquippedItems.Size() > 0 {
-				io.NewLine("You have the following equipped:")
-				for _, item := range s.context.EquippedItems.items {
-					io.NewLine(item.GetName())
-				}
-			}
+			io.NewLine("You take stock of your inventory.")
+			s.context.Inventory.PrintContents()
+			io.NewLine("You have the following equipped:")
+			s.context.EquippedItems.PrintContents()
 		} else if action.Name == "exit" {
 			break
 		} else {
@@ -113,7 +111,7 @@ func (s Stage) loopUntilExit() {
 	}
 }
 
-func executeLookCommand(lookTarget string, context Context) (target *things.Thing) {
+func executeLookCommand(lookTarget string, context context.Context) (target *things.Thing) {
 	defer func() {
 		if target != nil {
 			io.NewLine(target.LookText)

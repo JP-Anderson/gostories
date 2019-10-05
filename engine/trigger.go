@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"gostories/engine/context"
 	"gostories/engine/io"
 	"gostories/gen/items"
 )
@@ -9,15 +10,15 @@ import (
 // function mapped to the value of TRIGGER. If it finds a trigger function, it will attempt to 
 // apply the trigger function on the noun/named object TARGET, which will have some side-effects on
 // the provided GameContext. All trigger funcs can also return an error.
-func EvaluateTrigger(gameContext Context, triggerStr string) error {
+func EvaluateTrigger(gameContext context.Context, triggerStr string) error {
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
 	return triggerFunc(gameContext, targetStr)
 }
 
-type triggerFn = func(Context, string) error
+type triggerFn = func(context.Context, string) error
 
-func triggerRemoveItem(gameContext Context, itemName string) error {
+func triggerRemoveItem(gameContext context.Context, itemName string) error {
 	err := gameContext.Inventory.RemoveItemWithName(itemName)
 	if err != nil {
 		return err
@@ -26,7 +27,7 @@ func triggerRemoveItem(gameContext Context, itemName string) error {
 	return err
 }
 
-func triggerRevealItem(gameContext Context, itemName string) error {
+func triggerRevealItem(gameContext context.Context, itemName string) error {
 	io.NewLinef("Revealing item %v", itemName)
 	item := gameContext.CurrentArea.CheckAreaItemsForThing(itemName); if item != nil {
 		if item.Visible {
@@ -38,7 +39,7 @@ func triggerRevealItem(gameContext Context, itemName string) error {
 	return nil
 }
 
-func triggerAddItem(gameContext Context, itemName string) error {
+func triggerAddItem(gameContext context.Context, itemName string) error {
 	io.NewLinef("%#v", items.Items)
 	io.NewLinef("Looking for %v", itemName)
 	i, ok := items.Items[itemName]; if ok {

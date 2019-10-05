@@ -1,8 +1,9 @@
-package engine
+package inventory
 
 import (
 	"errors"
 
+	"gostories/engine/io"
 	"gostories/things"
 )
 
@@ -25,6 +26,17 @@ func NewEquippedItems() *EquippedItems {
 
 type ItemStore struct {
 	items []things.Item
+}
+
+// PrintContents prints the name of each item in the store
+func (i *ItemStore) PrintContents() {
+	if i.Size() > 0 {
+		for _, item := range i.items {
+			io.NewLine(item.GetName())
+		}
+	} else {
+		io.NewLinef("Empty.")
+	}
 }
 
 func (i *ItemStore) Size() int {
@@ -77,12 +89,10 @@ func (i *ItemStore) removeItemAtIndex(indexToRemove int) error {
 	return nil
 }
 
-// find returns the smallest index i at which the desiredItem == a[i], or -1 if there is no such index.
 func find(items []things.Item, desiredItem things.Item) int {
 	return findByName(items, desiredItem.GetName())
 }
 
-// find returns the smallest index i at which the desiredItem == a[i], or -1 if there is no such index.
 func findByName(items []things.Item, desiredItemName string) int {
 	for i, item := range items {
 		if desiredItemName == item.GetName() {

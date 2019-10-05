@@ -1,11 +1,12 @@
 package engine
 
 import (
+	"gostories/engine/context"
 	"gostories/engine/io"
 	"gostories/speech"
 )
 
-func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameContext Context) {
+func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameContext context.Context) {
 	ran := Run(speech, gameContext)
 	if ran {
 		return
@@ -15,7 +16,7 @@ func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameContext Context) {
 	}
 }
 
-func Run(speech speech.Tree, gameContext Context) bool {
+func Run(speech speech.Tree, gameContext context.Context) bool {
 	curr := &speech.Event
 	onFirstRun := true
 	for {
@@ -57,7 +58,7 @@ func Run(speech speech.Tree, gameContext Context) bool {
 	}
 }
 
-func printResponsesAndGetChoice(speechEvent *speech.Event, gameContext Context) int {
+func printResponsesAndGetChoice(speechEvent *speech.Event, gameContext context.Context) int {
 	// Remove responses we don't pass the conditions for first.
 	availableResponses := []speech.Response{}
 	for _, x := range speechEvent.Responses {
