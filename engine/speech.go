@@ -32,11 +32,18 @@ func Run(speech speech.Tree, gameContext Context) bool {
 		}
 		onFirstRun = false
 		io.NewLine(curr.Speech)
+		if curr.Trigger != "" {
+			io.NewLine(curr.Trigger)
+			err := EvaluateTrigger(gameContext, curr.Trigger); if err != nil {
+				io.NewLinef("%v", err)
+			}
+		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameContext)
 			response := curr.Responses[choice]
 			io.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
+				io.NewLine(response.Trigger)
 				err := EvaluateTrigger(gameContext, response.Trigger); if err != nil {
 					io.NewLinef("%v", err)
 				}

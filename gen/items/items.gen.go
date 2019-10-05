@@ -5,6 +5,10 @@ package items
 
 import "gostories/things"
 
+var Items = map[string]things.Item {
+	"shrubbery": Item_Shrubbery,
+}
+
 var Item_Collar = NewCollarItem()
 var collar_Item *CollarItem
 
