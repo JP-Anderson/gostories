@@ -16,8 +16,6 @@ func (c ShelfFeature) GetName() string { return c.Name }
 
 func (c ShelfFeature) GetLookText() string { return c.LookText }
 
-func (c ShelfFeature) Toggle() {}
-
 func (c *ShelfFeature) Show() { c.Thing.Visible = true }
 
 func (c *ShelfFeature) Hide() { c.Thing.Visible = false }
@@ -49,8 +47,6 @@ type FridgeFeature struct {
 func (c FridgeFeature) GetName() string { return c.Name }
 
 func (c FridgeFeature) GetLookText() string { return c.LookText }
-
-func (c FridgeFeature) Toggle() {}
 
 func (c *FridgeFeature) Show() { c.Thing.Visible = true }
 

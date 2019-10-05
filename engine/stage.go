@@ -79,12 +79,7 @@ func (s Stage) loopUntilExit() {
 				io.NewLinef("Couldn't find a %v to pick up.", noun)
 			}
 		} else if action.Name == "equip" {
-			item, err := s.context.Inventory.RemoveItemWithName(noun)
-			if item != nil && err == nil {
-				s.context.EquippedItems.StoreItem(*item)
-			} else {
-				io.NewLinef("Do not have a %v to equip.", noun)
-			}
+			executeEquipCommand(noun, s.context)
 		} else if action.Name == "inventory" {
 			io.NewLine("You take stock of your inventory.")
 			s.context.Inventory.PrintContents()
@@ -137,3 +132,26 @@ func executeLookCommand(lookTarget string, context context.Context) (target *thi
 	return
 }
 
+func executeEquipCommand(equipTarget string, context context.Context) {
+	defer func() {
+		recover()
+	}()
+	item, err := context.Inventory.GetItemWithName(equipTarget)
+	if err == nil {
+		var itemInterface interface{}
+		itemInterface = *item
+		if ok := itemInterface.(things.Equippable); ok != nil {
+			item, err := context.Inventory.RemoveItemWithName(equipTarget)
+			if item != nil && err == nil {
+				context.EquippedItems.StoreItem(*item)
+			} else {
+				io.NewLinef("Failed to equip item...")
+			}
+		} else {
+			io.NewLinef("How do you expect to equip the %v?", equipTarget)
+		}
+	} else {
+		io.NewLinef("%v", err)
+		io.NewLinef("Do not have a %v to equip.", equipTarget)
+	}
+}

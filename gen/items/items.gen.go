@@ -23,8 +23,6 @@ func (c CollarItem) GetName() string { return c.Name }
 
 func (c CollarItem) GetLookText() string { return c.LookText }
 
-func (c CollarItem) Toggle() {}
-
 func (c *CollarItem) Show() { c.Thing.Visible = true }
 
 func (c *CollarItem) Hide() { c.Thing.Visible = false }
@@ -33,6 +31,8 @@ func (c CollarItem) GetThing() things.Thing { return c.Thing }
 
 
 func (c CollarItem) Take() {}
+
+func (c CollarItem) Toggle() {}
 
 func NewCollarItem() *CollarItem {
 	if collar_Item == nil {
@@ -53,8 +53,6 @@ type ShrubberyItem struct {
 func (c ShrubberyItem) GetName() string { return c.Name }
 
 func (c ShrubberyItem) GetLookText() string { return c.LookText }
-
-func (c ShrubberyItem) Toggle() {}
 
 func (c *ShrubberyItem) Show() { c.Thing.Visible = true }
 
@@ -86,8 +84,6 @@ type SardinesItem struct {
 func (c SardinesItem) GetName() string { return c.Name }
 
 func (c SardinesItem) GetLookText() string { return c.LookText }
-
-func (c SardinesItem) Toggle() {}
 
 func (c *SardinesItem) Show() { c.Thing.Visible = true }
 

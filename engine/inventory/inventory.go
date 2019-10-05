@@ -68,30 +68,54 @@ func (i *ItemStore) ContainsMatch(matcher func(item things.Item) bool) bool {
 	return false
 }
 
+func (i *ItemStore) GetItemWithName(itemName string) (*things.Item, error) {
+	index, err := i.getIndexForItemName(itemName)
+        if err != nil {
+                return nil, err
+        }
+	return i.getItemAtIndex(index)
+}
+
+func (i *ItemStore) getIndexForItemName(itemName string) (int, error) {
+	index := findByName(i.items, itemName)
+        if index < 0 {
+                return -1, errors.New("item not present")
+        }
+	return index, nil
+}
+
+func (i *ItemStore) getItemAtIndex(index int) (*things.Item, error) {
+        if index >= len(i.items) {
+                return nil, errors.New("Index exceeds item slice length.")
+        }
+        if index < 0 {
+                return nil, errors.New("Index cannot be less than 0")
+        }
+        item := i.items[index]
+        return &item, nil
+}
+
 func (i *ItemStore) RemoveItem(item things.Item) (*things.Item, error) {
-	return i.RemoveItemWithName(item.GetName())
+        return i.RemoveItemWithName(item.GetName())
 }
 
 func (i *ItemStore) RemoveItemWithName(itemName string) (*things.Item, error) {
-	index := findByName(i.items, itemName)
-        if index < 0 {
-                return nil, errors.New("item not present")
+        index, err := i.getIndexForItemName(itemName)
+        if err != nil {
+                return nil, err
         }
-	return i.removeItemAtIndex(index)
+        return i.removeItemAtIndex(index)
 }
 
 func (i *ItemStore) removeItemAtIndex(indexToRemove int) (*things.Item, error) {
-	if indexToRemove >= len(i.items) {
+	item, err := i.getItemAtIndex(indexToRemove)
+	if err != nil {
 		return nil, errors.New("Could not find item to remove.")
 	}
-	if indexToRemove < 0 {
-		return nil, errors.New("Index cannot be less than 0")
-	}
-	item := i.items[indexToRemove]
 	copy(i.items[indexToRemove:], i.items[indexToRemove+1:])
 	i.items[len(i.items)-1] = nil
 	i.items = i.items[:len(i.items)-1]
-	return &item, nil
+	return item, nil
 }
 
 func findByName(items []things.Item, desiredItemName string) int {
