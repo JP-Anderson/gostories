@@ -1,4 +1,4 @@
-package engine
+package logic
 
 import (
 	"gostories/engine/context"

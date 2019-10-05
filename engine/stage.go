@@ -5,6 +5,7 @@ import (
 
 	"gostories/engine/context"
 	"gostories/engine/inventory"
+	"gostories/engine/logic"
 	"gostories/engine/io"
 	"gostories/things"
 )
@@ -98,7 +99,7 @@ func (s Stage) loopUntilExit() {
 			continue
 		}
 		trigger, ok := targetedThing.Triggers[action.Name]; if ok {
-			err := EvaluateTrigger(s.context, trigger)
+			err := logic.EvaluateTrigger(s.context, trigger)
                         if err != nil {
                                 io.NewLinef("Error evaluating trigger: %v", trigger)
                         }

@@ -3,6 +3,7 @@ package engine
 import (
 	"gostories/engine/context"
 	"gostories/engine/io"
+	"gostories/engine/logic"
 	"gostories/speech"
 )
 
@@ -24,7 +25,7 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 			return false
 		}
 		if curr.Condition != "" {
-			if !EvaluateCondition(gameContext, curr.Condition) {
+			if !logic.EvaluateCondition(gameContext, curr.Condition) {
 				if onFirstRun {
 					return false
 				}
@@ -35,7 +36,7 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 		io.NewLine(curr.Speech)
 		if curr.Trigger != "" {
 			io.NewLine(curr.Trigger)
-			err := EvaluateTrigger(gameContext, curr.Trigger); if err != nil {
+			err := logic.EvaluateTrigger(gameContext, curr.Trigger); if err != nil {
 				io.NewLinef("%v", err)
 			}
 		}
@@ -45,7 +46,7 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 			io.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
 				io.NewLine(response.Trigger)
-				err := EvaluateTrigger(gameContext, response.Trigger); if err != nil {
+				err := logic.EvaluateTrigger(gameContext, response.Trigger); if err != nil {
 					io.NewLinef("%v", err)
 				}
 			}
@@ -62,7 +63,7 @@ func printResponsesAndGetChoice(speechEvent *speech.Event, gameContext context.C
 	// Remove responses we don't pass the conditions for first.
 	availableResponses := []speech.Response{}
 	for _, x := range speechEvent.Responses {
-		if x.Condition == "" || EvaluateCondition(gameContext, x.Condition) {
+		if x.Condition == "" || logic.EvaluateCondition(gameContext, x.Condition) {
 			availableResponses = append(availableResponses, x)
 		}
 	}
