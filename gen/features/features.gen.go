@@ -4,7 +4,6 @@
 package features
 
 import "gostories/things"
-import "gostories/gen/items"
 
 var Feature_Shelf = NewShelfFeature()
 var shelf_Feature *ShelfFeature
@@ -31,10 +30,8 @@ func NewShelfFeature() *ShelfFeature {
 		shelf_Feature = &ShelfFeature{}
 		shelf_Feature.Name = "shelf"
 		shelf_Feature.LookText = "The shelf seems to contain a few old magazines and a cat collar."
-    	shelf_Feature.Triggers = map[string]things.Trigger{
-			"look": things.RevealItemTrigger{
-				ItemToReveal: &items.Item_Collar.Thing,
-			},
+    	shelf_Feature.Triggers = map[string]string {
+			"look": "reveal-item(collar)",
 		}
 	}
 	
@@ -67,10 +64,8 @@ func NewFridgeFeature() *FridgeFeature {
 		fridge_Feature = &FridgeFeature{}
 		fridge_Feature.Name = "fridge"
 		fridge_Feature.LookText = "The fridge is empty apart from a tin of sardines."
-    	fridge_Feature.Triggers = map[string]things.Trigger{
-			"look": things.RevealItemTrigger{
-				ItemToReveal: &items.Item_Sardines.Thing,
-			},
+    	fridge_Feature.Triggers = map[string]string {
+			"look": "reveal-item(sardines)",
 		}
 	}
 	

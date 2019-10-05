@@ -26,6 +26,18 @@ func triggerRemoveItem(gameContext Context, itemName string) error {
 	return err
 }
 
+func triggerRevealItem(gameContext Context, itemName string) error {
+	io.NewLinef("Revealing item %v", itemName)
+	item := gameContext.CurrentArea.CheckAreaItemsForThing(itemName); if item != nil {
+		if item.Visible {
+			io.NewLine(itemName + "is already visible")
+		} else {
+			item.Show()
+		}
+	}
+	return nil
+}
+
 func triggerAddItem(gameContext Context, itemName string) error {
 	io.NewLinef("%#v", items.Items)
 	io.NewLinef("Looking for %v", itemName)
@@ -37,6 +49,7 @@ func triggerAddItem(gameContext Context, itemName string) error {
 }
 
 var triggerStringsMap = map[string]triggerFn{
+	"reveal-item": triggerRevealItem,
 	"remove-item": triggerRemoveItem,
 	"add-item":    triggerAddItem,
 }

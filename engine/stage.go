@@ -104,9 +104,11 @@ func (s Stage) loopUntilExit() {
 		if targetedThing == nil {
 			continue
 		}
-		trigger := targetedThing.Triggers[action.Name]
-		if trigger != nil {
-			trigger.TriggerContextItem()
+		trigger, ok := targetedThing.Triggers[action.Name]; if ok {
+			err := EvaluateTrigger(s.context, trigger)
+                        if err != nil {
+                                io.NewLinef("Error evaluating trigger: %v", trigger)
+                        }
 		}
 	}
 }

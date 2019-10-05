@@ -6,7 +6,8 @@ type Thing struct {
 	Name     string
 	LookText string
 	Visible  bool
-	Triggers Triggers
+	// Triggers contains a map of verb commands to trigger functions. See triggers.go
+	Triggers map[string]string
 }
 
 func (t *Thing) Show() {
