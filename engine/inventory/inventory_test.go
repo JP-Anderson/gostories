@@ -110,9 +110,9 @@ func TestContainsMatchNegative(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return items.Item_Collar
+	return items.ItemCollar
 }
 
 func getAnotherTestItem() things.Item {
-	return items.Item_Shrubbery
+	return items.ItemShrubbery
 }

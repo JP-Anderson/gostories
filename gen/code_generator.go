@@ -100,11 +100,13 @@ func addPackagesInfo(buffer *bytes.Buffer, pckgName string, addItems bool) {
 
 func addItemMap(items []itemToAdd, buffer *bytes.Buffer) {
 	mapStr := `
+// Items contains all the items a player can pick up. It is currently indexed by the item name, however ideally 
+// it should be indexed by an enum/custom int and this should be the only place to access items.
 var Items = map[string]things.Item {
 `
 	for _, item := range items {
 		upperCaseItemName := strings.ToUpper(item.Name[0:1]) + item.Name[1:]
-		mapStr = mapStr + "        \"" + item.Name + "\": Item_" + upperCaseItemName + ",\n"
+		mapStr = mapStr + "        \"" + item.Name + "\": Item" + upperCaseItemName + ",\n"
 	}
 	mapStr = mapStr + `}
 
@@ -138,9 +140,11 @@ func addBaseStructAndMethods(name, upperName, thingType string, buffer *bytes.Bu
 
 func addStruct(lowerName, upperName, thingType string, writer *bytes.Buffer) {
 	fileStr := `
-var [TT]_[N] = New[N][TT]()
-var [lc_N]_[TT] *[N][TT]
+// [TT][N] probably should remove this and only access structs through the map
+var [TT][N] = New[N][TT]()
+var [lc_N][TT] *[N][TT]
 
+// [N][TT] struct
 type [N][TT] struct {
 	things.Thing
 }
@@ -156,21 +160,22 @@ type [N][TT] struct {
 
 func addItemConstructor(name, upperName, lookText, thingType string, visible bool, buffer *bytes.Buffer) {
 	fileStr := `
+// New[N][TT] creates a new [N][TT]. Probably will unexport this soon.
 func New[N][TT]() *[N][TT] {
-	if [lc_N]_[TT] == nil {
-		[lc_N]_[TT] = &[N][TT]{}
-		[lc_N]_[TT].Name = "[lc_N]"
-		[lc_N]_[TT].LookText = "[LT]"
+	if [lc_N][TT] == nil {
+		[lc_N][TT] = &[N][TT]{}
+		[lc_N][TT].Name = "[lc_N]"
+		[lc_N][TT].LookText = "[LT]"
 	}
 `
 	if visible {
 		fileStr = fileStr + `
-	[lc_N]_[TT].Show()
+	[lc_N][TT].Show()
 `
 	}
 
 	fileStr = fileStr +
-		`	return [lc_N]_[TT]
+		`	return [lc_N][TT]
 }
 `
 
@@ -187,18 +192,19 @@ func New[N][TT]() *[N][TT] {
 // TODO: then convert it into a slice of trigger strings so multiple can be added to a feature
 func addFeatureConstructor(name, upperName, lookText, thingType, trigger string, buffer *bytes.Buffer) {
 	fileStr := `
+// New[N][TT] creates a new [N][TT]. Probably will unexport this soon.
 func New[N][TT]() *[N][TT] {
-	if [lc_N]_[TT] == nil {
-		[lc_N]_[TT] = &[N][TT]{}
-		[lc_N]_[TT].Name = "[lc_N]"
-		[lc_N]_[TT].LookText = "[LT]"
-    	[lc_N]_[TT].Triggers = map[string]string {
+	if [lc_N][TT] == nil {
+		[lc_N][TT] = &[N][TT]{}
+		[lc_N][TT].Name = "[lc_N]"
+		[lc_N][TT].LookText = "[LT]"
+    	[lc_N][TT].Triggers = map[string]string {
 			"look": "[T]",
 		}
 	}
 	
-	[lc_N]_[TT].Show()
-	return [lc_N]_[TT]
+	[lc_N][TT].Show()
+	return [lc_N][TT]
 }
 `
 
@@ -214,14 +220,19 @@ func New[N][TT]() *[N][TT] {
 
 func addBasicMethodsForAThing(upperName, thingType string, writer *bytes.Buffer) {
 	fileStr := `
+// GetName returns the name of the thing
 func (c [N][TT]) GetName() string { return c.Name }
 
+// GetLookText returns the description when the player looks at the thing
 func (c [N][TT]) GetLookText() string { return c.LookText }
 
+// Show makes the thing visible to the player
 func (c *[N][TT]) Show() { c.Thing.Visible = true }
 
+// Hide makes the thing visible to the player
 func (c *[N][TT]) Hide() { c.Thing.Visible = false }
 
+// GetThing returns the underlying Thing struct (need to review if this is used)
 func (c [N][TT]) GetThing() things.Thing { return c.Thing }
 
 `
@@ -234,10 +245,12 @@ func (c [N][TT]) GetThing() things.Thing { return c.Thing }
 
 func addMethodsForItems(upperName string, writer *bytes.Buffer, isEquippable bool) {
 	fileStr := `
+// Take will be used for the player to take the item into the inventory (currently not needed)
 func (c [N]Item) Take() {}
 `
 	if isEquippable {
 		fileStr = fileStr + `
+// Toggle is used to equip an equippable item, or unequip it is already equipped
 func (c [N]Item) Toggle() {}
 `
 	}
