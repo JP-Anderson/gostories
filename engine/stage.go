@@ -8,6 +8,7 @@ import (
 	"gostories/engine/logic"
 	"gostories/engine/io"
 	"gostories/things"
+	"gostories/things/area"
 )
 
 // Stage holds the main game state and the game control loop.
@@ -16,7 +17,7 @@ type Stage struct {
 }
 
 // Start initialise a Stage, it is passed an Area, which is used to initialise the game state.
-func (s Stage) Start(area things.Area) {
+func (s Stage) Start(area area.Area) {
 	s.state = state.State{
 		CurrentArea:   area,
 		Inventory:     inventory.NewInventory(),
@@ -100,7 +101,7 @@ func executeLookCommand(lookTarget string, state state.State) (target *things.Th
 
 func executeTravelCommand(travelTarget string, state *state.State) bool {
 	trimmed := io.Trim(strings.ToLower(travelTarget))
-	exit, exists := state.CurrentArea.Exits[things.Direction(trimmed)]
+	exit, exists := state.CurrentArea.Exits[area.Direction(trimmed)]
 	if exists {
 		state.CurrentArea = *exit.To
 		return true
