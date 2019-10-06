@@ -7,7 +7,7 @@ import (
 	"gostories/things"
 )
 
-type conditionFn = func(state.State, string) bool
+type conditionFn func(state.State, string) bool
 
 // EvaluateCondition is given a string of format CONDITION(TARGET). CONDITION is matched to the name
 // of an available condition function, if found, the function will be ran with the string TARGET as

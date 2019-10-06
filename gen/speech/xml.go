@@ -9,6 +9,10 @@ import (
 	"gostories/speech"
 )
 
+
+// SpeechFromXMLFile takes a filepath string and attempts to load an XML file from the path, and parse it into a
+// speech.Tree object.
+// TODO: error handling
 func SpeechFromXMLFile(filepath string) speech.Tree {
 	absPath, err := path.Abs(filepath)
 	if err != nil {
@@ -18,14 +22,14 @@ func SpeechFromXMLFile(filepath string) speech.Tree {
 	if err != nil {
 		//
 	}
-	return SpeechFromXml(bytes)
+	return speechFromXML(bytes)
 }
 
-func SpeechFromXml(xmlBytes []byte) speech.Tree {
+func speechFromXML(xmlBytes []byte) speech.Tree {
 	t := &speech.Tree{}
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
-		io.NewLinef("SpeechFromXML failed: %v", err)
+		io.NewLinef("speechFromXML failed: %v", err)
 	}
 	return *t
 }

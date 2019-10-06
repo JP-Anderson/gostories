@@ -6,7 +6,7 @@ import (
 	"gostories/gen/items"
 )
 
-// EvaluateTrigger, given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger
+// EvaluateTrigger when  given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger
 // function mapped to the value of TRIGGER. If it finds a trigger function, it will attempt to 
 // apply the trigger function on the noun/named object TARGET, which will have some side-effects on
 // the provided game State. All trigger funcs can also return an error.
@@ -16,7 +16,7 @@ func EvaluateTrigger(gameState state.State, triggerStr string) error {
 	return triggerFunc(gameState, targetStr)
 }
 
-type triggerFn = func(state.State, string) error
+type triggerFn func(state.State, string) error
 
 func triggerRemoveItem(gameState state.State, itemName string) error {
 	_, err := gameState.Inventory.RemoveItemWithName(itemName)

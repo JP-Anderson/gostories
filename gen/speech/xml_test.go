@@ -15,7 +15,7 @@ func TestSpeechFromXMLFile(t *testing.T) {
 }
 
 func TestSpeechFromXml(t *testing.T) {
-	tree := SpeechFromXml(simpleResponseXML)
+	tree := speechFromXML(simpleResponseXML)
 	assert.Equal(t, getExpectedSimpleResponseTree(), tree)
 }
 

@@ -104,9 +104,8 @@ func executeTravelCommand(travelTarget string, state *state.State) bool {
 	if exists {
 		state.CurrentArea = *exit.To
 		return true
-	} else {
-		io.NewLinef("Could not find an exit to the %v", trimmed)
 	}
+	io.NewLinef("Could not find an exit to the %v", trimmed)
 	return false
 }
 
