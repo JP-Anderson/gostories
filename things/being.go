@@ -5,6 +5,9 @@ import (
 	"gostories/speech"
 )
 
+const speechDataRoot = "./gen/speech/speech_data/"
+
+// Being is a Non-Playable Character (NPC) which the player can interact with
 type Being struct {
 	Thing
 	Species   string
@@ -12,11 +15,15 @@ type Being struct {
 	AltSpeech *speech.Tree
 }
 
-// Simple examples constructed from code for now
+// NewBubbles creates a new Bubbles
 // Will either construct these from XML in future or find some way to autogenerate
 func NewBubbles() Being {
-	translatedSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles_human.xml")
-	catSpeech := generator.SpeechFromXMLFile("./generator/speech_data/bubbles.xml")
+	translatedSpeech := generator.SpeechFromXMLFile(
+		speechDataRoot + "bubbles_human.xml",
+	)
+	catSpeech := generator.SpeechFromXMLFile(
+		speechDataRoot + "bubbles.xml",
+	)
 	being := Being{
 		Thing: Thing{
 			Name:     "Bubbles",
