@@ -12,12 +12,3 @@ type Feature interface {
 	GetThing() *Thing
 }
 
-type ShelfFeature struct {
-	Thing
-}
-
-func (s ShelfFeature) GetName() string { return s.Name }
-
-func (s ShelfFeature) GetLookText() string { return s.LookText }
-
-func (s ShelfFeature) GetThing() Thing { return s.Thing }

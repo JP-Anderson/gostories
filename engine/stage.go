@@ -126,9 +126,11 @@ func executeTakeCommand(takeTarget string, state state.State) {
 	//TODO refactor. item store already has a method to iterate its store by name
 	for _, item := range state.CurrentArea.Items {
 		if strings.ToLower(item.GetName()) == strings.ToLower(takeTarget) {
-			io.NewLinef("You take the %v", item.GetName())
-			state.Inventory.StoreItem(item)
-			return
+			if item.GetThing().Visible {
+				io.NewLinef("You take the %v", item.GetName())
+				state.Inventory.StoreItem(item)
+				return
+			}
 		}
 	}
 	//TODO refactor. item store already has a method to iterate its store by name
