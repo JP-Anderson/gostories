@@ -15,10 +15,10 @@ type ShelfFeature struct {
 }
 
 // GetName returns the name of the thing
-func (c ShelfFeature) GetName() string { return c.Name }
+func (c *ShelfFeature) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c ShelfFeature) GetLookText() string { return c.LookText }
+func (c *ShelfFeature) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *ShelfFeature) Show() { c.Thing.Visible = true }
@@ -27,7 +27,7 @@ func (c *ShelfFeature) Show() { c.Thing.Visible = true }
 func (c *ShelfFeature) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c ShelfFeature) GetThing() things.Thing { return c.Thing }
+func (c *ShelfFeature) GetThing() *things.Thing { return &c.Thing }
 
 
 // NewShelfFeature creates a new ShelfFeature. Probably will unexport this soon.
@@ -55,10 +55,10 @@ type FridgeFeature struct {
 }
 
 // GetName returns the name of the thing
-func (c FridgeFeature) GetName() string { return c.Name }
+func (c *FridgeFeature) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c FridgeFeature) GetLookText() string { return c.LookText }
+func (c *FridgeFeature) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *FridgeFeature) Show() { c.Thing.Visible = true }
@@ -67,7 +67,7 @@ func (c *FridgeFeature) Show() { c.Thing.Visible = true }
 func (c *FridgeFeature) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c FridgeFeature) GetThing() things.Thing { return c.Thing }
+func (c *FridgeFeature) GetThing() *things.Thing { return &c.Thing }
 
 
 // NewFridgeFeature creates a new FridgeFeature. Probably will unexport this soon.

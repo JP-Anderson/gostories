@@ -9,7 +9,7 @@ type Feature interface {
 	GetLookText() string
 
 	// Get the Thing
-	GetThing() Thing
+	GetThing() *Thing
 }
 
 type ShelfFeature struct {

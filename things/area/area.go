@@ -43,7 +43,7 @@ func (a Area) CheckAreaItemsForThing(targetName string) *things.Thing {
 	for _, i := range a.Items {
 		if strings.ToLower(i.GetName()) == strings.ToLower(targetName) {
 			t := i.GetThing()
-			return &t
+			return t
 		}
 	}
 	return nil
@@ -69,7 +69,7 @@ func (a Area) CheckAreaFeaturesForThing(targetName string) *things.Thing {
 	for _, f := range a.Features {
 		if strings.ToLower(f.GetName()) == strings.ToLower(targetName) {
 			t := f.GetThing()
-			return &t
+			return t
 		}
 	}
 	return nil

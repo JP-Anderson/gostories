@@ -221,10 +221,10 @@ func New[N][TT]() *[N][TT] {
 func addBasicMethodsForAThing(upperName, thingType string, writer *bytes.Buffer) {
 	fileStr := `
 // GetName returns the name of the thing
-func (c [N][TT]) GetName() string { return c.Name }
+func (c *[N][TT]) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c [N][TT]) GetLookText() string { return c.LookText }
+func (c *[N][TT]) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *[N][TT]) Show() { c.Thing.Visible = true }
@@ -233,7 +233,7 @@ func (c *[N][TT]) Show() { c.Thing.Visible = true }
 func (c *[N][TT]) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c [N][TT]) GetThing() things.Thing { return c.Thing }
+func (c *[N][TT]) GetThing() *things.Thing { return &c.Thing }
 
 `
 	fileStr = strings.Replace(fileStr, "[N]", upperName, -1)
@@ -246,12 +246,12 @@ func (c [N][TT]) GetThing() things.Thing { return c.Thing }
 func addMethodsForItems(upperName string, writer *bytes.Buffer, isEquippable bool) {
 	fileStr := `
 // Take will be used for the player to take the item into the inventory (currently not needed)
-func (c [N]Item) Take() {}
+func (c *[N]Item) Take() {}
 `
 	if isEquippable {
 		fileStr = fileStr + `
 // Toggle is used to equip an equippable item, or unequip it is already equipped
-func (c [N]Item) Toggle() {}
+func (c *[N]Item) Toggle() {}
 `
 	}
 

@@ -24,10 +24,10 @@ type CollarItem struct {
 }
 
 // GetName returns the name of the thing
-func (c CollarItem) GetName() string { return c.Name }
+func (c *CollarItem) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c CollarItem) GetLookText() string { return c.LookText }
+func (c *CollarItem) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *CollarItem) Show() { c.Thing.Visible = true }
@@ -36,14 +36,14 @@ func (c *CollarItem) Show() { c.Thing.Visible = true }
 func (c *CollarItem) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c CollarItem) GetThing() things.Thing { return c.Thing }
+func (c *CollarItem) GetThing() *things.Thing { return &c.Thing }
 
 
 // Take will be used for the player to take the item into the inventory (currently not needed)
-func (c CollarItem) Take() {}
+func (c *CollarItem) Take() {}
 
 // Toggle is used to equip an equippable item, or unequip it is already equipped
-func (c CollarItem) Toggle() {}
+func (c *CollarItem) Toggle() {}
 
 // NewCollarItem creates a new CollarItem. Probably will unexport this soon.
 func NewCollarItem() *CollarItem {
@@ -65,10 +65,10 @@ type ShrubberyItem struct {
 }
 
 // GetName returns the name of the thing
-func (c ShrubberyItem) GetName() string { return c.Name }
+func (c *ShrubberyItem) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c ShrubberyItem) GetLookText() string { return c.LookText }
+func (c *ShrubberyItem) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *ShrubberyItem) Show() { c.Thing.Visible = true }
@@ -77,11 +77,11 @@ func (c *ShrubberyItem) Show() { c.Thing.Visible = true }
 func (c *ShrubberyItem) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c ShrubberyItem) GetThing() things.Thing { return c.Thing }
+func (c *ShrubberyItem) GetThing() *things.Thing { return &c.Thing }
 
 
 // Take will be used for the player to take the item into the inventory (currently not needed)
-func (c ShrubberyItem) Take() {}
+func (c *ShrubberyItem) Take() {}
 
 // NewShrubberyItem creates a new ShrubberyItem. Probably will unexport this soon.
 func NewShrubberyItem() *ShrubberyItem {
@@ -105,10 +105,10 @@ type SardinesItem struct {
 }
 
 // GetName returns the name of the thing
-func (c SardinesItem) GetName() string { return c.Name }
+func (c *SardinesItem) GetName() string { return c.Name }
 
 // GetLookText returns the description when the player looks at the thing
-func (c SardinesItem) GetLookText() string { return c.LookText }
+func (c *SardinesItem) GetLookText() string { return c.LookText }
 
 // Show makes the thing visible to the player
 func (c *SardinesItem) Show() { c.Thing.Visible = true }
@@ -117,11 +117,11 @@ func (c *SardinesItem) Show() { c.Thing.Visible = true }
 func (c *SardinesItem) Hide() { c.Thing.Visible = false }
 
 // GetThing returns the underlying Thing struct (need to review if this is used)
-func (c SardinesItem) GetThing() things.Thing { return c.Thing }
+func (c *SardinesItem) GetThing() *things.Thing { return &c.Thing }
 
 
 // Take will be used for the player to take the item into the inventory (currently not needed)
-func (c SardinesItem) Take() {}
+func (c *SardinesItem) Take() {}
 
 // NewSardinesItem creates a new SardinesItem. Probably will unexport this soon.
 func NewSardinesItem() *SardinesItem {

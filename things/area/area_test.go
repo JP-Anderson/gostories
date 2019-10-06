@@ -18,13 +18,15 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 		},
 	}
 
-	theThing := testArea.CheckAreaItemsForThing("collar")
-	assert.NotNil(t, theThing)
+	ref1 := testArea.CheckAreaItemsForThing("collar")
+	assert.NotNil(t, ref1)
 
-	theThing.Show()
+	ref1.Show()
 
-	theThing2 := testArea.CheckAreaItemsForThing("collar")
-	assert.True(t, theThing2.Visible)
+	ref2 := testArea.CheckAreaItemsForThing("collar")
+	
+	assert.True(t, ref1.Visible)
+	assert.True(t, ref2.Visible)
 }
 
 func getTestItem() things.Item {

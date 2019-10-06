@@ -12,7 +12,7 @@ type Item interface {
 	Take()
 
 	// Get the Thing
-	GetThing() Thing
+	GetThing() *Thing
 }
 
 type Equippable interface {
