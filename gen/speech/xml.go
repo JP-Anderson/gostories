@@ -1,4 +1,4 @@
-package generator
+package speechgeneration
 
 import (
 	"encoding/xml"

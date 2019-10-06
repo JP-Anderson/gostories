@@ -1,7 +1,7 @@
 package things
 
 import (
-	"gostories/generator"
+	generator "gostories/gen/speech"
 	"gostories/speech"
 )
 
