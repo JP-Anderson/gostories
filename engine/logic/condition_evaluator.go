@@ -3,19 +3,19 @@ package logic
 import (
 	"strings"
 
-	"gostories/engine/context"
+	"gostories/engine/state"
 	"gostories/things"
 )
 
-type conditionFn = func(context.Context, string) bool
+type conditionFn = func(state.State, string) bool
 
 // EvaluateCondition is given a string of format CONDITION(TARGET). CONDITION is matched to the name
 // of an available condition function, if found, the function will be ran with the string TARGET as
 // the parameter. A bool return signals if condition returns true or false for the target.
-func EvaluateCondition(gameContext context.Context, conditionStr string) bool {
+func EvaluateCondition(gameState state.State, conditionStr string) bool {
 	conditionFunc := getConditional(conditionStr)
 	targetStr := parseFuncParam(conditionStr)
-	return conditionFunc(gameContext, targetStr)
+	return conditionFunc(gameState, targetStr)
 }
 
 func getConditional(conditionStr string) conditionFn {
@@ -37,7 +37,7 @@ var conditionStringsMap = map[string]conditionFn{
 	"inventory-contains-item": conditionInventoryContainsItem,
 }
 
-func conditionItemIsEquipped(ctx context.Context, itemName string) bool {
+func conditionItemIsEquipped(ctx state.State, itemName string) bool {
 	return ctx.EquippedItems.ContainsMatch(func(item things.Item) bool {
 		if item.GetName() == itemName {
 			return true
@@ -46,7 +46,7 @@ func conditionItemIsEquipped(ctx context.Context, itemName string) bool {
 	})
 }
 
-func conditionInventoryContainsItem(ctx context.Context, itemName string) bool {
+func conditionInventoryContainsItem(ctx state.State, itemName string) bool {
 	return ctx.Inventory.ContainsMatch(func(item things.Item) bool {
 		if item.GetName() == itemName {
 			return true

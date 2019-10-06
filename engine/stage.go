@@ -3,21 +3,21 @@ package engine
 import (
 	"strings"
 
-	"gostories/engine/context"
+	"gostories/engine/state"
 	"gostories/engine/inventory"
 	"gostories/engine/logic"
 	"gostories/engine/io"
 	"gostories/things"
 )
 
-// Stage holds the main game context and the game control loop.
+// Stage holds the main game state and the game control loop.
 type Stage struct {
-	context context.Context
+	state state.State
 }
 
-// Start initialise a Stage, it is passed an Area, which is used to initialise the game context.
+// Start initialise a Stage, it is passed an Area, which is used to initialise the game state.
 func (s Stage) Start(area things.Area) {
-	s.context = context.Context{
+	s.state = state.State{
 		CurrentArea:   area,
 		Inventory:     inventory.NewInventory(),
 		EquippedItems: inventory.NewEquippedItems(),
@@ -29,7 +29,7 @@ func (s Stage) loopUntilExit() {
 	newArea := true
 	for {
 		if newArea {
-			io.NewLine(s.context.CurrentArea.Look)
+			io.NewLine(s.state.CurrentArea.Look)
 			newArea = false
 		}
 		// TODO: move the action parsing to another file/function
@@ -37,20 +37,20 @@ func (s Stage) loopUntilExit() {
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if action.Name == "look" {
-			targetedThing = executeLookCommand(noun, s.context)
+			targetedThing = executeLookCommand(noun, s.state)
 		} else if action.Name == "travel" {
-			newArea = executeTravelCommand(noun, &s.context)
+			newArea = executeTravelCommand(noun, &s.state)
 		} else if action.Name == "talk" {
-			executeTalkCommand(noun, s.context)
+			executeTalkCommand(noun, s.state)
 		} else if action.Name == "take" {
-			executeTakeCommand(noun, s.context)
+			executeTakeCommand(noun, s.state)
 		} else if action.Name == "equip" {
-			executeEquipCommand(noun, s.context)
+			executeEquipCommand(noun, s.state)
 		} else if action.Name == "inventory" {
 			io.NewLine("You take stock of your inventory.")
-			s.context.Inventory.PrintContents()
+			s.state.Inventory.PrintContents()
 			io.NewLine("You have the following equipped:")
-			s.context.EquippedItems.PrintContents()
+			s.state.EquippedItems.PrintContents()
 		} else if action.Name == "exit" {
 			break
 		} else {
@@ -60,7 +60,7 @@ func (s Stage) loopUntilExit() {
 			continue
 		}
 		trigger, ok := targetedThing.Triggers[action.Name]; if ok {
-			err := logic.EvaluateTrigger(s.context, trigger)
+			err := logic.EvaluateTrigger(s.state, trigger)
                         if err != nil {
                                 io.NewLinef("Error evaluating trigger: %v", trigger)
                         }
@@ -68,7 +68,7 @@ func (s Stage) loopUntilExit() {
 	}
 }
 
-func executeLookCommand(lookTarget string, context context.Context) (target *things.Thing) {
+func executeLookCommand(lookTarget string, state state.State) (target *things.Thing) {
 	defer func() {
 		if target != nil {
 			io.NewLine(target.LookText)
@@ -76,20 +76,20 @@ func executeLookCommand(lookTarget string, context context.Context) (target *thi
 	}()
 
 	if lookTarget == "" {
-		io.NewLine(context.CurrentArea.Look)
+		io.NewLine(state.CurrentArea.Look)
 	}
 
-	target = context.CurrentArea.CheckAreaItemsForThing(lookTarget)
+	target = state.CurrentArea.CheckAreaItemsForThing(lookTarget)
 	if target != nil {
 		return
 	}
 
-	target = context.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
+	target = state.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
 	if target != nil {
 		return
 	}
 
-	target = context.CurrentArea.CheckAreaBeingsForThing(lookTarget)
+	target = state.CurrentArea.CheckAreaBeingsForThing(lookTarget)
 	if target != nil {
 		return
 	}
@@ -98,11 +98,11 @@ func executeLookCommand(lookTarget string, context context.Context) (target *thi
 	return
 }
 
-func executeTravelCommand(travelTarget string, context *context.Context) bool {
+func executeTravelCommand(travelTarget string, state *state.State) bool {
 	trimmed := io.Trim(strings.ToLower(travelTarget))
-	exit, exists := context.CurrentArea.Exits[things.Direction(trimmed)]
+	exit, exists := state.CurrentArea.Exits[things.Direction(trimmed)]
 	if exists {
-		context.CurrentArea = *exit.To
+		state.CurrentArea = *exit.To
 		return true
 	} else {
 		io.NewLinef("Could not find an exit to the %v", trimmed)
@@ -110,29 +110,29 @@ func executeTravelCommand(travelTarget string, context *context.Context) bool {
 	return false
 }
 
-func executeTalkCommand(talkTarget string, context context.Context) {
-	for _, being := range context.CurrentArea.Beings {
+func executeTalkCommand(talkTarget string, state state.State) {
+	for _, being := range state.CurrentArea.Beings {
 		io.NewLine(being.Name)
 		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
 			io.NewLinef("You speak to %v.", being.Name)
-			RunWithAlt(being.Speech, being.AltSpeech, context)
+			RunWithAlt(being.Speech, being.AltSpeech, state)
 			return
 		}
 	}
 	io.NewLinef("Could not find a %v to talk to!", talkTarget)
 }
 
-func executeTakeCommand(takeTarget string, context context.Context) {
+func executeTakeCommand(takeTarget string, state state.State) {
 	//TODO refactor. item store already has a method to iterate its store by name
-	for _, item := range context.CurrentArea.Items {
+	for _, item := range state.CurrentArea.Items {
 		if strings.ToLower(item.GetName()) == strings.ToLower(takeTarget) {
 			io.NewLinef("You take the %v", item.GetName())
-			context.Inventory.StoreItem(item)
+			state.Inventory.StoreItem(item)
 			return
 		}
 	}
 	//TODO refactor. item store already has a method to iterate its store by name
-	for _, feature := range context.CurrentArea.Features {
+	for _, feature := range state.CurrentArea.Features {
 		if strings.ToLower(feature.GetName()) == strings.ToLower(takeTarget) {
 			io.NewLinef("You can't really take the %v...", feature.GetName())
 			return
@@ -141,18 +141,18 @@ func executeTakeCommand(takeTarget string, context context.Context) {
 	io.NewLinef("Couldn't find a %v to pick up.", takeTarget)
 }
 
-func executeEquipCommand(equipTarget string, context context.Context) {
+func executeEquipCommand(equipTarget string, state state.State) {
 	defer func() {
 		recover()
 	}()
-	item, err := context.Inventory.GetItemWithName(equipTarget)
+	item, err := state.Inventory.GetItemWithName(equipTarget)
 	if err == nil {
 		var itemInterface interface{}
 		itemInterface = *item
 		if ok := itemInterface.(things.Equippable); ok != nil {
-			item, err := context.Inventory.RemoveItemWithName(equipTarget)
+			item, err := state.Inventory.RemoveItemWithName(equipTarget)
 			if item != nil && err == nil {
-				context.EquippedItems.StoreItem(*item)
+				state.EquippedItems.StoreItem(*item)
 			} else {
 				io.NewLinef("Failed to equip item...")
 			}

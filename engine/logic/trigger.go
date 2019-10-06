@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"gostories/engine/context"
+	"gostories/engine/state"
 	"gostories/engine/io"
 	"gostories/gen/items"
 )
@@ -9,31 +9,31 @@ import (
 // EvaluateTrigger, given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger
 // function mapped to the value of TRIGGER. If it finds a trigger function, it will attempt to 
 // apply the trigger function on the noun/named object TARGET, which will have some side-effects on
-// the provided GameContext. All trigger funcs can also return an error.
-func EvaluateTrigger(gameContext context.Context, triggerStr string) error {
+// the provided game State. All trigger funcs can also return an error.
+func EvaluateTrigger(gameState state.State, triggerStr string) error {
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
-	return triggerFunc(gameContext, targetStr)
+	return triggerFunc(gameState, targetStr)
 }
 
-type triggerFn = func(context.Context, string) error
+type triggerFn = func(state.State, string) error
 
-func triggerRemoveItem(gameContext context.Context, itemName string) error {
-	_, err := gameContext.Inventory.RemoveItemWithName(itemName)
+func triggerRemoveItem(gameState state.State, itemName string) error {
+	_, err := gameState.Inventory.RemoveItemWithName(itemName)
 	if err == nil {
 		// this should be fine as long as item is always removed from inventory on equip
 		return nil
 	}
-	_, err = gameContext.EquippedItems.RemoveItemWithName(itemName)
+	_, err = gameState.EquippedItems.RemoveItemWithName(itemName)
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func triggerRevealItem(gameContext context.Context, itemName string) error {
+func triggerRevealItem(gameState state.State, itemName string) error {
 	io.NewLinef("Revealing item %v", itemName)
-	item := gameContext.CurrentArea.CheckAreaItemsForThing(itemName); if item != nil {
+	item := gameState.CurrentArea.CheckAreaItemsForThing(itemName); if item != nil {
 		if item.Visible {
 			io.NewLine(itemName + "is already visible")
 		} else {
@@ -43,12 +43,12 @@ func triggerRevealItem(gameContext context.Context, itemName string) error {
 	return nil
 }
 
-func triggerAddItem(gameContext context.Context, itemName string) error {
+func triggerAddItem(gameState state.State, itemName string) error {
 	io.NewLinef("%#v", items.Items)
 	io.NewLinef("Looking for %v", itemName)
 	i, ok := items.Items[itemName]; if ok {
 		io.NewLine("Found!")
-		gameContext.Inventory.StoreItem(i)
+		gameState.Inventory.StoreItem(i)
 	}
 	return nil
 }

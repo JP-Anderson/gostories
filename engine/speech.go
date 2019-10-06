@@ -1,23 +1,23 @@
 package engine
 
 import (
-	"gostories/engine/context"
+	"gostories/engine/state"
 	"gostories/engine/io"
 	"gostories/engine/logic"
 	"gostories/speech"
 )
 
-func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameContext context.Context) {
-	ran := Run(speech, gameContext)
+func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameState state.State) {
+	ran := Run(speech, gameState)
 	if ran {
 		return
 	}
 	if alt != nil {
-		Run(*alt, gameContext)
+		Run(*alt, gameState)
 	}
 }
 
-func Run(speech speech.Tree, gameContext context.Context) bool {
+func Run(speech speech.Tree, gameState state.State) bool {
 	curr := &speech.Event
 	onFirstRun := true
 	for {
@@ -25,7 +25,7 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 			return false
 		}
 		if curr.Condition != "" {
-			if !logic.EvaluateCondition(gameContext, curr.Condition) {
+			if !logic.EvaluateCondition(gameState, curr.Condition) {
 				if onFirstRun {
 					return false
 				}
@@ -36,17 +36,17 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 		io.NewLine(curr.Speech)
 		if curr.Trigger != "" {
 			io.NewLine(curr.Trigger)
-			err := logic.EvaluateTrigger(gameContext, curr.Trigger); if err != nil {
+			err := logic.EvaluateTrigger(gameState, curr.Trigger); if err != nil {
 				io.NewLinef("%v", err)
 			}
 		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
-			choice := printResponsesAndGetChoice(curr, gameContext)
+			choice := printResponsesAndGetChoice(curr, gameState)
 			response := curr.Responses[choice]
 			io.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
 				io.NewLine(response.Trigger)
-				err := logic.EvaluateTrigger(gameContext, response.Trigger); if err != nil {
+				err := logic.EvaluateTrigger(gameState, response.Trigger); if err != nil {
 					io.NewLinef("%v", err)
 				}
 			}
@@ -59,11 +59,11 @@ func Run(speech speech.Tree, gameContext context.Context) bool {
 	}
 }
 
-func printResponsesAndGetChoice(speechEvent *speech.Event, gameContext context.Context) int {
+func printResponsesAndGetChoice(speechEvent *speech.Event, gameState state.State) int {
 	// Remove responses we don't pass the conditions for first.
 	availableResponses := []speech.Response{}
 	for _, x := range speechEvent.Responses {
-		if x.Condition == "" || logic.EvaluateCondition(gameContext, x.Condition) {
+		if x.Condition == "" || logic.EvaluateCondition(gameState, x.Condition) {
 			availableResponses = append(availableResponses, x)
 		}
 	}
