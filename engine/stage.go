@@ -3,6 +3,7 @@ package engine
 import (
 	"strings"
 
+	"gostories/engine/action"
 	"gostories/engine/state"
 	"gostories/engine/inventory"
 	"gostories/engine/logic"
@@ -19,7 +20,7 @@ type Stage struct {
 // Start initialise a Stage, it is passed an Area, which is used to initialise the game state.
 func (s Stage) Start(area area.Area) {
 	s.state = state.State{
-		CurrentArea:   area,
+		CurrentArea:   &area,
 		Inventory:     inventory.NewInventory(),
 		EquippedItems: inventory.NewEquippedItems(),
 	}
@@ -34,25 +35,25 @@ func (s Stage) loopUntilExit() {
 			newArea = false
 		}
 		// TODO: move the action parsing to another file/function
-		action, noun := io.SimpleParse()
+		inputAction, noun := io.SimpleParse()
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
-		if action.Name == "look" {
-			targetedThing = executeLookCommand(noun, s.state)
-		} else if action.Name == "travel" {
+		if inputAction.Name == "look" {
+			targetedThing = action.ExecuteLookCommand(noun, s.state)
+		} else if inputAction.Name == "travel" {
 			newArea = executeTravelCommand(noun, &s.state)
-		} else if action.Name == "talk" {
+		} else if inputAction.Name == "talk" {
 			executeTalkCommand(noun, s.state)
-		} else if action.Name == "take" {
+		} else if inputAction.Name == "take" {
 			executeTakeCommand(noun, s.state)
-		} else if action.Name == "equip" {
+		} else if inputAction.Name == "equip" {
 			executeEquipCommand(noun, s.state)
-		} else if action.Name == "inventory" {
+		} else if inputAction.Name == "inventory" {
 			io.NewLine("You take stock of your inventory.")
 			s.state.Inventory.PrintContents()
 			io.NewLine("You have the following equipped:")
 			s.state.EquippedItems.PrintContents()
-		} else if action.Name == "exit" {
+		} else if inputAction.Name == "exit" {
 			break
 		} else {
 			io.NewLine("Unknown action")
@@ -60,7 +61,7 @@ func (s Stage) loopUntilExit() {
 		if targetedThing == nil {
 			continue
 		}
-		trigger, ok := targetedThing.Triggers[action.Name]; if ok {
+		trigger, ok := targetedThing.Triggers[inputAction.Name]; if ok {
 			err := logic.EvaluateTrigger(s.state, trigger)
                         if err != nil {
                                 io.NewLinef("Error evaluating trigger: %v", trigger)
@@ -69,41 +70,11 @@ func (s Stage) loopUntilExit() {
 	}
 }
 
-func executeLookCommand(lookTarget string, state state.State) (target *things.Thing) {
-	defer func() {
-		if target != nil {
-			io.NewLine(target.LookText)
-		}
-	}()
-
-	if lookTarget == "" {
-		io.NewLine(state.CurrentArea.Look)
-	}
-
-	target = state.CurrentArea.CheckAreaItemsForThing(lookTarget)
-	if target != nil {
-		return
-	}
-
-	target = state.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
-	if target != nil {
-		return
-	}
-
-	target = state.CurrentArea.CheckAreaBeingsForThing(lookTarget)
-	if target != nil {
-		return
-	}
-
-	io.NewLinef("Couldn't find a %v to look at!", lookTarget)
-	return
-}
-
 func executeTravelCommand(travelTarget string, state *state.State) bool {
 	trimmed := io.Trim(strings.ToLower(travelTarget))
 	exit, exists := state.CurrentArea.Exits[area.Direction(trimmed)]
 	if exists {
-		state.CurrentArea = *exit.To
+		state.CurrentArea = exit.To
 		return true
 	}
 	io.NewLinef("Could not find an exit to the %v", trimmed)
