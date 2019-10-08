@@ -38,21 +38,21 @@ func Run(speech speech.Tree, gameState state.State) bool {
 			}
 		}
 		onFirstRun = false
-		io.NewLine(curr.Speech)
+		io.ActiveInputOutputHandler.NewLine(curr.Speech)
 		if curr.Trigger != "" {
-			io.NewLine(curr.Trigger)
+			io.ActiveInputOutputHandler.NewLine(curr.Trigger)
 			err := logic.EvaluateTrigger(gameState, curr.Trigger); if err != nil {
-				io.NewLinef("%v", err)
+				io.ActiveInputOutputHandler.NewLinef("%v", err)
 			}
 		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameState)
 			response := curr.Responses[choice]
-			io.NewLine(response.ResponseStr)
+			io.ActiveInputOutputHandler.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
-				io.NewLine(response.Trigger)
+				io.ActiveInputOutputHandler.NewLine(response.Trigger)
 				err := logic.EvaluateTrigger(gameState, response.Trigger); if err != nil {
-					io.NewLinef("%v", err)
+					io.ActiveInputOutputHandler.NewLinef("%v", err)
 				}
 			}
 			curr = &curr.Responses[choice].Next
@@ -75,17 +75,17 @@ func printResponsesAndGetChoice(speechEvent *speech.Event, gameState state.State
 
 	speechEvent.Responses = availableResponses
 	for i, option := range speechEvent.Responses {
-		io.NewLinef("%v - \"%v\"", i, option.ResponseStr)
+		io.ActiveInputOutputHandler.NewLinef("%v - \"%v\"", i, option.ResponseStr)
 	}
 
 	last := len(speechEvent.Responses) - 1
 	for {
-		selection, err := io.ReadInt()
+		selection, err := io.ActiveInputOutputHandler.ReadInt()
 		if err != nil {
-			io.NewLinef("%v", err)
+			io.ActiveInputOutputHandler.NewLinef("%v", err)
 		}
 		if selection < 0 || selection > last {
-			io.NewLinef("Enter option number from %v to %v", 0, last)
+			io.ActiveInputOutputHandler.NewLinef("Enter option number from %v to %v", 0, last)
 		}
 		return selection
 	}

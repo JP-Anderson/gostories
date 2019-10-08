@@ -41,10 +41,10 @@ type ItemStore struct {
 func (i *ItemStore) PrintContents() {
 	if i.Size() > 0 {
 		for _, item := range i.items {
-			io.NewLine(item.GetName())
+			io.ActiveInputOutputHandler.NewLine(item.GetName())
 		}
 	} else {
-		io.NewLinef("Empty.")
+		io.ActiveInputOutputHandler.NewLinef("Empty.")
 	}
 }
 

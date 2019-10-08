@@ -32,10 +32,10 @@ func triggerRemoveItem(gameState state.State, itemName string) error {
 }
 
 func triggerRevealItem(gameState state.State, itemName string) error {
-	io.NewLinef("Revealing item %v", itemName)
+	io.ActiveInputOutputHandler.NewLinef("Revealing item %v", itemName)
 	item := gameState.CurrentArea.CheckAreaItemsForThing(itemName); if item != nil {
 		if item.Visible {
-			io.NewLine(itemName + "is already visible")
+			io.ActiveInputOutputHandler.NewLine(itemName + "is already visible")
 		} else {
 			item.Show()
 		}
@@ -44,10 +44,10 @@ func triggerRevealItem(gameState state.State, itemName string) error {
 }
 
 func triggerAddItem(gameState state.State, itemName string) error {
-	io.NewLinef("%#v", items.Items)
-	io.NewLinef("Looking for %v", itemName)
+	io.ActiveInputOutputHandler.NewLinef("%#v", items.Items)
+	io.ActiveInputOutputHandler.NewLinef("Looking for %v", itemName)
 	i, ok := items.Items[itemName]; if ok {
-		io.NewLine("Found!")
+		io.ActiveInputOutputHandler.NewLine("Found!")
 		gameState.Inventory.StoreItem(i)
 	}
 	return nil

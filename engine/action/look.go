@@ -9,12 +9,12 @@ import (
 func ExecuteLookCommand(lookTarget string, gameState state.State) (target *things.Thing) {
 	defer func() {
 		if target != nil {
-			io.NewLine(target.LookText)
+			io.ActiveInputOutputHandler.NewLine(target.LookText)
 		}
 	}()
 
 	if lookTarget == "" {
-		io.NewLine(gameState.CurrentArea.Look)
+		io.ActiveInputOutputHandler.NewLine(gameState.CurrentArea.Look)
 	}
 
 	target = gameState.CurrentArea.CheckAreaItemsForThing(lookTarget)
@@ -32,7 +32,7 @@ func ExecuteLookCommand(lookTarget string, gameState state.State) (target *thing
 		return
 	}
 
-	io.NewLinef("Couldn't find a %v to look at!", lookTarget)
+	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to look at!", lookTarget)
 	return
 }
 

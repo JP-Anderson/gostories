@@ -72,7 +72,7 @@ func WriteFeaturesFile() error {
 
 func genGoLangFile(packageName string, buffer *bytes.Buffer) (err error) {
 	filename := "./" + packageName + "/" + generatedFileName(packageName)
-	io2.NewLinef("Filename: %v", filename)
+	io2.ActiveInputOutputHandler.NewLinef("Filename: %v", filename)
 	if err != nil {
 		return
 	}

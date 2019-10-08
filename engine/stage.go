@@ -8,6 +8,7 @@ import (
 	"gostories/engine/inventory"
 	"gostories/engine/logic"
 	"gostories/engine/io"
+	"gostories/engine/io/console"
 	"gostories/things"
 	"gostories/things/area"
 )
@@ -31,11 +32,11 @@ func (s Stage) loopUntilExit() {
 	newArea := true
 	for {
 		if newArea {
-			io.NewLine(s.state.CurrentArea.Look)
+			io.ActiveInputOutputHandler.NewLine(s.state.CurrentArea.Look)
 			newArea = false
 		}
 		// TODO: move the action parsing to another file/function
-		inputAction, noun := io.SimpleParse()
+		inputAction, noun := io.ActiveInputOutputHandler.SimpleParse()
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if inputAction.Name == "look" {
@@ -49,14 +50,14 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "equip" {
 			executeEquipCommand(noun, s.state)
 		} else if inputAction.Name == "inventory" {
-			io.NewLine("You take stock of your inventory.")
+			io.ActiveInputOutputHandler.NewLine("You take stock of your inventory.")
 			s.state.Inventory.PrintContents()
-			io.NewLine("You have the following equipped:")
+			io.ActiveInputOutputHandler.NewLine("You have the following equipped:")
 			s.state.EquippedItems.PrintContents()
 		} else if inputAction.Name == "exit" {
 			break
 		} else {
-			io.NewLine("Unknown action")
+			io.ActiveInputOutputHandler.NewLine("Unknown action")
 		}
 		if targetedThing == nil {
 			continue
@@ -64,33 +65,33 @@ func (s Stage) loopUntilExit() {
 		trigger, ok := targetedThing.Triggers[inputAction.Name]; if ok {
 			err := logic.EvaluateTrigger(s.state, trigger)
                         if err != nil {
-                                io.NewLinef("Error evaluating trigger: %v", trigger)
+                                io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
                         }
 		}
 	}
 }
 
 func executeTravelCommand(travelTarget string, state *state.State) bool {
-	trimmed := io.Trim(strings.ToLower(travelTarget))
+	trimmed := consoleio.Trim(strings.ToLower(travelTarget))
 	exit, exists := state.CurrentArea.Exits[area.Direction(trimmed)]
 	if exists {
 		state.CurrentArea = exit.To
 		return true
 	}
-	io.NewLinef("Could not find an exit to the %v", trimmed)
+	io.ActiveInputOutputHandler.NewLinef("Could not find an exit to the %v", trimmed)
 	return false
 }
 
 func executeTalkCommand(talkTarget string, state state.State) {
 	for _, being := range state.CurrentArea.Beings {
-		io.NewLine(being.Name)
+		io.ActiveInputOutputHandler.NewLine(being.Name)
 		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
-			io.NewLinef("You speak to %v.", being.Name)
+			io.ActiveInputOutputHandler.NewLinef("You speak to %v.", being.Name)
 			RunWithAlt(being.Speech, being.AltSpeech, state)
 			return
 		}
 	}
-	io.NewLinef("Could not find a %v to talk to!", talkTarget)
+	io.ActiveInputOutputHandler.NewLinef("Could not find a %v to talk to!", talkTarget)
 }
 
 func executeTakeCommand(takeTarget string, state state.State) {
@@ -98,7 +99,7 @@ func executeTakeCommand(takeTarget string, state state.State) {
 	for _, item := range state.CurrentArea.Items {
 		if strings.ToLower(item.GetName()) == strings.ToLower(takeTarget) {
 			if item.GetThing().Visible {
-				io.NewLinef("You take the %v", item.GetName())
+				io.ActiveInputOutputHandler.NewLinef("You take the %v", item.GetName())
 				state.Inventory.StoreItem(item)
 				return
 			}
@@ -107,11 +108,11 @@ func executeTakeCommand(takeTarget string, state state.State) {
 	//TODO refactor. item store already has a method to iterate its store by name
 	for _, feature := range state.CurrentArea.Features {
 		if strings.ToLower(feature.GetName()) == strings.ToLower(takeTarget) {
-			io.NewLinef("You can't really take the %v...", feature.GetName())
+			io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.GetName())
 			return
 		}
 	}
-	io.NewLinef("Couldn't find a %v to pick up.", takeTarget)
+	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
 }
 
 func executeEquipCommand(equipTarget string, state state.State) {
@@ -127,13 +128,13 @@ func executeEquipCommand(equipTarget string, state state.State) {
 			if item != nil && err == nil {
 				state.EquippedItems.StoreItem(*item)
 			} else {
-				io.NewLinef("Failed to equip item...")
+				io.ActiveInputOutputHandler.NewLinef("Failed to equip item...")
 			}
 		} else {
-			io.NewLinef("How do you expect to equip the %v?", equipTarget)
+			io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", equipTarget)
 		}
 	} else {
-		io.NewLinef("%v", err)
-		io.NewLinef("Do not have a %v to equip.", equipTarget)
+		io.ActiveInputOutputHandler.NewLinef("%v", err)
+		io.ActiveInputOutputHandler.NewLinef("Do not have a %v to equip.", equipTarget)
 	}
 }

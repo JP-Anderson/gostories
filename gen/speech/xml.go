@@ -16,7 +16,7 @@ import (
 func SpeechFromXMLFile(filepath string) speech.Tree {
 	absPath, err := path.Abs(filepath)
 	if err != nil {
-		io.NewLinef("Error finding absolute path for file [%v]: %v", filepath, err)
+		io.ActiveInputOutputHandler.NewLinef("Error finding absolute path for file [%v]: %v", filepath, err)
 	}
 	bytes, err := ioutil.ReadFile(absPath)
 	if err != nil {
@@ -29,7 +29,7 @@ func speechFromXML(xmlBytes []byte) speech.Tree {
 	t := &speech.Tree{}
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
-		io.NewLinef("speechFromXML failed: %v", err)
+		io.ActiveInputOutputHandler.NewLinef("speechFromXML failed: %v", err)
 	}
 	return *t
 }
