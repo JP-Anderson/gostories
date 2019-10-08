@@ -5,6 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"gostories/engine/io"
+	"gostories/engine/io/mock"
 	"gostories/engine/state"
 	"gostories/things/area"
 	"gostories/things"
@@ -12,7 +14,10 @@ import (
 )
 
 func TestLookCommandWithValidTarget(t *testing.T) {
-        testArea := &area.Area{}
+	mockedIOHandler := mockio.NewMockInputOutputHandler()
+	io.ActiveInputOutputHandler = mockedIOHandler
+
+	testArea := &area.Area{}
         testGameState := &state.State {
                 CurrentArea: testArea,
         }
@@ -24,21 +29,30 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 		}
 		result := ExecuteLookCommand("sardines", *testGameState)
 		assert.Equal(t, testItem.GetThing(), result)
-		// TODO: create io mock/monkey patch for asserting text output of the look command.
-		//  or find better way to test this.
+		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+			t,
+			"A tin of tasty sardines preserved in olive oil.",
+			1,
+		)
 	})
 
 }
 
 func TestLookCommandWithInvalidTarget(t *testing.T) {
-        testArea := &area.Area{}
+        mockedIOHandler := mockio.NewMockInputOutputHandler()
+        io.ActiveInputOutputHandler = mockedIOHandler
+
+	testArea := &area.Area{}
         testGameState := &state.State {
                 CurrentArea: testArea,
         }
 
 	result := ExecuteLookCommand("sardines", *testGameState)
 	assert.Nil(t, result)
-	// TODO: create io mock/monkey patch for asserting text output of the look command.
-	//  or find better way to test this.
+	mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		t,
+		"Couldn't find a sardines to look at!",
+		1,
+	)
 }
 
