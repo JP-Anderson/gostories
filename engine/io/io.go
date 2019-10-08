@@ -5,6 +5,9 @@ import (
 	"gostories/parser"
 )
 
+// ActiveInputOutputHandler bridges the game engine with whatever Input/Output handler is in use. For unit
+// testing, this variable is monkey patched. In the future, will review if this should be injected rather
+// than monkey patched.
 var ActiveInputOutputHandler InputOutputHandler = console.NewConsoleInputOutputHandler()
 
 // InputOutputHandler specifies the behaviour a component must implement in order to pass input into

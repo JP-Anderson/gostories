@@ -10,10 +10,13 @@ import (
         "gostories/parser"
 )
 
+// ConsoleInputOutputHandler manages the games user Input and Output through some "standard" Go
+// packages such as "os" and "bufio".
 type ConsoleInputOutputHandler struct {
         reader *bufio.Reader
 }
 
+// NewConsoleInputOutputHandler creates a simple Input Output Handler for playing the game via console.
 func NewConsoleInputOutputHandler() *ConsoleInputOutputHandler {
         return &ConsoleInputOutputHandler {
                 reader: bufio.NewReader(os.Stdin),
@@ -38,14 +41,6 @@ func (c *ConsoleInputOutputHandler)  ReadInt() (i int, e error) {
         return strconv.Atoi(input)
 }
 
-func (c *ConsoleInputOutputHandler) readString() string {
-        input, err := c.reader.ReadString('\n')
-        if err != nil {
-                c.NewLinef("ReadString error: %v", err)
-        }
-        return input
-}
-
 // SimpleParse parses input from the user. Currently only one or two (space-separated) strings can
 // be parsed. SimpleParse returns the first string as an action (if recognised), and the second
 // string (the target verb) as is.
@@ -59,6 +54,15 @@ func (c *ConsoleInputOutputHandler) SimpleParse() (parser.Action, string) {
         }
         return parser.Unknown(), ""
 }
+
+func (c *ConsoleInputOutputHandler) readString() string {
+        input, err := c.reader.ReadString('\n')
+        if err != nil {
+                c.NewLinef("ReadString error: %v", err)
+        }
+        return input
+}
+
 
 const linuxCutset = "\n"
 const windowsCutset = "\r" + linuxCutset
