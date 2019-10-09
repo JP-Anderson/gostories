@@ -116,14 +116,11 @@ func executeTakeCommand(takeTarget string, state state.State) {
 }
 
 func executeEquipCommand(equipTarget string, state state.State) {
-	defer func() {
-		recover()
-	}()
 	item, err := state.Inventory.GetItemWithName(equipTarget)
 	if err == nil {
 		var itemInterface interface{}
 		itemInterface = *item
-		if ok := itemInterface.(things.Equippable); ok != nil {
+		_, ok := itemInterface.(things.Equippable); if ok {
 			item, err := state.Inventory.RemoveItemWithName(equipTarget)
 			if item != nil && err == nil {
 				state.EquippedItems.StoreItem(*item)
