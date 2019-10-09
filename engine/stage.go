@@ -8,7 +8,6 @@ import (
 	"gostories/engine/inventory"
 	"gostories/engine/logic"
 	"gostories/engine/io"
-	"gostories/engine/io/console"
 	"gostories/things"
 	"gostories/things/area"
 )
@@ -29,11 +28,11 @@ func (s Stage) Start(area area.Area) {
 }
 
 func (s Stage) loopUntilExit() {
-	newArea := true
+	isNewArea := true
 	for {
-		if newArea {
+		if isNewArea {
 			io.ActiveInputOutputHandler.NewLine(s.state.CurrentArea.Look)
-			newArea = false
+			isNewArea = false
 		}
 		// TODO: move the action parsing to another file/function
 		inputAction, noun := io.ActiveInputOutputHandler.SimpleParse()
@@ -42,7 +41,7 @@ func (s Stage) loopUntilExit() {
 		if inputAction.Name == "look" {
 			targetedThing = action.ExecuteLookCommand(noun, s.state)
 		} else if inputAction.Name == "travel" {
-			newArea = executeTravelCommand(noun, &s.state)
+			isNewArea = action.ExecuteTravelCommand(noun, &s.state)
 		} else if inputAction.Name == "talk" {
 			executeTalkCommand(noun, s.state)
 		} else if inputAction.Name == "take" {
@@ -69,17 +68,6 @@ func (s Stage) loopUntilExit() {
                         }
 		}
 	}
-}
-
-func executeTravelCommand(travelTarget string, state *state.State) bool {
-	trimmed := consoleio.Trim(strings.ToLower(travelTarget))
-	exit, exists := state.CurrentArea.Exits[area.Direction(trimmed)]
-	if exists {
-		state.CurrentArea = exit.To
-		return true
-	}
-	io.ActiveInputOutputHandler.NewLinef("Could not find an exit to the %v", trimmed)
-	return false
 }
 
 func executeTalkCommand(talkTarget string, state state.State) {
