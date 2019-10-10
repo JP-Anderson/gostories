@@ -9,7 +9,6 @@ import (
 	"gostories/speech"
 )
 
-
 // SpeechFromXMLFile takes a filepath string and attempts to load an XML file from the path, and parse it into a
 // speech.Tree object.
 // TODO: error handling

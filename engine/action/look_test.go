@@ -6,11 +6,11 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"gostories/engine/io"
-	"gostories/engine/io/mock"
+	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
-	"gostories/things/area"
-	"gostories/things"
 	"gostories/gen/items"
+	"gostories/things"
+	"gostories/things/area"
 )
 
 func TestLookCommandWithValidTarget(t *testing.T) {
@@ -18,9 +18,9 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 	io.ActiveInputOutputHandler = mockedIOHandler
 
 	testArea := &area.Area{}
-        testGameState := &state.State {
-                CurrentArea: testArea,
-        }
+	testGameState := &state.State{
+		CurrentArea: testArea,
+	}
 
 	t.Run("valid item target", func(t *testing.T) {
 		testItem := items.ItemSardines
@@ -39,13 +39,13 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 }
 
 func TestLookCommandWithInvalidTarget(t *testing.T) {
-        mockedIOHandler := mockio.NewMockInputOutputHandler()
-        io.ActiveInputOutputHandler = mockedIOHandler
+	mockedIOHandler := mockio.NewMockInputOutputHandler()
+	io.ActiveInputOutputHandler = mockedIOHandler
 
 	testArea := &area.Area{}
-        testGameState := &state.State {
-                CurrentArea: testArea,
-        }
+	testGameState := &state.State{
+		CurrentArea: testArea,
+	}
 
 	result := ExecuteLookCommand("sardines", *testGameState)
 	assert.Nil(t, result)
@@ -55,4 +55,3 @@ func TestLookCommandWithInvalidTarget(t *testing.T) {
 		1,
 	)
 }
-

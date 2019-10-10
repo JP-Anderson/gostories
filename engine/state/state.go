@@ -12,4 +12,3 @@ type State struct {
 	Inventory     *inventory.Inventory
 	EquippedItems *inventory.EquippedItems
 }
-

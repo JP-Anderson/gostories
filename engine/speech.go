@@ -1,9 +1,9 @@
 package engine
 
 import (
-	"gostories/engine/state"
 	"gostories/engine/io"
 	"gostories/engine/logic"
+	"gostories/engine/state"
 	"gostories/speech"
 )
 
@@ -41,7 +41,8 @@ func Run(speech speech.Tree, gameState state.State) bool {
 		io.ActiveInputOutputHandler.NewLine(curr.Speech)
 		if curr.Trigger != "" {
 			io.ActiveInputOutputHandler.NewLine(curr.Trigger)
-			err := logic.EvaluateTrigger(gameState, curr.Trigger); if err != nil {
+			err := logic.EvaluateTrigger(gameState, curr.Trigger)
+			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("%v", err)
 			}
 		}
@@ -51,7 +52,8 @@ func Run(speech speech.Tree, gameState state.State) bool {
 			io.ActiveInputOutputHandler.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
 				io.ActiveInputOutputHandler.NewLine(response.Trigger)
-				err := logic.EvaluateTrigger(gameState, response.Trigger); if err != nil {
+				err := logic.EvaluateTrigger(gameState, response.Trigger)
+				if err != nil {
 					io.ActiveInputOutputHandler.NewLinef("%v", err)
 				}
 			}

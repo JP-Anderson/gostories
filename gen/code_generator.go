@@ -41,7 +41,7 @@ func WriteItemsFile() error {
 	items := []itemToAdd{
 		itemToAdd{"collar", "A small red cat collar with a bell.", false, true},
 		itemToAdd{"shrubbery", "A small but rather well cared for shrubbery.", true, false},
-	        itemToAdd{"sardines", "A tin of tasty sardines preserved in olive oil.", true, false},
+		itemToAdd{"sardines", "A tin of tasty sardines preserved in olive oil.", true, false},
 	}
 	addItemMap(items, b)
 	addItemStructs(items, b)
@@ -256,7 +256,6 @@ func (c *[N]Item) Toggle() {}
 	}
 
 	fileStr = strings.Replace(fileStr, "[N]", upperName, -1)
-
 
 	fsBytes := []byte(fileStr)
 	writer.Write(fsBytes)

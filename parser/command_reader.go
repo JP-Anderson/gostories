@@ -34,7 +34,7 @@ var actions = map[string]Action{
 	"exit":   travelAction,
 	"walk":   travelAction,
 	"travel": travelAction,
-	"go":     travelAction,	
+	"go":     travelAction,
 	"w":      travelAction,
 
 	"take": takeAction,

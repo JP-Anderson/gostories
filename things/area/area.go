@@ -63,7 +63,7 @@ func (a Area) CheckAreaBeingsForThing(targetName string) *things.Thing {
 }
 
 // CheckAreaFeaturesForThing takes a target Feature name, it iterates through the Feature objects
-// stored in the Area, and returns a Thing pointer to the Feature if it exists. Note, this method 
+// stored in the Area, and returns a Thing pointer to the Feature if it exists. Note, this method
 // does not take into account if the Feature is visible to the player.
 func (a Area) CheckAreaFeaturesForThing(targetName string) *things.Thing {
 	for _, f := range a.Features {

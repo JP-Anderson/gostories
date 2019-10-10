@@ -12,7 +12,7 @@ import (
 // MockInputOutputHandler mocks the InputOutputHandler for the purposes of asserting data that
 // has been Output from the engine.
 type MockInputOutputHandler struct {
-        output []string
+	output []string
 }
 
 // ExpectedStringEqualsNthOutputString returns true if the string output value created on the Nth call
@@ -23,29 +23,28 @@ func (c *MockInputOutputHandler) ExpectedStringEqualsNthOutputString(t *testing.
 
 // NewMockInputOutputHandler creates a new MockInputOutputHandler for use in testing.
 func NewMockInputOutputHandler() *MockInputOutputHandler {
-        return &MockInputOutputHandler {}
+	return &MockInputOutputHandler{}
 }
 
 // NewLine takes a string and adds it to the internal output tracker for assertions.
 func (c *MockInputOutputHandler) NewLine(newOutput string) error {
-        c.output = append(c.output, newOutput)
-        return nil
+	c.output = append(c.output, newOutput)
+	return nil
 }
 
 // NewLinef takes a string and adds it to the internal output tracker for assertions.
 func (c *MockInputOutputHandler) NewLinef(output string, args ...interface{}) error {
-        return c.NewLine(fmt.Sprintf(output, args...))
+	return c.NewLine(fmt.Sprintf(output, args...))
 }
 
-// ReadInt isn't yet used but is needed for the interface 
-func (c *MockInputOutputHandler)  ReadInt() (i int, e error) {
-        // TODO: provide a method for pre-loading ReadInt with a series of int/error returns
-        return -1, nil
+// ReadInt isn't yet used but is needed for the interface
+func (c *MockInputOutputHandler) ReadInt() (i int, e error) {
+	// TODO: provide a method for pre-loading ReadInt with a series of int/error returns
+	return -1, nil
 }
 
 // SimpleParse isn't yet used
 func (c *MockInputOutputHandler) SimpleParse() (parser.Action, string) {
-        // TODO: provide a method for pre-loading with a series of Action/string returns
-        return parser.Unknown(), ""
+	// TODO: provide a method for pre-loading with a series of Action/string returns
+	return parser.Unknown(), ""
 }
-

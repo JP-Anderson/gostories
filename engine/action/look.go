@@ -39,4 +39,3 @@ func ExecuteLookCommand(lookTarget string, gameState state.State) (target *thing
 	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to look at!", lookTarget)
 	return
 }
-

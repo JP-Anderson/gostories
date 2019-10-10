@@ -15,4 +15,3 @@ type Feature interface {
 	// Get the Thing
 	GetThing() *Thing
 }
-

@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"gostories/engine/io"
-	"gostories/engine/io/console"
+	consoleio "gostories/engine/io/console"
 	"gostories/engine/state"
 	"gostories/things/area"
 )
@@ -22,4 +22,3 @@ func ExecuteTravelCommand(travelTarget string, state *state.State) bool {
 	io.ActiveInputOutputHandler.NewLinef("Could not find an exit to the %v", trimmed)
 	return false
 }
-

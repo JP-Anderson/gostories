@@ -87,43 +87,43 @@ func (i *ItemStore) ContainsMatch(matcher func(item things.Item) bool) bool {
 // returns an error.
 func (i *ItemStore) GetItemWithName(itemName string) (*things.Item, error) {
 	index, err := i.getIndexForItemName(itemName)
-        if err != nil {
-                return nil, err
-        }
+	if err != nil {
+		return nil, err
+	}
 	return i.getItemAtIndex(index)
 }
 
 func (i *ItemStore) getIndexForItemName(itemName string) (int, error) {
 	index := findByName(i.items, itemName)
-        if index < 0 {
-                return -1, errors.New("item not present")
-        }
+	if index < 0 {
+		return -1, errors.New("item not present")
+	}
 	return index, nil
 }
 
 func (i *ItemStore) getItemAtIndex(index int) (*things.Item, error) {
-        if index >= len(i.items) {
-                return nil, errors.New("Index exceeds item slice length.")
-        }
-        if index < 0 {
-                return nil, errors.New("Index cannot be less than 0")
-        }
-        item := i.items[index]
-        return &item, nil
+	if index >= len(i.items) {
+		return nil, errors.New("Index exceeds item slice length.")
+	}
+	if index < 0 {
+		return nil, errors.New("Index cannot be less than 0")
+	}
+	item := i.items[index]
+	return &item, nil
 }
 
 // RemoveItem takes an Item and removes the first Item with that name from the ItemStore, or it returns an error.
 func (i *ItemStore) RemoveItem(item things.Item) (*things.Item, error) {
-        return i.RemoveItemWithName(item.GetName())
+	return i.RemoveItemWithName(item.GetName())
 }
 
 // RemoveItemWithName removes the first Item matching the provided name from the ItemStore, or it returns an error.
 func (i *ItemStore) RemoveItemWithName(itemName string) (*things.Item, error) {
-        index, err := i.getIndexForItemName(itemName)
-        if err != nil {
-                return nil, err
-        }
-        return i.removeItemAtIndex(index)
+	index, err := i.getIndexForItemName(itemName)
+	if err != nil {
+		return nil, err
+	}
+	return i.removeItemAtIndex(index)
 }
 
 func (i *ItemStore) removeItemAtIndex(indexToRemove int) (*things.Item, error) {
@@ -145,4 +145,3 @@ func findByName(items []things.Item, desiredItemName string) int {
 	}
 	return -1
 }
-

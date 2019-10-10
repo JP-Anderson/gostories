@@ -1,9 +1,9 @@
 package action
 
 import (
-	"gostories/engine/inventory"
 	"testing"
 
+	"gostories/engine/inventory"
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"

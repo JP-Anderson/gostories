@@ -2,7 +2,7 @@ package things
 
 // A Thing is anything in the game that can be interacted with in some way. All Things have
 // a Name (identifying string), LookText (text which is output when the player executes the
-// Look action on the Thing, a Visible attribute (is the Thing currently revealed to the 
+// Look action on the Thing, a Visible attribute (is the Thing currently revealed to the
 // player, and a set of Triggers. Triggers have effect on the game state, based on
 // interactions the player makes with the object.
 type Thing struct {

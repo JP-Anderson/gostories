@@ -24,7 +24,7 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 	ref1.Show()
 
 	ref2 := testArea.CheckAreaItemsForThing("collar")
-	
+
 	assert.True(t, ref1.Visible)
 	assert.True(t, ref2.Visible)
 }
