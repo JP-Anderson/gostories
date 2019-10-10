@@ -45,11 +45,8 @@ func triggerRevealItem(gameState state.State, itemName string) error {
 }
 
 func triggerAddItem(gameState state.State, itemName string) error {
-	io.ActiveInputOutputHandler.NewLinef("%#v", items.Items)
-	io.ActiveInputOutputHandler.NewLinef("Looking for %v", itemName)
 	i, ok := items.Items[itemName]
 	if ok {
-		io.ActiveInputOutputHandler.NewLine("Found!")
 		gameState.Inventory.StoreItem(i)
 	}
 	return nil

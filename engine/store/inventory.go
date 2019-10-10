@@ -41,8 +41,9 @@ func (e *EquippedItems) StoreItem(newItem things.Item) bool {
 	if ok {
 		io.ActiveInputOutputHandler.NewLinef("You equipped the %v.", newItem.GetName())
 		e.ItemStore.StoreItem(newItem)
+	} else {
+		io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", newItem.GetName())
 	}
-	io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", newItem.GetName())
 	return ok
 }
 

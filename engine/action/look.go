@@ -19,6 +19,7 @@ func ExecuteLookCommand(lookTarget string, gameState *state.State) (target *thin
 
 	if lookTarget == "" {
 		io.ActiveInputOutputHandler.NewLine(gameState.CurrentArea.Look)
+		return
 	}
 
 	item := gameState.CurrentArea.FindItemByName(lookTarget)
