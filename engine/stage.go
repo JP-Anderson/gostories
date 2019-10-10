@@ -4,22 +4,22 @@ import (
 	"strings"
 
 	"gostories/engine/action"
-	"gostories/engine/store"
 	"gostories/engine/io"
 	"gostories/engine/logic"
 	"gostories/engine/state"
+	"gostories/engine/store"
 	"gostories/things"
 	"gostories/things/area"
 )
 
 // Stage holds the main game state and the game control loop.
 type Stage struct {
-	state state.State
+	state *state.State
 }
 
 // Start initialise a Stage, it is passed an Area, which is used to initialise the game state.
 func (s Stage) Start(area area.Area) {
-	s.state = state.State{
+	s.state = &state.State{
 		CurrentArea:   &area,
 		Inventory:     store.NewInventory(),
 		EquippedItems: store.NewEquippedItems(),
@@ -41,13 +41,13 @@ func (s Stage) loopUntilExit() {
 		if inputAction.Name == "look" {
 			targetedThing = action.ExecuteLookCommand(noun, s.state)
 		} else if inputAction.Name == "travel" {
-			isNewArea = action.ExecuteTravelCommand(noun, &s.state)
+			isNewArea = action.ExecuteTravelCommand(noun, s.state)
 		} else if inputAction.Name == "talk" {
 			executeTalkCommand(noun, s.state)
 		} else if inputAction.Name == "take" {
-			action.ExecuteTakeCommand(noun, &s.state)
+			action.ExecuteTakeCommand(noun, s.state)
 		} else if inputAction.Name == "equip" {
-			action.ExecuteEquipCommand(noun, &s.state)
+			action.ExecuteEquipCommand(noun, s.state)
 		} else if inputAction.Name == "inventory" {
 			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
 			s.state.Inventory.PrintContents()
@@ -63,7 +63,7 @@ func (s Stage) loopUntilExit() {
 		}
 		trigger, ok := targetedThing.Triggers[inputAction.Name]
 		if ok {
-			err := logic.EvaluateTrigger(s.state, trigger)
+			err := logic.EvaluateTrigger(*s.state, trigger)
 			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
 			}
@@ -71,12 +71,12 @@ func (s Stage) loopUntilExit() {
 	}
 }
 
-func executeTalkCommand(talkTarget string, state state.State) {
+func executeTalkCommand(talkTarget string, state *state.State) {
 	for _, being := range state.CurrentArea.Beings {
 		io.ActiveInputOutputHandler.NewLine(being.Name)
 		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
 			io.ActiveInputOutputHandler.NewLinef("You speak to %v.", being.Name)
-			RunWithAlt(being.Speech, being.AltSpeech, state)
+			RunWithAlt(being.Speech, being.AltSpeech, *state)
 			return
 		}
 	}

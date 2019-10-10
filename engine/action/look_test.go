@@ -5,10 +5,10 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/store"
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
+	"gostories/engine/store"
 	"gostories/gen/items"
 	"gostories/things/area"
 )
@@ -26,7 +26,7 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 		testItem := items.ItemSardines
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
-		result := ExecuteLookCommand("sardines", *testGameState)
+		result := ExecuteLookCommand("sardines", testGameState)
 		assert.Equal(t, testItem.GetThing(), result)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(
 			t,
@@ -45,8 +45,9 @@ func TestLookCommandWithInvalidTarget(t *testing.T) {
 	testGameState := &state.State{
 		CurrentArea: testArea,
 	}
+	testArea.Items = store.NewItemStore()
 
-	result := ExecuteLookCommand("sardines", *testGameState)
+	result := ExecuteLookCommand("sardines", testGameState)
 	assert.Nil(t, result)
 	mockedIOHandler.ExpectedStringEqualsNthOutputString(
 		t,
