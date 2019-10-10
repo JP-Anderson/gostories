@@ -2,6 +2,7 @@ package main
 
 import (
 	"gostories/engine"
+	"gostories/engine/inventory"
 	"gostories/gen/features"
 	"gostories/gen/items"
 	"gostories/things"
@@ -40,23 +41,24 @@ func main() {
 	// Add item
 	collar := items.ItemCollar
 	collar.Hide()
-	storeRoom.Items = append(storeRoom.Items, collar)
+	storeRoom.Items.StoreItem(collar)
 
 	sardines := items.ItemSardines
 	sardines.Hide()
-	kitchen.Items = append(kitchen.Items, sardines)
+	kitchen.Items.StoreItem(sardines)
 
 	stage := engine.Stage{}
 	stage.Start(catRoom)
 }
 
 // TODO move area construction out of main
+// TODO NewArea builder which creates empty stores etc
 func catRoom() area.Area {
 	return area.Area{
 		Look:   "You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
 		Beings: []things.Being{things.NewBubbles()},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  []things.Item{},
+		Items:  inventory.NewItemStore(),
 	}
 }
 
@@ -65,7 +67,7 @@ func storeRoom() area.Area {
 		Look:   "You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
 		Beings: []things.Being{},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  []things.Item{},
+		Items:  inventory.NewItemStore(),
 		Features: []things.Feature{
 			features.FeatureShelf,
 		},
@@ -77,7 +79,7 @@ func kitchenRoom() area.Area {
 		Look:   "You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.",
 		Beings: []things.Being{},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  []things.Item{},
+		Items:  inventory.NewItemStore(),
 		Features: []things.Feature{
 			features.FeatureFridge,
 		},

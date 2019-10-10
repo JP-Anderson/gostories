@@ -15,7 +15,9 @@ type Inventory struct {
 
 // NewInventory returns a new Inventory ItemStore
 func NewInventory() *Inventory {
-	return &Inventory{}
+	return &Inventory{
+		ItemStore: *NewItemStore(),
+	}
 }
 
 // EquippedItems is an ItemStore for storing equippable Items the player has equipped. Currently it just contains
@@ -28,13 +30,22 @@ type EquippedItems struct {
 
 // NewEquippedItems returns a new ItemStore for storing items the player has equipped.
 func NewEquippedItems() *EquippedItems {
-	return &EquippedItems{}
+	return &EquippedItems{
+		ItemStore: *NewItemStore(),
+	}
 }
 
 // ItemStore is a wrapper around a slice of things.Item, which provides helper methods for adding and removing Items
 // from the slice.
 type ItemStore struct {
 	items []things.Item
+}
+
+// NewItemStore returns a generic Item container.
+func NewItemStore() *ItemStore {
+	return &ItemStore{
+		items: []things.Item{},
+	}
 }
 
 // PrintContents prints the name of each Item in the ItemStore.

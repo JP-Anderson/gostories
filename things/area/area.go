@@ -3,6 +3,7 @@ package area
 import (
 	"strings"
 
+	"gostories/engine/inventory"
 	"gostories/things"
 )
 
@@ -12,7 +13,7 @@ import (
 type Area struct {
 	Look     string
 	Exits    map[Direction]Exit
-	Items    []things.Item
+	Items    *inventory.ItemStore
 	Beings   []things.Being
 	Features []things.Feature
 }
@@ -40,10 +41,9 @@ const (
 // returns any Item with a matching name (not case-sensitive). Note, this method does not take into
 // account if the Item is visible to the player.
 func (a Area) FindItemByName(targetName string) things.Item {
-	for _, item := range a.Items {
-		if strings.ToLower(item.GetName()) == strings.ToLower(targetName) {
-			return item
-		}
+	item, err := a.Items.GetItemWithName(targetName)
+	if item != nil && err == nil {
+		return *item
 	}
 	return nil
 }

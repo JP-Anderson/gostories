@@ -45,7 +45,7 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "talk" {
 			executeTalkCommand(noun, s.state)
 		} else if inputAction.Name == "take" {
-			executeTakeCommand(noun, s.state)
+			action.ExecuteTakeCommand(noun, &s.state)
 		} else if inputAction.Name == "equip" {
 			action.ExecuteEquipCommand(noun, &s.state)
 		} else if inputAction.Name == "inventory" {
@@ -81,20 +81,4 @@ func executeTalkCommand(talkTarget string, state state.State) {
 		}
 	}
 	io.ActiveInputOutputHandler.NewLinef("Could not find a %v to talk to!", talkTarget)
-}
-
-func executeTakeCommand(takeTarget string, state state.State) {
-	item := state.CurrentArea.FindItemByName(takeTarget)
-	if item != nil && item.GetThing().Visible {
-		io.ActiveInputOutputHandler.NewLinef("You take the %v", item.GetName())
-		state.Inventory.StoreItem(item)
-		return
-	}
-
-	feature := state.CurrentArea.CheckAreaFeaturesForThing(takeTarget)
-	if feature != nil && strings.ToLower(feature.Name) == strings.ToLower(takeTarget) {
-		io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.Name)
-		return
-	}
-	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
 }
