@@ -23,7 +23,6 @@ func NewInventory() *Inventory {
 // EquippedItems is an ItemStore for storing equippable Items the player has equipped. Currently it just contains
 // a regular ItemStore.
 // TODO: Introduce limited equipment slots
-// TODO: Enforce this to store only Equippables rather than making users of this struct handle this.
 type EquippedItems struct {
 	ItemStore
 }
@@ -33,6 +32,18 @@ func NewEquippedItems() *EquippedItems {
 	return &EquippedItems{
 		ItemStore: *NewItemStore(),
 	}
+}
+
+// StoreItem takes an Item and checks if it is an Equippable Item. If it is, is passes the item through to the
+// ItemStore method StoreItem to store the Item as normal.
+func (e *EquippedItems) StoreItem(newItem things.Item) bool {
+	_, ok := newItem.(things.Equippable)
+	if ok {
+		io.ActiveInputOutputHandler.NewLinef("You equipped the %v.", newItem.GetName())
+		e.ItemStore.StoreItem(newItem)
+	}
+	io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", newItem.GetName())
+	return ok
 }
 
 // ItemStore is a wrapper around a slice of things.Item, which provides helper methods for adding and removing Items

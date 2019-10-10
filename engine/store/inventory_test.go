@@ -109,6 +109,20 @@ func TestContainsMatchNegative(t *testing.T) {
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))
 }
 
+func TestEquippedItemsStoreItemDoesNotStoreNonEquippables(t *testing.T) {
+	equippedItems := NewEquippedItems()
+	output := equippedItems.StoreItem(items.ItemShrubbery)
+	assert.False(t, output)
+	assert.Equal(t, 0, equippedItems.Size())
+}
+
+func TestEquippedItemsStoreItemCanStoreEquippables(t *testing.T) {
+	equippedItems := NewEquippedItems()
+	output := equippedItems.StoreItem(items.ItemCollar)
+	assert.True(t, output)
+	assert.Equal(t, 1, equippedItems.Size())
+}
+
 func getTestItem() things.Item {
 	return items.ItemCollar
 }
