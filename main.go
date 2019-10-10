@@ -2,7 +2,7 @@ package main
 
 import (
 	"gostories/engine"
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/gen/features"
 	"gostories/gen/items"
 	"gostories/things"
@@ -58,7 +58,7 @@ func catRoom() area.Area {
 		Look:   "You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
 		Beings: []things.Being{things.NewBubbles()},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  inventory.NewItemStore(),
+		Items:  store.NewItemStore(),
 	}
 }
 
@@ -67,7 +67,7 @@ func storeRoom() area.Area {
 		Look:   "You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
 		Beings: []things.Being{},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  inventory.NewItemStore(),
+		Items:  store.NewItemStore(),
 		Features: []things.Feature{
 			features.FeatureShelf,
 		},
@@ -79,7 +79,7 @@ func kitchenRoom() area.Area {
 		Look:   "You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.",
 		Beings: []things.Being{},
 		Exits:  make(map[area.Direction]area.Exit),
-		Items:  inventory.NewItemStore(),
+		Items:  store.NewItemStore(),
 		Features: []things.Feature{
 			features.FeatureFridge,
 		},

@@ -3,7 +3,7 @@ package area
 import (
 	"strings"
 
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/things"
 )
 
@@ -13,7 +13,7 @@ import (
 type Area struct {
 	Look     string
 	Exits    map[Direction]Exit
-	Items    *inventory.ItemStore
+	Items    *store.ItemStore
 	Beings   []things.Being
 	Features []things.Feature
 }

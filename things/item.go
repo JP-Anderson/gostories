@@ -1,6 +1,6 @@
 package things
 
-// An Item is something the player can pick up and place in their inventory.
+// An Item is something the player can pick up and place in their store.
 type Item interface {
 
 	// Get the Name of the item.

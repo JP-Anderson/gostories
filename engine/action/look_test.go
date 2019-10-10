@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
@@ -24,7 +24,7 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 
 	t.Run("valid item target", func(t *testing.T) {
 		testItem := items.ItemSardines
-		testArea.Items = inventory.NewItemStore()
+		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		result := ExecuteLookCommand("sardines", *testGameState)
 		assert.Equal(t, testItem.GetThing(), result)

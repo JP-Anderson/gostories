@@ -8,7 +8,7 @@ import (
 )
 
 // ExecuteTakeCommand given a target string will search the Item objects in the current game Area
-// of the State. If any Item names match the target, they will be added to the player inventory.
+// of the State. If any Item names match the target, they will be added to the player store.
 func ExecuteTakeCommand(takeTarget string, state *state.State) {
 	item := state.CurrentArea.FindItemByName(takeTarget)
 	if item != nil && item.GetThing().Visible {

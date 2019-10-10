@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"gostories/engine/action"
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/engine/io"
 	"gostories/engine/logic"
 	"gostories/engine/state"
@@ -21,8 +21,8 @@ type Stage struct {
 func (s Stage) Start(area area.Area) {
 	s.state = state.State{
 		CurrentArea:   &area,
-		Inventory:     inventory.NewInventory(),
-		EquippedItems: inventory.NewEquippedItems(),
+		Inventory:     store.NewInventory(),
+		EquippedItems: store.NewEquippedItems(),
 	}
 	s.loopUntilExit()
 }
@@ -49,7 +49,7 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "equip" {
 			action.ExecuteEquipCommand(noun, &s.state)
 		} else if inputAction.Name == "inventory" {
-			io.ActiveInputOutputHandler.NewLine("You take stock of your inventory.")
+			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
 			s.state.Inventory.PrintContents()
 			io.ActiveInputOutputHandler.NewLine("You have the following equipped:")
 			s.state.EquippedItems.PrintContents()

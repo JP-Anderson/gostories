@@ -1,7 +1,7 @@
 package state
 
 import (
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/things/area"
 )
 
@@ -9,6 +9,6 @@ import (
 // and the players carried items.
 type State struct {
 	CurrentArea   *area.Area
-	Inventory     *inventory.Inventory
-	EquippedItems *inventory.EquippedItems
+	Inventory     *store.Inventory
+	EquippedItems *store.EquippedItems
 }

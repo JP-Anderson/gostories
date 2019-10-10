@@ -1,7 +1,7 @@
 package action
 
 import (
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -20,12 +20,12 @@ func TestTakeCommandWithValidTarget(t *testing.T) {
 	testArea := &area.Area{}
 	testGameState := &state.State{
 		CurrentArea: testArea,
-		Inventory:   inventory.NewInventory(),
+		Inventory:   store.NewInventory(),
 	}
 
 	t.Run("item added to inventory and removed from area", func(t *testing.T) {
 		testItem := items.ItemSardines
-		testArea.Items = inventory.NewItemStore()
+		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		ExecuteTakeCommand("sardines", testGameState)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(

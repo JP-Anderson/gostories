@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
@@ -20,8 +20,8 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 	testArea := &area.Area{}
 	testGameState := &state.State{
 		CurrentArea:   testArea,
-		Inventory:     inventory.NewInventory(),
-		EquippedItems: inventory.NewEquippedItems(),
+		Inventory:     store.NewInventory(),
+		EquippedItems: store.NewEquippedItems(),
 	}
 
 	t.Run("valid item target", func(t *testing.T) {
@@ -45,8 +45,8 @@ func TestEquipCommandWithInvalidTarget(t *testing.T) {
 	testArea := &area.Area{}
 	testGameState := &state.State{
 		CurrentArea:   testArea,
-		Inventory:     inventory.NewInventory(),
-		EquippedItems: inventory.NewEquippedItems(),
+		Inventory:     store.NewInventory(),
+		EquippedItems: store.NewEquippedItems(),
 	}
 
 	t.Run("missing item", func(t *testing.T) {

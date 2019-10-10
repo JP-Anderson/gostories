@@ -1,7 +1,7 @@
 package area
 
 import (
-	"gostories/engine/inventory"
+	"gostories/engine/store"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,7 +14,7 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 	item := getTestItem()
 	assert.False(t, item.GetThing().Visible)
 	testArea := Area{
-		Items: inventory.NewItemStore(),
+		Items: store.NewItemStore(),
 	}
 	testArea.Items.StoreItem(item)
 
