@@ -4,10 +4,10 @@ import (
 	"strings"
 
 	"gostories/engine/action"
-	"gostories/engine/state"
 	"gostories/engine/inventory"
-	"gostories/engine/logic"
 	"gostories/engine/io"
+	"gostories/engine/logic"
+	"gostories/engine/state"
 	"gostories/things"
 	"gostories/things/area"
 )
@@ -47,7 +47,7 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "take" {
 			executeTakeCommand(noun, s.state)
 		} else if inputAction.Name == "equip" {
-			executeEquipCommand(noun, s.state)
+			action.ExecuteEquipCommand(noun, &s.state)
 		} else if inputAction.Name == "inventory" {
 			io.ActiveInputOutputHandler.NewLine("You take stock of your inventory.")
 			s.state.Inventory.PrintContents()
@@ -61,11 +61,12 @@ func (s Stage) loopUntilExit() {
 		if targetedThing == nil {
 			continue
 		}
-		trigger, ok := targetedThing.Triggers[inputAction.Name]; if ok {
+		trigger, ok := targetedThing.Triggers[inputAction.Name]
+		if ok {
 			err := logic.EvaluateTrigger(s.state, trigger)
-                        if err != nil {
-                                io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
-                        }
+			if err != nil {
+				io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
+			}
 		}
 	}
 }
@@ -101,25 +102,4 @@ func executeTakeCommand(takeTarget string, state state.State) {
 		}
 	}
 	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
-}
-
-func executeEquipCommand(equipTarget string, state state.State) {
-	item, err := state.Inventory.GetItemWithName(equipTarget)
-	if err == nil {
-		var itemInterface interface{}
-		itemInterface = *item
-		_, ok := itemInterface.(things.Equippable); if ok {
-			item, err := state.Inventory.RemoveItemWithName(equipTarget)
-			if item != nil && err == nil {
-				state.EquippedItems.StoreItem(*item)
-			} else {
-				io.ActiveInputOutputHandler.NewLinef("Failed to equip item...")
-			}
-		} else {
-			io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", equipTarget)
-		}
-	} else {
-		io.ActiveInputOutputHandler.NewLinef("%v", err)
-		io.ActiveInputOutputHandler.NewLinef("Do not have a %v to equip.", equipTarget)
-	}
 }
