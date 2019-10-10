@@ -33,12 +33,12 @@ func triggerRemoveItem(gameState state.State, itemName string) error {
 
 func triggerRevealItem(gameState state.State, itemName string) error {
 	io.ActiveInputOutputHandler.NewLinef("Revealing item %v", itemName)
-	item := gameState.CurrentArea.CheckAreaItemsForThing(itemName)
+	item := gameState.CurrentArea.FindItemByName(itemName)
 	if item != nil {
-		if item.Visible {
+		if item.GetThing().Visible {
 			io.ActiveInputOutputHandler.NewLine(itemName + "is already visible")
 		} else {
-			item.Show()
+			item.GetThing().Show()
 		}
 	}
 	return nil

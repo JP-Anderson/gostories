@@ -84,22 +84,17 @@ func executeTalkCommand(talkTarget string, state state.State) {
 }
 
 func executeTakeCommand(takeTarget string, state state.State) {
-	//TODO refactor. item store already has a method to iterate its store by name
-	for _, item := range state.CurrentArea.Items {
-		if strings.ToLower(item.GetName()) == strings.ToLower(takeTarget) {
-			if item.GetThing().Visible {
-				io.ActiveInputOutputHandler.NewLinef("You take the %v", item.GetName())
-				state.Inventory.StoreItem(item)
-				return
-			}
-		}
+	item := state.CurrentArea.FindItemByName(takeTarget)
+	if item != nil && item.GetThing().Visible {
+		io.ActiveInputOutputHandler.NewLinef("You take the %v", item.GetName())
+		state.Inventory.StoreItem(item)
+		return
 	}
-	//TODO refactor. item store already has a method to iterate its store by name
-	for _, feature := range state.CurrentArea.Features {
-		if strings.ToLower(feature.GetName()) == strings.ToLower(takeTarget) {
-			io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.GetName())
-			return
-		}
+
+	feature := state.CurrentArea.CheckAreaFeaturesForThing(takeTarget)
+	if feature != nil && strings.ToLower(feature.Name) == strings.ToLower(takeTarget) {
+		io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.Name)
+		return
 	}
 	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
 }

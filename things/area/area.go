@@ -36,14 +36,13 @@ const (
 	West  = "west"
 )
 
-// CheckAreaItemsForThing takes a target Item name, it iterates through the Item objects stored in
-// the Area, and returns a Thing pointer to the Item if it exists. Note, this method does not take
-// into account if the Item is visible to the player.
-func (a Area) CheckAreaItemsForThing(targetName string) *things.Thing {
-	for _, i := range a.Items {
-		if strings.ToLower(i.GetName()) == strings.ToLower(targetName) {
-			t := i.GetThing()
-			return t
+// FindItemByName takes a target Item name, it iterates through the Item objects stored in the Area, and
+// returns any Item with a matching name (not case-sensitive). Note, this method does not take into
+// account if the Item is visible to the player.
+func (a Area) FindItemByName(targetName string) things.Item {
+	for _, item := range a.Items {
+		if strings.ToLower(item.GetName()) == strings.ToLower(targetName) {
+			return item
 		}
 	}
 	return nil

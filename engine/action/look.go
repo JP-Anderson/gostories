@@ -21,9 +21,9 @@ func ExecuteLookCommand(lookTarget string, gameState state.State) (target *thing
 		io.ActiveInputOutputHandler.NewLine(gameState.CurrentArea.Look)
 	}
 
-	target = gameState.CurrentArea.CheckAreaItemsForThing(lookTarget)
-	if target != nil {
-		return
+	item := gameState.CurrentArea.FindItemByName(lookTarget)
+	if item != nil {
+		return item.GetThing()
 	}
 
 	target = gameState.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
