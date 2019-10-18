@@ -9,7 +9,7 @@ import (
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
 	"gostories/engine/store"
-	"gostories/gen/items"
+	items "gostories/gen/items/v2"
 	"gostories/things/area"
 )
 
@@ -23,7 +23,7 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 	}
 
 	t.Run("valid item target", func(t *testing.T) {
-		testItem := items.ItemSardines
+		testItem := items.Items["sardines"]
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		result := ExecuteLookCommand("sardines", testGameState)

@@ -5,11 +5,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/store"
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
-	"gostories/gen/items"
+	"gostories/engine/store"
+	items "gostories/gen/items/v2"
 	"gostories/things/area"
 )
 
@@ -25,7 +25,7 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 	}
 
 	t.Run("valid item target", func(t *testing.T) {
-		testGameState.Inventory.StoreItem(items.ItemCollar)
+		testGameState.Inventory.StoreItem(items.Items["collar"])
 		assert.Equal(t, 1, testGameState.Inventory.Size())
 		ExecuteEquipCommand("collar", testGameState)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(
@@ -61,7 +61,7 @@ func TestEquipCommandWithInvalidTarget(t *testing.T) {
 	})
 
 	t.Run("non-equippable item", func(t *testing.T) {
-		testGameState.Inventory.StoreItem(items.ItemSardines)
+		testGameState.Inventory.StoreItem(items.Items["sardines"])
 		ExecuteEquipCommand("sardines", testGameState)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(
 			t,

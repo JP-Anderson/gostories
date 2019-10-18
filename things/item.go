@@ -9,9 +9,6 @@ type Item interface {
 	// Description given when Looking at the item.
 	GetLookText() string
 
-	// Take the item into the inventory (not currently used, may remove).
-	Take()
-
 	// Get the Thing returns the base Thing struct attached to the Item
 	GetThing() *Thing
 }

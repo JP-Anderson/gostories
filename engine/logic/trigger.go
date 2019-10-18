@@ -3,7 +3,7 @@ package logic
 import (
 	"gostories/engine/io"
 	"gostories/engine/state"
-	"gostories/gen/items"
+	items "gostories/gen/items/v2"
 )
 
 // EvaluateTrigger when  given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger

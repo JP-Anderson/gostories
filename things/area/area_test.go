@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/gen/items"
+	items "gostories/gen/items/v2"
 	"gostories/things"
 )
 
@@ -30,5 +30,5 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return items.ItemCollar
+	return items.Items["collar"]
 }

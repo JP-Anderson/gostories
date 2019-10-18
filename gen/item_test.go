@@ -10,11 +10,11 @@ func TestLoad(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			err := WriteItemsFile()
-			if err != nil {
-				t.Log(err)
-			}
-			err = WriteFeaturesFile()
+			// err := WriteItemsFile()
+			// if err != nil {
+			// 	t.Log(err)
+			// }
+			err := WriteFeaturesFile()
 			if err != nil {
 				t.Log(err)
 			}

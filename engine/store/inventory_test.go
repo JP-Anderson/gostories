@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/gen/items"
+	items "gostories/gen/items/v2"
 	"gostories/things"
 )
 
@@ -111,22 +111,22 @@ func TestContainsMatchNegative(t *testing.T) {
 
 func TestEquippedItemsStoreItemDoesNotStoreNonEquippables(t *testing.T) {
 	equippedItems := NewEquippedItems()
-	output := equippedItems.StoreItem(items.ItemShrubbery)
+	output := equippedItems.StoreItem(getAnotherTestItem())
 	assert.False(t, output)
 	assert.Equal(t, 0, equippedItems.Size())
 }
 
 func TestEquippedItemsStoreItemCanStoreEquippables(t *testing.T) {
 	equippedItems := NewEquippedItems()
-	output := equippedItems.StoreItem(items.ItemCollar)
+	output := equippedItems.StoreItem(getTestItem())
 	assert.True(t, output)
 	assert.Equal(t, 1, equippedItems.Size())
 }
 
 func getTestItem() things.Item {
-	return items.ItemCollar
+	return items.Items["collar"]
 }
 
 func getAnotherTestItem() things.Item {
-	return items.ItemShrubbery
+	return items.Items["shrubbery"]
 }
