@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	items "gostories/gen/items/v2"
+	"gostories/gen/items"
 	"gostories/things"
 )
 

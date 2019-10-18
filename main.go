@@ -4,7 +4,7 @@ import (
 	"gostories/engine"
 	"gostories/engine/store"
 	"gostories/gen/features"
-	items "gostories/gen/items/v2"
+	"gostories/gen/items"
 	"gostories/things"
 	"gostories/things/area"
 )

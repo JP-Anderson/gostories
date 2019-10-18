@@ -9,7 +9,7 @@ import (
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
 	"gostories/engine/store"
-	items "gostories/gen/items/v2"
+	"gostories/gen/items"
 	"gostories/things/area"
 )
 
