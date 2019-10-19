@@ -1,4 +1,4 @@
-package speechgeneration
+package speech
 
 import (
 	"testing"
@@ -8,9 +8,9 @@ import (
 	"gostories/speech"
 )
 
-func TestSpeechFromXMLFile(t *testing.T) {
-	path := "./speech_data/test.xml"
-	loadedTree := SpeechFromXMLFile(path)
+func TestTree(t *testing.T) {
+	path := "test"
+	loadedTree := Tree(path)
 	assert.Equal(t, getExpectedSimpleResponseTree(), loadedTree)
 }
 
@@ -20,7 +20,7 @@ func TestSpeechFromXml(t *testing.T) {
 }
 
 func TestConditional(t *testing.T) {
-	bubblesSpeech := SpeechFromXMLFile("./speech_data/bubbles_human.xml")
+	bubblesSpeech := Tree("bubbles_human")
 	assert.Equal(t, "item-equipped(collar)", bubblesSpeech.Event.Condition)
 }
 

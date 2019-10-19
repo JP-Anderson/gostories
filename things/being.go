@@ -18,12 +18,8 @@ type Being struct {
 // NewBubbles creates a new Bubbles.
 // Will either construct these from XML in future or find some way to autogenerate.
 func NewBubbles() *Being {
-	translatedSpeech := generator.SpeechFromXMLFile(
-		speechDataRoot + "bubbles_human.xml",
-	)
-	catSpeech := generator.SpeechFromXMLFile(
-		speechDataRoot + "bubbles.xml",
-	)
+	translatedSpeech := generator.Tree("bubbles_human")
+	catSpeech := generator.Tree("bubbles")
 	being := &Being{
 		Thing: Thing{
 			Name:     "Bubbles",
