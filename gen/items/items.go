@@ -2,26 +2,17 @@ package items
 
 import (
 	"encoding/xml"
-	"fmt"
-	"io/ioutil"
-	"log"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"gostories/engine/io"
 	"gostories/things"
+	gxml "gostories/xml"
 )
-
-const rootFolderName = "gostories"
 
 // Item returns any item which has a name matching the provided name
 func Item(name string) things.Item {
 	return items[name]
 }
 
-// Items contains all the items a player can pick up. It is currently indexed by the item name, however ideally
-// it should be indexed by an enum/custom int and this should be the only place to access items.
 var items = getItems()
 
 func getItems() (i map[string]things.Item) {
@@ -29,42 +20,7 @@ func getItems() (i map[string]things.Item) {
 }
 
 func loadFromXML() (items map[string]things.Item) {
-	itemsXMLPath := getRootPath() + "/gen/items/data/items.xml"
-	print(itemsFromXML)
-	absPath, err := filepath.Abs(itemsXMLPath)
-	if err != nil {
-		io.ActiveInputOutputHandler.NewLinef("Error finding absolute path for file [%v]: %v", itemsXMLPath, err)
-		panic("ah")
-	}
-	bytes, err := ioutil.ReadFile(absPath)
-	if err != nil {
-		print(fmt.Sprintf("Error loading file [%s]: %s", itemsXMLPath, err))
-	}
-	return itemsFromXML(bytes)
-}
-
-func getRootPath() string {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Check if already in root directory (e.g. main.go)
-	if getCurrentDirectoryNameFromPath(dir) == rootFolderName {
-		return dir
-	}
-
-	// Get parent directory
-	dir = filepath.Dir(dir)
-	// If not at root, continue getting parent
-	for getCurrentDirectoryNameFromPath(dir) != rootFolderName {
-		dir = filepath.Dir(dir)
-	}
-	return dir
-}
-
-func getCurrentDirectoryNameFromPath(path string) string {
-	return path[strings.LastIndex(path, "/")+1:]
+	return itemsFromXML(gxml.BytesForItems())
 }
 
 func itemsFromXML(xmlBytes []byte) map[string]things.Item {
@@ -113,10 +69,6 @@ type XItem struct {
 
 type item struct {
 	t *things.Thing
-	// Name         string
-	// LookText     string
-	// IsVisible    bool
-	// IsEquippable bool
 }
 
 func (i *item) GetName() string {
@@ -133,10 +85,6 @@ func (i *item) GetThing() *things.Thing {
 
 type equippable struct {
 	t *things.Thing
-	// Name         string
-	// LookText     string
-	// IsVisible    bool
-	// IsEquippable bool
 }
 
 func (i *equippable) GetName() string {
