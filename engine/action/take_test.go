@@ -1,7 +1,6 @@
 package action
 
 import (
-	"gostories/engine/store"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -9,6 +8,7 @@ import (
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/state"
+	"gostories/engine/store"
 	"gostories/gen/items"
 	"gostories/things/area"
 )
@@ -25,6 +25,7 @@ func TestTakeCommandWithValidTarget(t *testing.T) {
 
 	t.Run("item added to inventory and removed from area", func(t *testing.T) {
 		testItem := items.Item("sardines")
+		testItem.GetThing().Visible = true
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		ExecuteTakeCommand("sardines", testGameState)

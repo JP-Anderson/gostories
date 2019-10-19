@@ -10,16 +10,23 @@ import (
 )
 
 const (
-	itemsXMLPath   = "/gen/items/data/items.xml"
-	rootFolderName = "gostories"
+	itemsXMLPath    = "/gen/items/data/items.xml"
+	featuresXMLPath = "/gen/features/data/features.xml"
+	rootFolderName  = "gostories"
 )
 
+// BytesForItems returns the bytes of the items XML data file.
 func BytesForItems() []byte {
 	return bytes(itemsXMLPath)
 }
 
-func bytes(path string) []byte {
-	pathToRead := getRootPath() + itemsXMLPath
+// BytesForFeatures returns the bytes of the features XML data file.
+func BytesForFeatures() []byte {
+	return bytes(featuresXMLPath)
+}
+
+func bytes(testDirPath string) []byte {
+	pathToRead := getRootPath() + testDirPath
 	absPath, err := filepath.Abs(pathToRead)
 	if err != nil {
 		panic(fmt.Sprintf("Error finding absolute path for file [%v]: %v", pathToRead, err))

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XFeatures>
+	<XFeature>
+		<Name>shelf</Name>
+		<LookText>The shelf seems to contain a few old magazines and a cat collar.</LookText>
+		<XTriggerStrings>
+			<XTriggerString>
+				<Action>look</Action>
+				<Trigger>reveal-item(collar)</Trigger>
+			</XTriggerString>
+		</XTriggerStrings>
+	</XFeature>
+	<XFeature>
+		<Name>fridge</Name>
+		<LookText>The fridge is empty apart from a tin of sardines.</LookText>
+		<XTriggerStrings>
+			<XTriggerString>
+				<Action>look</Action>
+				<Trigger>reveal-item(sardines)</Trigger>
+			</XTriggerString>
+		</XTriggerStrings>
+	</XFeature>
+</XFeatures>

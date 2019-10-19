@@ -64,7 +64,7 @@ func storeRoom() area.Area {
 		Exits:  make(map[area.Direction]area.Exit),
 		Items:  store.NewItemStore(),
 		Features: []things.Feature{
-			features.FeatureShelf,
+			features.Feature("shelf"),
 		},
 	}
 }
@@ -76,7 +76,7 @@ func kitchenRoom() area.Area {
 		Exits:  make(map[area.Direction]area.Exit),
 		Items:  store.NewItemStore(),
 		Features: []things.Feature{
-			features.FeatureFridge,
+			features.Feature("fridge"),
 		},
 	}
 }

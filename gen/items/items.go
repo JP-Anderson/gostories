@@ -8,7 +8,7 @@ import (
 	gxml "gostories/xml"
 )
 
-// Item returns any item which has a name matching the provided name
+// Item returns any item which has a name matching the provided name.
 func Item(name string) things.Item {
 	return items[name]
 }
@@ -28,7 +28,7 @@ func itemsFromXML(xmlBytes []byte) map[string]things.Item {
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
-		io.ActiveInputOutputHandler.NewLinef("speechFromXML failed: %v", err)
+		io.ActiveInputOutputHandler.NewLinef("itemsFromXML failed: %v", err)
 	}
 	m := make(map[string]things.Item, len(t.XItem))
 	for _, i := range t.XItem {
@@ -54,12 +54,12 @@ func itemsFromXML(xmlBytes []byte) map[string]things.Item {
 	return m
 }
 
-// XItems specifies the xml schema for a list of Items
+// XItems specifies the xml schema for a list of Items.
 type XItems struct {
 	XItem []XItem
 }
 
-// XItem specifies the xml schema for an Item
+// XItem specifies the xml schema for an Item.
 type XItem struct {
 	Name         string
 	LookText     string

@@ -16,6 +16,6 @@
 		<Name>sardines</Name>
 		<LookText>A tin of tasty sardines preserved in olive oil.</LookText>
 		<IsEquippable>n</IsEquippable>
-		<IsVisible>y</IsVisible>
+		<IsVisible>n</IsVisible>
 	</XItem>
 </XItems>
