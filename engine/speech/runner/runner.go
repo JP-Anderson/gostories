@@ -1,10 +1,10 @@
-package engine
+package runner
 
 import (
 	"gostories/engine/io"
 	"gostories/engine/logic"
+	"gostories/engine/speech"
 	"gostories/engine/state"
-	"gostories/speech"
 )
 
 // RunWithAlt takes two speech.Trees, if the primary speech passes a specific condition in the root Tree node, it

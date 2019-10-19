@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/speech"
+	"gostories/engine/speech"
 )
 
 func TestTree(t *testing.T) {

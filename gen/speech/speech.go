@@ -4,7 +4,7 @@ import (
 	"encoding/xml"
 
 	"gostories/engine/io"
-	"gostories/speech"
+	"gostories/engine/speech"
 	gxml "gostories/xml"
 )
 

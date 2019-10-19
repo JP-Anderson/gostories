@@ -2,7 +2,7 @@ package things
 
 import (
 	generator "gostories/gen/speech"
-	"gostories/speech"
+	"gostories/engine/speech"
 )
 
 const speechDataRoot = "./gen/speech/speech_data/"

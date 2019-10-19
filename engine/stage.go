@@ -1,8 +1,6 @@
 package engine
 
 import (
-	"strings"
-
 	"gostories/engine/action"
 	"gostories/engine/io"
 	"gostories/engine/logic"
@@ -43,7 +41,7 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "travel" {
 			isNewArea = action.ExecuteTravelCommand(noun, s.state)
 		} else if inputAction.Name == "talk" {
-			executeTalkCommand(noun, s.state)
+			action.ExecuteTalkCommand(noun, s.state)
 		} else if inputAction.Name == "take" {
 			action.ExecuteTakeCommand(noun, s.state)
 		} else if inputAction.Name == "equip" {
@@ -69,16 +67,4 @@ func (s Stage) loopUntilExit() {
 			}
 		}
 	}
-}
-
-func executeTalkCommand(talkTarget string, state *state.State) {
-	for _, being := range state.CurrentArea.Beings {
-		io.ActiveInputOutputHandler.NewLine(being.Name)
-		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
-			io.ActiveInputOutputHandler.NewLinef("You speak to %v.", being.Name)
-			RunWithAlt(&being.Speech, being.AltSpeech, *state)
-			return
-		}
-	}
-	io.ActiveInputOutputHandler.NewLinef("Could not find a %v to talk to!", talkTarget)
 }
