@@ -24,7 +24,7 @@ func TestTakeCommandWithValidTarget(t *testing.T) {
 	}
 
 	t.Run("item added to inventory and removed from area", func(t *testing.T) {
-		testItem := items.Items["sardines"]
+		testItem := items.Item("sardines")
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		ExecuteTakeCommand("sardines", testGameState)

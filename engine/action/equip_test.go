@@ -25,7 +25,7 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 	}
 
 	t.Run("valid item target", func(t *testing.T) {
-		testGameState.Inventory.StoreItem(items.Items["collar"])
+		testGameState.Inventory.StoreItem(items.Item("collar"))
 		assert.Equal(t, 1, testGameState.Inventory.Size())
 		ExecuteEquipCommand("collar", testGameState)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(
@@ -61,7 +61,7 @@ func TestEquipCommandWithInvalidTarget(t *testing.T) {
 	})
 
 	t.Run("non-equippable item", func(t *testing.T) {
-		testGameState.Inventory.StoreItem(items.Items["sardines"])
+		testGameState.Inventory.StoreItem(items.Item("sardines"))
 		ExecuteEquipCommand("sardines", testGameState)
 		mockedIOHandler.ExpectedStringEqualsNthOutputString(
 			t,

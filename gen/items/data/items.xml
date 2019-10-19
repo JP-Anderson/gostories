@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<XItems>
+	<XItem>
+		<Name>collar</Name>
+		<LookText>A small red cat collar with a bell.</LookText>
+		<IsEquippable>y</IsEquippable>
+		<IsVisible>n</IsVisible>
+	</XItem>
+	<XItem>
+		<Name>shrubbery</Name>
+		<LookText>A small but rather well cared for shrubbery.</LookText>
+		<IsEquippable>n</IsEquippable>
+		<IsVisible>y</IsVisible>
+	</XItem>
+	<XItem>
+		<Name>sardines</Name>
+		<LookText>A tin of tasty sardines preserved in olive oil.</LookText>
+		<IsEquippable>n</IsEquippable>
+		<IsVisible>y</IsVisible>
+	</XItem>
+</XItems>

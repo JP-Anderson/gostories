@@ -23,7 +23,7 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 	}
 
 	t.Run("valid item target", func(t *testing.T) {
-		testItem := items.Items["sardines"]
+		testItem := items.Item("sardines")
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		result := ExecuteLookCommand("sardines", testGameState)

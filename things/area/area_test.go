@@ -12,6 +12,7 @@ import (
 
 func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 	item := getTestItem()
+	assert.NotNil(t, item)
 	assert.False(t, item.GetThing().Visible)
 	testArea := Area{
 		Items: store.NewItemStore(),
@@ -30,5 +31,5 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return items.Items["collar"]
+	return items.Item("collar")
 }
