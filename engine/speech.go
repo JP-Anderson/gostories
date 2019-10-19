@@ -10,20 +10,21 @@ import (
 // RunWithAlt takes two speech.Trees, if the primary speech passes a specific condition in the root Tree node, it
 // will begin parsing the Tree with Run. Otherwise it will parse the alternate Tree. This can be used to design
 // alernate major speech paths based on conditions in the game (e.g. player is wearing/holding an item).
-func RunWithAlt(speech speech.Tree, alt *speech.Tree, gameState state.State) {
+func RunWithAlt(speech *speech.Tree, alt *speech.Tree, gameState state.State) {
 	ran := Run(speech, gameState)
 	if ran {
 		return
 	}
 	if alt != nil {
-		Run(*alt, gameState)
+		Run(alt, gameState)
 	}
 }
 
 // Run takes a speech.Tree and a game State, starting from the first node of the SpeechTree, it will parse the speech
 // tree based on input/output to/from the player.
-func Run(speech speech.Tree, gameState state.State) bool {
-	curr := &speech.Event
+func Run(tree *speech.Tree, gameState state.State) bool {
+	p := tree.Start()
+	curr := &p
 	onFirstRun := true
 	for {
 		if curr == nil {
@@ -45,6 +46,10 @@ func Run(speech speech.Tree, gameState state.State) bool {
 			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("%v", err)
 			}
+		}
+		if curr.Checkpoint != nil {
+			io.ActiveInputOutputHandler.NewLinef("New checkpoint!")
+			tree.SetStart(curr.Checkpoint)
 		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameState)

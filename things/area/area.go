@@ -14,7 +14,7 @@ type Area struct {
 	Look     string
 	Exits    map[Direction]Exit
 	Items    *store.ItemStore
-	Beings   []things.Being
+	Beings   []*things.Being
 	Features []things.Feature
 }
 

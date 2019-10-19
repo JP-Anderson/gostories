@@ -28,6 +28,11 @@
                             <Event>
                                 <Speech>Mmm... Mmpph..! Thanks so much. Here, take this</Speech>
                                 <Trigger>add-item(shrubbery)</Trigger>
+                                <Checkpoint>
+                                    <Event>
+                                        <Speech>Ah, hello again, old friend!</Speech>
+                                    </Event>
+                                </Checkpoint>
                             </Event>
                         </Response>
                         <Response>

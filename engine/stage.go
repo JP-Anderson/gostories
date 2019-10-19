@@ -76,7 +76,7 @@ func executeTalkCommand(talkTarget string, state *state.State) {
 		io.ActiveInputOutputHandler.NewLine(being.Name)
 		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
 			io.ActiveInputOutputHandler.NewLinef("You speak to %v.", being.Name)
-			RunWithAlt(being.Speech, being.AltSpeech, *state)
+			RunWithAlt(&being.Speech, being.AltSpeech, *state)
 			return
 		}
 	}
