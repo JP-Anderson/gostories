@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Areas>
+    <XArea>
+        <Name>cat_room</Name>
+        <LookText>You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.</LookText>
+        <Exits>
+            <West>store_room</West>
+        </Exits>
+        <Beings>
+            <Being>
+                <Name>bubbles</Name>
+            </Being>
+        </Beings>
+    </XArea>
+    <XArea>
+        <Name>kitchen</Name>
+        <LookText>You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.</LookText>
+        <Exits>
+            <South>store_room</South>
+        </Exits>
+        <Features>
+            <Feature>
+                <Name>fridge</Name>
+            </Feature>
+        </Features>
+    </XArea>
+    <XArea>
+        <Name>store_room</Name>
+        <LookText>You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.</LookText>
+        <Exits>
+            <East>cat_room</East>
+            <North>kitchen</North>
+        </Exits>
+        <Features>
+            <Feature>
+                <Name>shelf</Name>
+            </Feature>
+        </Features>
+    </XArea>
+</Areas>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Area>
+    <Name>kitchen</Name>
+    <LookText>You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.</LookText>
+    <Exits>
+        <South>store_room</South>
+    </Exits>
+    <Features>
+        <Feature>
+            <Name>fridge</Name>
+        </Feature>
+    </Features>
+</Area>
