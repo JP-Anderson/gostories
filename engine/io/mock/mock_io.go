@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/parser"
+	"gostories/engine/parser"
 )
 
 // MockInputOutputHandler mocks the InputOutputHandler for the purposes of asserting data that

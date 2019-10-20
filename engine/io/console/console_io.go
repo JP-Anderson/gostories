@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"gostories/parser"
+	"gostories/engine/parser"
 )
 
 // ConsoleInputOutputHandler manages the games user Input and Output through some "standard" Go
