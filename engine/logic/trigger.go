@@ -16,6 +16,12 @@ func EvaluateTrigger(gameState state.State, triggerStr string) error {
 	return triggerFunc(gameState, targetStr)
 }
 
+func getTrigger(triggerStr string) triggerFn {
+	triggerFuncStr := parseFuncName(triggerStr)
+	trigger := triggerStringsMap[triggerFuncStr]
+	return trigger
+}
+
 type triggerFn func(state.State, string) error
 
 func triggerRemoveItem(gameState state.State, itemName string) error {
@@ -56,10 +62,4 @@ var triggerStringsMap = map[string]triggerFn{
 	"reveal-item": triggerRevealItem,
 	"remove-item": triggerRemoveItem,
 	"add-item":    triggerAddItem,
-}
-
-func getTrigger(triggerStr string) triggerFn {
-	triggerFuncStr := parseSingleValueFuncName(triggerStr)
-	trigger := triggerStringsMap[triggerFuncStr]
-	return trigger
 }

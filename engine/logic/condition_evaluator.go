@@ -1,8 +1,6 @@
 package logic
 
 import (
-	"strings"
-
 	"gostories/engine/state"
 	"gostories/things"
 )
@@ -19,17 +17,9 @@ func EvaluateCondition(gameState state.State, conditionStr string) bool {
 }
 
 func getConditional(conditionStr string) conditionFn {
-	conditionFuncStr := parseSingleValueFuncName(conditionStr)
+	conditionFuncStr := parseFuncName(conditionStr)
 	condition := conditionStringsMap[conditionFuncStr]
 	return condition
-}
-
-func parseFuncParam(input string) string {
-	return input[strings.Index(input, "(")+1 : strings.Index(input, ")")]
-}
-
-func parseSingleValueFuncName(input string) string {
-	return input[:strings.Index(input, "(")]
 }
 
 var conditionStringsMap = map[string]conditionFn{
