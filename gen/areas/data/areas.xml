@@ -23,6 +23,11 @@
                 <Name>fridge</Name>
             </Feature>
         </Features>
+        <Items>
+            <Item>
+                <Name>sardines</Name>
+            </Item>
+        </Items>
     </XArea>
     <XArea>
         <Name>store_room</Name>
@@ -36,5 +41,10 @@
                 <Name>shelf</Name>
             </Feature>
         </Features>
+        <Items>
+            <Item>
+                <Name>collar</Name>
+            </Item>
+        </Items>
     </XArea>
 </Areas>

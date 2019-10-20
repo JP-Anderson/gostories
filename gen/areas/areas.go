@@ -4,7 +4,9 @@ import (
 	"encoding/xml"
 
 	"gostories/engine/io"
+	"gostories/engine/store"
 	"gostories/gen/features"
+	"gostories/gen/items"
 	"gostories/things"
 	"gostories/things/area"
 	gxml "gostories/xml"
@@ -46,6 +48,10 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		newArea.Features = []things.Feature{}
 		for _, f := range a.Features.Feature {
 			newArea.Features = append(newArea.Features, features.Feature(f.Name))
+		}
+		newArea.Items = store.NewItemStore()
+		for _, i := range a.Items.Item {
+			newArea.Items.StoreItem(items.Item(i.Name))
 		}
 		m[a.Name] = newArea
 	}
@@ -94,8 +100,10 @@ type XArea struct {
 	Exits    Exits
 	Features Features
 	Beings   []Being
+	Items    Items
 }
 
+// Exits specifies the xml schema for the exits of an Area.
 type Exits struct {
 	North string
 	East  string
@@ -103,14 +111,30 @@ type Exits struct {
 	West  string
 }
 
+// Features specifies the xml schema for a list of Feature references.
 type Features struct {
 	Feature []Feature
 }
 
+// Feature specifies the xml schema for a Feature reference in an Area. Note a Feature reference is not
+// a full feature object, but contains a string ID of a feature to be linked from the loaded features.
 type Feature struct {
 	Name string
 }
 
+// Items specifies the xml schema for a list of Item references.
+type Items struct {
+	Item []Item
+}
+
+// Item specifies the xml schema for an Item reference in an Area. Note a Item reference is not
+// a full item object, but contains a string ID of an item to be linked from the loaded items.
+type Item struct {
+	Name string
+}
+
+// Being specifies the xml schema for a Being reference in an Area. Note a Being reference is not
+// a full Being object, but contains a string ID of a Being to be linked from the loaded Beings.
 type Being struct {
 	Name string
 }

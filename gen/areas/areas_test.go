@@ -66,3 +66,17 @@ func TestLoadFromXMLLoadsExits(t *testing.T) {
 	assert.Equal(t, storeRoom.Exits[area.East].To, catRoom)
 	assert.Equal(t, storeRoom.Exits[area.East].From, storeRoom)
 }
+
+func TestLoadFromXMLLoadsItems(t *testing.T) {
+	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	_areas := loadFromXML()
+	storeRoom := _areas["store_room"]
+
+	collar, err := storeRoom.Items.GetItemWithName("collar")
+	c := *collar
+	// Assert store room has collar
+	assert.NoError(t, err)
+	assert.NotNil(t, collar)
+	assert.False(t, c.GetThing().Visible)
+	assert.Equal(t, "collar", c.GetName())
+}
