@@ -7,6 +7,28 @@ func ParseInput(arg1, arg2 string) (Action, string) {
 	return actionFromString(arg1), arg2
 }
 
+func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
+	targets = []string{}
+	action = unknownAction
+	for _, token := range ts {
+		println(token)
+		_, isPreposition := prepositions[token]
+		newAction := actionFromString(token)
+
+		if !isPreposition {
+			println("not preposition")
+			if newAction == unknownAction {
+				println("not an action either")
+				targets = append(targets, token)
+			} else {
+				println("is an action")
+				action = newAction
+			}
+		}
+	}
+	return action, targets
+}
+
 // Action is a type representing an action the player can execute in the game. Currently it just wraps a string
 // which matches the verb the player types to carry out the action.
 type Action struct{ Name string }
@@ -50,6 +72,14 @@ var actions = map[string]Action{
 	"pack":      inventoryAction,
 	"i":         inventoryAction,
 
+	"put":   placeAction,
+	"place": placeAction,
+	"p":     placeAction,
+
+	"unlock": unlockAction,
+	"open":   unlockAction,
+	"access": unlockAction,
+
 	"quit": quitAction,
 }
 
@@ -60,6 +90,8 @@ var travelAction = Action{"travel"}
 var takeAction = Action{"take"}
 var equipAction = Action{"equip"}
 var inventoryAction = Action{"inventory"}
+var placeAction = Action{"place"}
+var unlockAction = Action{"unlock"}
 var quitAction = Action{"quit"}
 
 // Unknown returns an unknownAction, which is used when user input cannot be parsed.
