@@ -44,15 +44,18 @@ func (c *ConsoleInputOutputHandler) ReadInt() (i int, e error) {
 // SimpleParse parses input from the user. Currently only one or two (space-separated) strings can
 // be parsed. SimpleParse returns the first string as an action (if recognised), and the second
 // string (the target verb) as is.
-func (c *ConsoleInputOutputHandler) SimpleParse() (parser.Action, string) {
+func (c *ConsoleInputOutputHandler) SimpleParse() (parser.Action, []string) {
 	input := c.readString()
 	split := strings.Split(input, " ")
-	if len(split) >= 2 {
-		return parser.ParseInput(split[0], Trim(split[1]))
-	} else if len(split) == 1 {
+	len := len(split)
+	if len > 2 {
+		return parser.ParseInput(split...)
+	} else if len == 2 {
+		return parser.ParseInput(Trim(split[0]), Trim(split[1]))
+	} else if len == 1 {
 		return parser.ParseInput(Trim(split[0]), "")
 	}
-	return parser.Unknown(), ""
+	return parser.Unknown(), []string{""}
 }
 
 func (c *ConsoleInputOutputHandler) readString() string {

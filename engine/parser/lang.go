@@ -4,6 +4,12 @@ type void struct{}
 
 var member void
 
+var articles = map[string]void{
+	"the": member,
+	"a":   member,
+	"an":  member,
+}
+
 var prepositions = map[string]void{
 	"about":      member,
 	"below":      member,
@@ -53,4 +59,43 @@ var prepositions = map[string]void{
 	"except":     member,
 	"of":         member,
 	"to":         member,
+}
+
+var conjunctions = map[string]void{
+	"for":       member,
+	"and":       member,
+	"nor":       member,
+	"but":       member,
+	"or":        member,
+	"yet":       member,
+	"so":        member,
+	"both":      member,
+	"either":    member,
+	"neither":   member,
+	"not":       member,
+	"only":      member,
+	"whether":   member,
+	"after":     member,
+	"although":  member,
+	"as":        member,
+	"if":        member,
+	"because":   member,
+	"before":    member,
+	"lest":      member,
+	"now":       member,
+	"once":      member,
+	"since":     member,
+	"supposing": member,
+	"that":      member,
+	"than":      member,
+	"though":    member,
+	"till":      member,
+	"unless":    member,
+	"until":     member,
+	"when":      member,
+	"whenever":  member,
+	"where":     member,
+	"whereas":   member,
+	"wherever":  member,
+	"while":     member,
 }

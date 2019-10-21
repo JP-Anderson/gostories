@@ -25,5 +25,5 @@ type InputOutputHandler interface {
 
 	// SimpleParse parses textual input from the player and returns an Action and a target
 	// for the action in-game. It cannot error, but can return an UnknownAction.
-	SimpleParse() (parser.Action, string)
+	SimpleParse() (parser.Action, []string)
 }

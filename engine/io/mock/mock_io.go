@@ -44,7 +44,7 @@ func (c *MockInputOutputHandler) ReadInt() (i int, e error) {
 }
 
 // SimpleParse isn't yet used
-func (c *MockInputOutputHandler) SimpleParse() (parser.Action, string) {
+func (c *MockInputOutputHandler) SimpleParse() (parser.Action, []string) {
 	// TODO: provide a method for pre-loading with a series of Action/string returns
-	return parser.Unknown(), ""
+	return parser.Unknown(), []string{""}
 }

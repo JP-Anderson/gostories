@@ -33,19 +33,19 @@ func (s Stage) loopUntilExit() {
 			isNewArea = false
 		}
 		// TODO: move the action parsing to another file/function
-		inputAction, noun := io.ActiveInputOutputHandler.SimpleParse()
+		inputAction, targets := io.ActiveInputOutputHandler.SimpleParse()
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if inputAction.Name == "look" {
-			targetedThing = action.ExecuteLookCommand(noun, s.state)
+			targetedThing = action.ExecuteLookCommand(targets[0], s.state)
 		} else if inputAction.Name == "travel" {
-			isNewArea = action.ExecuteTravelCommand(noun, s.state)
+			isNewArea = action.ExecuteTravelCommand(targets[0], s.state)
 		} else if inputAction.Name == "talk" {
-			action.ExecuteTalkCommand(noun, s.state)
+			action.ExecuteTalkCommand(targets[0], s.state)
 		} else if inputAction.Name == "take" {
-			action.ExecuteTakeCommand(noun, s.state)
+			action.ExecuteTakeCommand(targets[0], s.state)
 		} else if inputAction.Name == "equip" {
-			action.ExecuteEquipCommand(noun, s.state)
+			action.ExecuteEquipCommand(targets[0], s.state)
 		} else if inputAction.Name == "inventory" {
 			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
 			s.state.Inventory.PrintContents()

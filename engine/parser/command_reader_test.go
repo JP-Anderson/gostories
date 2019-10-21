@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestParseInputWithValidActions(t *testing.T) {
+func TestParseTwoTokenInputWithValidActions(t *testing.T) {
 	validActionStrings := []struct {
 		action         string
 		target         string
@@ -37,13 +37,13 @@ func TestParseInputWithValidActions(t *testing.T) {
 	for _, testCase := range validActionStrings {
 		t.Run(testCase.action, func(t *testing.T) {
 			assertions := require.New(t)
-			action, _ := ParseInput(testCase.action, testCase.target)
+			action, _ := parseTwoTokenInput(testCase.action, testCase.target)
 			assertions.Equal(testCase.expectedAction, action)
 		})
 	}
 }
 
-func TestParseInputWithInvalidActionsGivesUnknownAction(t *testing.T) {
+func TestParseTwoTokenInputWithInvalidActionsGivesUnknownAction(t *testing.T) {
 	unknownActionInputs := []struct {
 		action string
 		target string
@@ -57,7 +57,7 @@ func TestParseInputWithInvalidActionsGivesUnknownAction(t *testing.T) {
 	for _, testCase := range unknownActionInputs {
 		t.Run(testCase.action, func(t *testing.T) {
 			assertions := require.New(t)
-			action, _ := ParseInput(testCase.action, testCase.target)
+			action, _ := parseTwoTokenInput(testCase.action, testCase.target)
 			assertions.Equal(unknownAction, action)
 		})
 	}
@@ -72,16 +72,16 @@ func TestParseInputWithMultiStrings(t *testing.T) {
 	}{
 		// Place/put actions
 		{"", []string{"put", "coffee", "on", "table"}, placeAction, []string{"coffee", "table"}},
+		{"", []string{"put", "the", "coffee", "on", "to", "the", "table"}, placeAction, []string{"coffee", "table"}},
 		{"", []string{"place", "coffee", "on", "table"}, placeAction, []string{"coffee", "table"}},
 		{"", []string{"p", "coffee", "on", "table"}, placeAction, []string{"coffee", "table"}},
 		{"", []string{"put", "coffee", "on", "table"}, placeAction, []string{"coffee", "table"}},
 		// Open/unlock actions
 		{"", []string{"unlock", "door", "with", "key"}, unlockAction, []string{"door", "key"}},
-		// TODO: Ignore the word "the"?
-		{"", []string{"unlock", "the", "door", "with", "key"}, unlockAction, []string{"the", "door", "key"}},
+		{"", []string{"unlock", "the", "door", "with", "key"}, unlockAction, []string{"door", "key"}},
 		{"", []string{"open", "gate", "with", "amulet"}, unlockAction, []string{"gate", "amulet"}},
 		// TODO: Ignore adjectives?
-		{"", []string{"open", "the", "large", "gate", "with", "amulet"}, unlockAction, []string{"the", "large", "gate", "amulet"}},
+		{"", []string{"open", "the", "large", "gate", "with", "amulet"}, unlockAction, []string{"large", "gate", "amulet"}},
 	}
 	for _, testCase := range validInputs {
 		t.Run(testCase.testName, func(t *testing.T) {

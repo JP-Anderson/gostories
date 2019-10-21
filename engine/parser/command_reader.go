@@ -1,10 +1,18 @@
 package parser
 
-// ParseInput takes two strings from the user input (which will already have been split on spaces). It attempts to match
-// the first arg to an Action, and will return any matching Action (or an UnknownAction if it cannot find a match).
-// Currently the second argument is simply returned as is.
-func ParseInput(arg1, arg2 string) (Action, string) {
-	return actionFromString(arg1), arg2
+// ParseInput takes a slice of strings from the user input (which will already have been split on spaces). It will pass
+// into a token parsing function based on the number of tokens in the slice.
+func ParseInput(tokens ...string) (Action, []string) {
+	if len(tokens) == 1 {
+		return parseTwoTokenInput(tokens[0], "")
+	} else if len(tokens) == 2 {
+		return parseTwoTokenInput(tokens[0], tokens[1])
+	}
+	return parseMultiTokenInput(tokens...)
+}
+
+func parseTwoTokenInput(t1, t2 string) (Action, []string) {
+	return actionFromString(t1), []string{t2}
 }
 
 func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
@@ -12,18 +20,23 @@ func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
 	action = unknownAction
 	for _, token := range ts {
 		println(token)
+		_, isArticle := articles[token]
+		if isArticle {
+			continue
+		}
+		_, isConjunction := conjunctions[token]
+		if isConjunction {
+			continue
+		}
 		_, isPreposition := prepositions[token]
+		if isPreposition {
+			continue
+		}
 		newAction := actionFromString(token)
-
-		if !isPreposition {
-			println("not preposition")
-			if newAction == unknownAction {
-				println("not an action either")
-				targets = append(targets, token)
-			} else {
-				println("is an action")
-				action = newAction
-			}
+		if newAction == unknownAction {
+			targets = append(targets, token)
+		} else {
+			action = newAction
 		}
 	}
 	return action, targets
