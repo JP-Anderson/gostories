@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestBuildFromMap(t *testing.T) {
+func TestLoadFromXML(t *testing.T) {
 	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
 	assert.Equal(t, 2, len(_features))

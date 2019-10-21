@@ -2,7 +2,7 @@ package io
 
 import (
 	console "gostories/engine/io/console"
-	"gostories/parser"
+	"gostories/engine/parser"
 )
 
 // ActiveInputOutputHandler bridges the game engine with whatever Input/Output handler is in use. For unit

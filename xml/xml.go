@@ -12,6 +12,7 @@ import (
 const (
 	itemsXMLPath    = "/gen/items/data/items.xml"
 	featuresXMLPath = "/gen/features/data/features.xml"
+	areasXMLPath    = "/gen/areas/data/areas.xml"
 	speechXMLPath   = "/gen/speech/data/"
 
 	rootFolderName = "gostories"
@@ -25,6 +26,11 @@ func BytesForItems() []byte {
 // BytesForFeatures returns the bytes of the features XML data file.
 func BytesForFeatures() []byte {
 	return bytes(featuresXMLPath)
+}
+
+// BytesForAreas returns the bytes of the areas XML data file.
+func BytesForAreas() []byte {
+	return bytes(areasXMLPath)
 }
 
 // BytesForSpeechTree returns the bytes of an XML represented speech tree.
