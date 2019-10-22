@@ -46,6 +46,12 @@ func (s Stage) loopUntilExit() {
 			action.ExecuteTakeCommand(targets[0], s.state)
 		} else if inputAction.Name == "equip" {
 			action.ExecuteEquipCommand(targets[0], s.state)
+		} else if inputAction.Name == "place" {
+			if len(targets) == 1 {
+				action.ExecutePlaceCommand(targets[0], nil, s.state)
+			} else if len(targets) == 2 {
+				action.ExecutePlaceCommand(targets[1], &targets[1], s.state)
+			}
 		} else if inputAction.Name == "inventory" {
 			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
 			s.state.Inventory.PrintContents()
