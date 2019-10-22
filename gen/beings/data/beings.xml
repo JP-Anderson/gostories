@@ -5,7 +5,7 @@
         <LookText>The cat is reasonably small, ginger, and chunky.</LookText>
         <Species>Cat</Species>
         <IsVisible>y</IsVisible>
-        <Speech>bubbles</Speech>
-        <AltSpeech>bubbles_human</AltSpeech>
+        <Speech>bubbles_human</Speech>
+        <AltSpeech>bubbles</AltSpeech>
     </Being>
 </Beings>
