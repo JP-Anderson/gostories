@@ -14,6 +14,7 @@ const (
 	featuresXMLPath = "/gen/features/data/features.xml"
 	areasXMLPath    = "/gen/areas/data/areas.xml"
 	speechXMLPath   = "/gen/speech/data/"
+	beingsXMLPath   = "/gen/beings/data/beings.xml"
 
 	rootFolderName = "gostories"
 )
@@ -36,6 +37,11 @@ func BytesForAreas() []byte {
 // BytesForSpeechTree returns the bytes of an XML represented speech tree.
 func BytesForSpeechTree(filename string) []byte {
 	return bytes(speechXMLPath + filename + ".xml")
+}
+
+// BytesForBeings returns the bytes of the beings XML data file.
+func BytesForBeings() []byte {
+	return bytes(beingsXMLPath)
 }
 
 func bytes(testDirPath string) []byte {
