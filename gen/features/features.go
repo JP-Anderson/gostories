@@ -9,7 +9,7 @@ import (
 )
 
 // Feature returns any feature which has a name matching the provided name.
-func Feature(name string) things.Item {
+func Feature(name string) things.Feature {
 	return features[name]
 }
 

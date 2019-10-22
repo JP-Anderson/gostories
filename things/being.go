@@ -1,7 +1,6 @@
 package things
 
 import (
-	generator "gostories/gen/speech"
 	"gostories/engine/speech"
 )
 
@@ -13,24 +12,6 @@ type Being struct {
 	Species   string
 	Speech    speech.Tree
 	AltSpeech *speech.Tree
-}
-
-// NewBubbles creates a new Bubbles.
-// Will either construct these from XML in future or find some way to autogenerate.
-func NewBubbles() *Being {
-	translatedSpeech := generator.Tree("bubbles_human")
-	catSpeech := generator.Tree("bubbles")
-	being := &Being{
-		Thing: Thing{
-			Name:     "Bubbles",
-			LookText: "The cat is reasonably small, ginger, and chunky.",
-		},
-		Species:   "Cat",
-		Speech:    translatedSpeech,
-		AltSpeech: &catSpeech,
-	}
-	being.Show()
-	return being
 }
 
 // GetName returns the name of the Being.
