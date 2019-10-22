@@ -4,6 +4,7 @@ import (
 	"gostories/engine/io"
 	"gostories/engine/state"
 	"gostories/gen/items"
+	"gostories/things/area"
 )
 
 // EvaluateTrigger when  given a string of format "TRIGGER(TARGET)", attempts to retrieve a trigger
@@ -39,12 +40,12 @@ func triggerRemoveItem(gameState state.State, itemName string) error {
 
 func triggerRevealItem(gameState state.State, itemName string) error {
 	io.ActiveInputOutputHandler.NewLinef("Revealing item %v", itemName)
-	item := gameState.CurrentArea.FindItemByName(itemName)
+	item := area.CheckItems(gameState.CurrentArea, itemName)
 	if item != nil {
-		if item.GetThing().Visible {
+		if item.Visible {
 			io.ActiveInputOutputHandler.NewLine(itemName + "is already visible")
 		} else {
-			item.GetThing().Show()
+			item.Show()
 		}
 	}
 	return nil

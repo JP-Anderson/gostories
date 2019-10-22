@@ -37,6 +37,22 @@ const (
 	West  = "west"
 )
 
+// Checker is a func which given an *Area and string, returns any things.Thing that has a name matching the
+// provided string.
+type Checker func(*Area, string) *things.Thing
+
+// CheckAreaForThing takes a thing name string, and a variable number of Checker functions. It will return a
+// pointer to any Thing (matching the provided name) that has been yielded by the checkers.
+func (a *Area) CheckAreaForThing(thingName string, checkers ...Checker) *things.Thing {
+	for _, checker := range checkers {
+		res := checker(a, thingName)
+		if res != nil {
+			return res
+		}
+	}
+	return nil
+}
+
 // FindItemByName takes a target Item name, it iterates through the Item objects stored in the Area, and
 // returns any Item with a matching name (not case-sensitive). Note, this method does not take into
 // account if the Item is visible to the player.
@@ -48,10 +64,18 @@ func (a Area) FindItemByName(targetName string) things.Item {
 	return nil
 }
 
-// CheckAreaBeingsForThing takes a target Being name, it iterates through the Being objects stored in
-// the Area, and returns a Thing pointer to the Being if it exists. Note, this method does not take
-// into account if the Being is visible to the player.
-func (a Area) CheckAreaBeingsForThing(targetName string) *things.Thing {
+// CheckItems is a Checker func which checks the Items in an Area matching the targetName.
+func CheckItems(a *Area, targetName string) *things.Thing {
+	item, err := a.Items.GetItemWithName(targetName)
+	if item != nil && err == nil {
+		t := *item
+		return t.GetThing()
+	}
+	return nil
+}
+
+// CheckBeings is a Checker func which checks the Beings in an Area matching the targetName.
+func CheckBeings(a *Area, targetName string) *things.Thing {
 	for _, b := range a.Beings {
 		if strings.ToLower(b.GetName()) == strings.ToLower(targetName) {
 			t := b.GetThing()
@@ -61,10 +85,8 @@ func (a Area) CheckAreaBeingsForThing(targetName string) *things.Thing {
 	return nil
 }
 
-// CheckAreaFeaturesForThing takes a target Feature name, it iterates through the Feature objects
-// stored in the Area, and returns a Thing pointer to the Feature if it exists. Note, this method
-// does not take into account if the Feature is visible to the player.
-func (a Area) CheckAreaFeaturesForThing(targetName string) *things.Thing {
+// CheckFeatures is a Checker func which checks the Features in an Area matching the targetName.
+func CheckFeatures(a *Area, targetName string) *things.Thing {
 	for _, f := range a.Features {
 		if strings.ToLower(f.GetName()) == strings.ToLower(targetName) {
 			t := f.GetThing()

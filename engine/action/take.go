@@ -5,6 +5,7 @@ import (
 
 	"gostories/engine/io"
 	"gostories/engine/state"
+	"gostories/things/area"
 )
 
 // ExecuteTakeCommand given a target string will search the Item objects in the current game Area
@@ -18,7 +19,7 @@ func ExecuteTakeCommand(takeTarget string, state *state.State) {
 		return
 	}
 
-	feature := state.CurrentArea.CheckAreaFeaturesForThing(takeTarget)
+	feature := state.CurrentArea.CheckAreaForThing(takeTarget, area.CheckFeatures)
 	if feature != nil && strings.ToLower(feature.Name) == strings.ToLower(takeTarget) {
 		io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.Name)
 		return

@@ -3,6 +3,7 @@ package action
 import (
 	"gostories/engine/io"
 	"gostories/engine/state"
+	"gostories/things/area"
 )
 
 // ExecutePlaceCommand can take one or two string targets. The first target must always match to an item that can
@@ -11,15 +12,9 @@ import (
 // If the second target is provided, certain interactions could occur of this, depending on how the place command will
 // affect different targets (and also different items) (TODO)
 func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameState *state.State) {
-	being := gameState.CurrentArea.CheckAreaBeingsForThing(placeTarget)
-	if being != nil {
-		io.ActiveInputOutputHandler.NewLine("How do you expect to place " + being.Name + "!?")
-		return
-	}
-
-	ftr := gameState.CurrentArea.CheckAreaFeaturesForThing(placeTarget)
-	if ftr != nil {
-		io.ActiveInputOutputHandler.NewLine("How do you expect to place the " + ftr.Name + "!?")
+	notAnItem := gameState.CurrentArea.CheckAreaForThing(placeTarget, area.CheckBeings, area.CheckFeatures)
+	if notAnItem != nil {
+		io.ActiveInputOutputHandler.NewLine("How do you expect to place the " + notAnItem.Name + "!?")
 		return
 	}
 
@@ -41,19 +36,12 @@ func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameStat
 
 	secondTargetString := *placeSecondTarget
 
+	secondTarget := gameState.CurrentArea.CheckAreaForThing(secondTargetString, area.CheckBeings, area.CheckFeatures)
 	// TODO run triggers off certain action interactions
-	being2 := gameState.CurrentArea.CheckAreaBeingsForThing(secondTargetString)
-	if being2 != nil {
-		io.ActiveInputOutputHandler.NewLinef("placed %s on %s", actualItem.GetName(), being2.Name)
-		return
-	}
-
-	ftr2 := gameState.CurrentArea.CheckAreaFeaturesForThing(*placeSecondTarget)
-	if ftr2 != nil {
-		io.ActiveInputOutputHandler.NewLinef("placed %s on %s", actualItem.GetName(), ftr2.Name)
+	if secondTarget != nil {
+		io.ActiveInputOutputHandler.NewLinef("placed %s on %s", actualItem.GetName(), secondTarget.Name)
 		return
 	}
 
 	io.ActiveInputOutputHandler.NewLinef("Not sure how to place the %s on the %s!", actualItem.GetName(), secondTargetString)
-
 }

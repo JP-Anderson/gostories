@@ -4,6 +4,7 @@ import (
 	"gostories/engine/io"
 	"gostories/engine/state"
 	"gostories/things"
+	"gostories/things/area"
 )
 
 // ExecuteLookCommand is given the string name of a target, and a game State. It searches through the
@@ -11,32 +12,15 @@ import (
 // the target, the Look text for the Thing is sent through the output handler, and the Thing is returned
 // to run any optional post Action triggers attached to the Thing.
 func ExecuteLookCommand(lookTarget string, gameState *state.State) (target *things.Thing) {
-	defer func() {
-		if target != nil {
-			io.ActiveInputOutputHandler.NewLine(target.LookText)
-		}
-	}()
-
 	if lookTarget == "" {
 		io.ActiveInputOutputHandler.NewLine(gameState.CurrentArea.Look)
-		return
+		return nil
 	}
-
-	item := gameState.CurrentArea.FindItemByName(lookTarget)
-	if item != nil {
-		return item.GetThing()
-	}
-
-	target = gameState.CurrentArea.CheckAreaFeaturesForThing(lookTarget)
+	target = gameState.CurrentArea.CheckAreaForThing(lookTarget, area.CheckBeings, area.CheckItems, area.CheckFeatures)
 	if target != nil {
-		return
+		io.ActiveInputOutputHandler.NewLine(target.LookText)
+		return target
 	}
-
-	target = gameState.CurrentArea.CheckAreaBeingsForThing(lookTarget)
-	if target != nil {
-		return
-	}
-
 	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to look at!", lookTarget)
-	return
+	return target
 }
