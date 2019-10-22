@@ -5,6 +5,7 @@ import (
 
 	"gostories/engine/io"
 	"gostories/engine/store"
+	"gostories/gen/beings"
 	"gostories/gen/features"
 	"gostories/gen/items"
 	"gostories/things"
@@ -42,7 +43,7 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		if len(a.Beings) > 0 {
 			//hardcoding the only being for now. TODO generate with XML
 			newArea.Beings = []*things.Being{
-				things.NewBubbles(),
+				beings.Get("bubbles"),
 			}
 		}
 		newArea.Features = []things.Feature{}
