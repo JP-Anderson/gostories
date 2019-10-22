@@ -31,5 +31,5 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return items.Item("collar")
+	return items.Get("collar")
 }

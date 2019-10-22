@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XFeatures>
-	<XFeature>
+<Features>
+	<Feature>
 		<Name>shelf</Name>
 		<LookText>The shelf seems to contain a few old magazines and a cat collar.</LookText>
 		<XTriggerStrings>
@@ -9,8 +9,8 @@
 				<Trigger>reveal-item(collar)</Trigger>
 			</XTriggerString>
 		</XTriggerStrings>
-	</XFeature>
-	<XFeature>
+	</Feature>
+	<Feature>
 		<Name>fridge</Name>
 		<LookText>The fridge is empty apart from a tin of sardines.</LookText>
 		<XTriggerStrings>
@@ -19,5 +19,5 @@
 				<Trigger>reveal-item(sardines)</Trigger>
 			</XTriggerString>
 		</XTriggerStrings>
-	</XFeature>
-</XFeatures>
+	</Feature>
+</Features>

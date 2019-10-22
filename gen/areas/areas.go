@@ -13,8 +13,8 @@ import (
 	gxml "gostories/xml"
 )
 
-// Area returns any area which has a name matching the provided name.
-func Area(name string) area.Area {
+// Get returns any area which has a name matching the provided name.
+func Get(name string) area.Area {
 	return *areas[name]
 }
 
@@ -35,8 +35,8 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		print("err here")
 		io.ActiveInputOutputHandler.NewLinef("areasFromXML failed: %v", err)
 	}
-	m := make(map[string]*area.Area, len(t.XArea))
-	for _, a := range t.XArea {
+	m := make(map[string]*area.Area, len(t.Area))
+	for _, a := range t.Area {
 		newArea := &area.Area{
 			Look: a.LookText,
 		}
@@ -48,17 +48,17 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		}
 		newArea.Features = []things.Feature{}
 		for _, f := range a.Features.Feature {
-			newArea.Features = append(newArea.Features, features.Feature(f.Name))
+			newArea.Features = append(newArea.Features, features.Get(f.Name))
 		}
 		newArea.Items = store.NewItemStore()
 		for _, i := range a.Items.Item {
-			newArea.Items.StoreItem(items.Item(i.Name))
+			newArea.Items.StoreItem(items.Get(i.Name))
 		}
 		m[a.Name] = newArea
 	}
 	// Loop a second time to add the exits between Areas (we need to do this after the first
 	// loop to ensure all the Areas are created when we start linking them.)
-	for _, a := range t.XArea {
+	for _, a := range t.Area {
 		current := m[a.Name]
 		current.Exits = make(map[area.Direction]area.Exit)
 		if a.Exits.North != "" {
@@ -91,11 +91,11 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 
 // Areas specifies the xml schema for a list of areas.
 type Areas struct {
-	XArea []XArea
+	Area []Area
 }
 
-// XArea specifies the xml schema for an area in-game.
-type XArea struct {
+// Area specifies the xml schema for an area in-game.
+type Area struct {
 	Name     string
 	LookText string
 	Exits    Exits

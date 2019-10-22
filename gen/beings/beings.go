@@ -58,9 +58,9 @@ type Being struct {
 
 func newBeing(in Being) *things.Being {
 	mainSpeech := generator.Tree(in.Speech)
-	var altSpeech *speech.Tree
+	var altSpeech speech.Tree
 	if in.AltSpeech != "" {
-		altSpeech = generator.TreePtr(generator.Tree(in.AltSpeech))
+		altSpeech = generator.Tree(in.AltSpeech)
 	}
 	being := &things.Being{
 		Thing: things.Thing{
@@ -69,7 +69,7 @@ func newBeing(in Being) *things.Being {
 		},
 		Species:   in.Species,
 		Speech:    mainSpeech,
-		AltSpeech: altSpeech,
+		AltSpeech: &altSpeech,
 	}
 	if in.IsVisible == "y" {
 		being.Show()

@@ -8,8 +8,8 @@ import (
 	gxml "gostories/xml"
 )
 
-// Feature returns any feature which has a name matching the provided name.
-func Feature(name string) things.Feature {
+// Get returns any feature which has a name matching the provided name.
+func Get(name string) things.Feature {
 	return features[name]
 }
 
@@ -24,14 +24,14 @@ func loadFromXML() (items map[string]things.Feature) {
 }
 
 func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
-	t := &XFeatures{}
+	t := &Features{}
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
 		io.ActiveInputOutputHandler.NewLinef("featuresFromXML failed: %v", err)
 	}
-	m := make(map[string]things.Feature, len(t.XFeature))
-	for _, f := range t.XFeature {
+	m := make(map[string]things.Feature, len(t.Feature))
+	for _, f := range t.Feature {
 		triggers := make(map[string]string)
 		for _, trigger := range f.XTriggerStrings.XTriggerString {
 			triggers[trigger.Action] = trigger.Trigger
@@ -48,13 +48,13 @@ func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
 	return m
 }
 
-// XFeatures specifies the xml schema for a list of features.
-type XFeatures struct {
-	XFeature []XFeature
+// Features specifies the xml schema for a list of features.
+type Features struct {
+	Feature []Feature
 }
 
-// XFeature specifies the xml schema for a feature (area/item/feature of interest in-game).
-type XFeature struct {
+// Feature specifies the xml schema for a feature (area/item/feature of interest in-game).
+type Feature struct {
 	Name            string
 	LookText        string
 	XTriggerStrings XTriggerStrings

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Areas>
-    <XArea>
+    <Area>
         <Name>cat_room</Name>
         <LookText>You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.</LookText>
         <Exits>
@@ -11,8 +11,8 @@
                 <Name>bubbles</Name>
             </Being>
         </Beings>
-    </XArea>
-    <XArea>
+    </Area>
+    <Area>
         <Name>kitchen</Name>
         <LookText>You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.</LookText>
         <Exits>
@@ -28,8 +28,8 @@
                 <Name>sardines</Name>
             </Item>
         </Items>
-    </XArea>
-    <XArea>
+    </Area>
+    <Area>
         <Name>store_room</Name>
         <LookText>You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.</LookText>
         <Exits>
@@ -46,5 +46,5 @@
                 <Name>collar</Name>
             </Item>
         </Items>
-    </XArea>
+    </Area>
 </Areas>

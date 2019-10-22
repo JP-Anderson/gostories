@@ -43,7 +43,7 @@ func TestPlaceItemInvalidTarget(t * testing.T) {
         }
 
 	str := "lion"
-	testGameState.Inventory.StoreItem(items.Item("collar"))
+	testGameState.Inventory.StoreItem(items.Get("collar"))
         ExecutePlaceCommand("collar", &str, testGameState)
         mockedIOHandler.ExpectedStringEqualsNthOutputString(
                 t,

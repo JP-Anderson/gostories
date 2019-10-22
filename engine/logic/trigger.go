@@ -52,7 +52,7 @@ func triggerRevealItem(gameState state.State, itemName string) error {
 }
 
 func triggerAddItem(gameState state.State, itemName string) error {
-	i := items.Item(itemName)
+	i := items.Get(itemName)
 	if i != nil {
 		gameState.Inventory.StoreItem(i)
 	}

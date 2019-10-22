@@ -124,9 +124,9 @@ func TestEquippedItemsStoreItemCanStoreEquippables(t *testing.T) {
 }
 
 func getTestItem() things.Item {
-	return items.Item("collar")
+	return items.Get("collar")
 }
 
 func getAnotherTestItem() things.Item {
-	return items.Item("shrubbery")
+	return items.Get("shrubbery")
 }

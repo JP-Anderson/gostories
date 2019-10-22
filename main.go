@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	startRoom := areas.Area("cat_room")
+	startRoom := areas.Get("cat_room")
 	stage := engine.Stage{}
 	stage.Start(startRoom)
 }
