@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"gostories/engine/state"
-	"gostories/engine/store"
-	"gostories/things/area"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"gostories/things/area"
+	tutils "gostories/utils/testing"
 )
 
 func TestAddExit(t *testing.T) {
@@ -15,11 +15,8 @@ func TestAddExit(t *testing.T) {
 		Look:  "Some room",
 		Exits: make(map[area.Direction]area.Exit),
 	}
-	testGameState := &state.State{
-		CurrentArea:   testArea,
-		Inventory:     store.NewInventory(),
-		EquippedItems: store.NewEquippedItems(),
-	}
+	testGameState := tutils.TestState()
+	testGameState.CurrentArea = testArea
 
 	err := triggerAddExit(testGameState, input)
 	assert.NoError(t, err)
@@ -40,17 +37,3 @@ func TestAddExit(t *testing.T) {
 	assert.NotNil(t, reverseExit)
 	assert.Equal(t, area1, reverseExit.To)
 }
-
-// func triggerAddExit(gameState state.State, input string) error {
-// 	stringSlice := strings.Split(input,",")
-// 	a := areas.Get(stringSlice[1])
-// 	if a != nil {
-// 		dir := area.StringToDirection[stringSlice[0]]
-// 		exit := area.Exit{
-// 			To: a,
-// 			From: gameState.CurrentArea,
-// 		}
-// 		gameState.CurrentArea.Exits[dir] = exit
-// 	}
-// 	return nil
-// }

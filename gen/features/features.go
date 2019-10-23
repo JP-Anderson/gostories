@@ -68,8 +68,9 @@ type XTriggerStrings struct {
 // XTriggerString specifies the xml schema for an action trigger on a feature, which maps verb Action to a
 // trigger string (Trigger), to be executed.
 type XTriggerString struct {
-	Action  string
-	Trigger string
+	Action       string
+	ActionTarget string
+	Trigger      string
 }
 
 type feature struct {

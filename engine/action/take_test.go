@@ -7,21 +7,17 @@ import (
 
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
-	"gostories/engine/state"
 	"gostories/engine/store"
 	"gostories/gen/items"
-	"gostories/things/area"
+	tutils "gostories/utils/testing"
 )
 
 func TestTakeCommandWithValidTarget(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
-	testArea := &area.Area{}
-	testGameState := &state.State{
-		CurrentArea: testArea,
-		Inventory:   store.NewInventory(),
-	}
+	testGameState := tutils.TestState()
+	testArea := testGameState.CurrentArea
 
 	t.Run("item added to inventory and removed from area", func(t *testing.T) {
 		testItem := items.Get("sardines")

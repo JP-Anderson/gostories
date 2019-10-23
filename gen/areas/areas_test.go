@@ -2,12 +2,13 @@ package areas
 
 import (
 	"fmt"
-	"gostories/engine/io"
-	console "gostories/engine/io/console"
-	"gostories/things/area"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+
+	"gostories/engine/io"
+	console "gostories/engine/io/console"
+	"gostories/things/area"
 )
 
 func TestLoadFromXML(t *testing.T) {
