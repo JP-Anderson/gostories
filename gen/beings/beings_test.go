@@ -18,11 +18,11 @@ func TestLoadFromXML(t *testing.T) {
 	assert.Equal(
 		t,
 		"Meow. Meeeeeeeeew! Mew.",
-		bubbles.Speech.Event.Speech,
+		bubbles.AltSpeech.Event.Speech,
 	)
 	assert.Equal(
 		t,
 		"Good day! I don't suppose you have any food I could eat do you? I'm famished!",
-		bubbles.AltSpeech.Event.Speech,
+		bubbles.Speech.Event.Speech,
 	)
 }

@@ -14,8 +14,8 @@ import (
 )
 
 // Get returns any area which has a name matching the provided name.
-func Get(name string) area.Area {
-	return *areas[name]
+func Get(name string) *area.Area {
+	return areas[name]
 }
 
 var areas = getAreas()

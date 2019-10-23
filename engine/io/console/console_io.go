@@ -71,5 +71,5 @@ const windowsCutset = "\r" + linuxCutset
 
 // Trim returns a string with spaces to the right trimmed, and a line ending.
 func Trim(input string) string {
-	return strings.TrimRight(input, windowsCutset)
+	return strings.TrimRight(input, linuxCutset)
 }

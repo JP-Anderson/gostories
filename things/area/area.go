@@ -37,6 +37,22 @@ const (
 	West  = "west"
 )
 
+// StringToDirection maps a string to the area.Direction value.
+var StringToDirection = map[string]Direction{
+	North: North,
+	East:  East,
+	South: South,
+	West:  West,
+}
+
+// OppositeDirection maps a string to it's opposite area.Direction value.
+var OppositeDirection = map[string]Direction{
+	North: South,
+	East:  West,
+	South: North,
+	West:  East,
+}
+
 // Checker is a func which given an *Area and string, returns any things.Thing that has a name matching the
 // provided string.
 type Checker func(*Area, string) *things.Thing

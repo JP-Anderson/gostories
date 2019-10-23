@@ -67,7 +67,7 @@ func (s Stage) loopUntilExit() {
 		}
 		trigger, ok := targetedThing.Triggers[inputAction.Name]
 		if ok {
-			err := logic.EvaluateTrigger(*s.state, trigger)
+			err := logic.EvaluateTrigger(s.state, trigger)
 			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
 			}

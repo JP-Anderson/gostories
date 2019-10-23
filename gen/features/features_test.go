@@ -11,7 +11,7 @@ import (
 func TestLoadFromXML(t *testing.T) {
 	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
-	assert.Equal(t, 2, len(_features))
+	assert.Equal(t, 3, len(_features))
 	shelf := _features["shelf"].GetThing()
 	assert.Equal(t, "reveal-item(collar)", shelf.Triggers["look"])
 }

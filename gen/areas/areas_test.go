@@ -13,10 +13,10 @@ import (
 func TestLoadFromXML(t *testing.T) {
 	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
-	assert.Equal(t, 3, len(_areas))
+	assert.Equal(t, 5, len(_areas))
 	assert.Equal(
 		t,
-		"You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.",
+		"You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance. There's an exit to the North, and East.",
 		_areas["store_room"].Look,
 	)
 }
@@ -24,7 +24,6 @@ func TestLoadFromXML(t *testing.T) {
 func TestLoadFromXMLLoadsBeings(t *testing.T) {
 	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
-	assert.Equal(t, 3, len(_areas))
 	catRoom := _areas["cat_room"]
 	assert.Equal(t, 1, len(catRoom.Beings))
 }

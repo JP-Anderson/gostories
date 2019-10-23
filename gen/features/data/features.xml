@@ -20,4 +20,15 @@
 			</XTriggerString>
 		</XTriggerStrings>
 	</Feature>
+	<Feature>
+		<Name>stand</Name>
+		<LookText>The stand is a small square table which reaches around waist height. There is a small circular imprint on top of the table.</LookText>
+		<XTriggerStrings>
+			<XTriggerString>
+				<Action>put</Action>
+				<ActionTarget>put-item(shrubbery)</ActionTarget>
+				<Trigger>remove-item(shrubbery);add-exit(north,final_room)</Trigger>
+			</XTriggerString>
+		</XTriggerStrings>
+	</Feature>
 </Features>

@@ -42,7 +42,7 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 		io.ActiveInputOutputHandler.NewLine(curr.Speech)
 		if curr.Trigger != "" {
 			io.ActiveInputOutputHandler.NewLine(curr.Trigger)
-			err := logic.EvaluateTrigger(gameState, curr.Trigger)
+			err := logic.EvaluateTrigger(&gameState, curr.Trigger)
 			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("%v", err)
 			}
@@ -57,7 +57,7 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 			io.ActiveInputOutputHandler.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
 				io.ActiveInputOutputHandler.NewLine(response.Trigger)
-				err := logic.EvaluateTrigger(gameState, response.Trigger)
+				err := logic.EvaluateTrigger(&gameState, response.Trigger)
 				if err != nil {
 					io.ActiveInputOutputHandler.NewLinef("%v", err)
 				}
