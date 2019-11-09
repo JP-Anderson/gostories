@@ -42,10 +42,12 @@ func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameStat
 	// TODO run triggers off certain action interactions
 	if secondTarget != nil {
 		io.ActiveInputOutputHandler.NewLinef("placed %s on %s", actualItem.GetName(), secondTarget.Name)
-		trigger := secondTarget.Triggers["put"]
-		err = logic.EvaluateTrigger(gameState, trigger.Action)
-		if err != nil {
-			io.ActiveInputOutputHandler.NewLinef("trigger error %v", err)
+		trigger, ok := secondTarget.Triggers["put"]
+		if ok {
+			err = logic.EvaluateTrigger(gameState, trigger.Action)
+			if err != nil {
+				io.ActiveInputOutputHandler.NewLinef("trigger error %v", err)
+			}
 		}
 		return secondTarget
 	}
