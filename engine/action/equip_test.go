@@ -7,22 +7,15 @@ import (
 
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
-	"gostories/engine/state"
-	"gostories/engine/store"
 	"gostories/gen/items"
-	"gostories/things/area"
+	tutils "gostories/utils/testing"
 )
 
 func TestEquipCommandWithValidTarget(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
-	testArea := &area.Area{}
-	testGameState := &state.State{
-		CurrentArea:   testArea,
-		Inventory:     store.NewInventory(),
-		EquippedItems: store.NewEquippedItems(),
-	}
+	testGameState := tutils.TestState()
 
 	t.Run("valid item target", func(t *testing.T) {
 		testGameState.Inventory.StoreItem(items.Get("collar"))
@@ -42,12 +35,7 @@ func TestEquipCommandWithInvalidTarget(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
-	testArea := &area.Area{}
-	testGameState := &state.State{
-		CurrentArea:   testArea,
-		Inventory:     store.NewInventory(),
-		EquippedItems: store.NewEquippedItems(),
-	}
+	testGameState := tutils.TestState()
 
 	t.Run("missing item", func(t *testing.T) {
 		ExecuteEquipCommand("collar", testGameState)

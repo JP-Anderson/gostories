@@ -14,8 +14,9 @@
     </Area>
     <Area>
         <Name>kitchen</Name>
-        <LookText>You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard.</LookText>
+        <LookText>You are in a cramped kitchen, there is a fridge on the far side of the wall and one cupboard. The exits lead south to the store room, and north.</LookText>
         <Exits>
+            <North>table_room</North>
             <South>store_room</South>
         </Exits>
         <Features>
@@ -31,7 +32,7 @@
     </Area>
     <Area>
         <Name>store_room</Name>
-        <LookText>You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance.</LookText>
+        <LookText>You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance. There's an exit to the North, and East.</LookText>
         <Exits>
             <East>cat_room</East>
             <North>kitchen</North>
@@ -46,5 +47,24 @@
                 <Name>collar</Name>
             </Item>
         </Items>
+    </Area>
+    <Area>
+        <Name>table_room</Name>
+        <LookText>You are in a small room which is empty apart from a small wooden stand in the corner across from the only exit, back to the south.</LookText>
+        <Exits>
+            <South>kitchen</South>
+        </Exits>
+        <Features>
+            <Feature>
+                <Name>stand</Name>
+            </Feature>
+        </Features>
+    </Area>
+    <Area>
+        <Name>final_room</Name>
+        <LookText>TODO: Make final room.</LookText>
+        <Exits>
+            <South>table_room</South>
+        </Exits>
     </Area>
 </Areas>

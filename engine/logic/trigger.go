@@ -1,8 +1,12 @@
 package logic
 
 import (
+	"fmt"
+	"strings"
+
 	"gostories/engine/io"
 	"gostories/engine/state"
+	"gostories/gen/areas"
 	"gostories/gen/items"
 	"gostories/things/area"
 )
@@ -11,7 +15,14 @@ import (
 // function mapped to the value of TRIGGER. If it finds a trigger function, it will attempt to
 // apply the trigger function on the noun/named object TARGET, which will have some side-effects on
 // the provided game State. All trigger funcs can also return an error.
-func EvaluateTrigger(gameState state.State, triggerStr string) error {
+func EvaluateTrigger(gameState *state.State, triggerStr string) error {
+	if strings.Contains(triggerStr, ";") {
+		subTriggers := strings.Split(triggerStr, ";")
+		for _, trigger := range subTriggers {
+			println(fmt.Sprintf("trigger is %s", trigger))
+			EvaluateTrigger(gameState, trigger)
+		}
+	}
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
 	return triggerFunc(gameState, targetStr)
@@ -23,14 +34,10 @@ func getTrigger(triggerStr string) triggerFn {
 	return trigger
 }
 
-type triggerFn func(state.State, string) error
+type triggerFn func(*state.State, string) error
 
-func triggerRemoveItem(gameState state.State, itemName string) error {
+func triggerRemoveItem(gameState *state.State, itemName string) error {
 	_, err := gameState.Inventory.RemoveItemWithName(itemName)
-	if err == nil {
-		// this should be fine as long as item is always removed from inventory on equip
-		return nil
-	}
 	_, err = gameState.EquippedItems.RemoveItemWithName(itemName)
 	if err != nil {
 		return err
@@ -38,7 +45,7 @@ func triggerRemoveItem(gameState state.State, itemName string) error {
 	return nil
 }
 
-func triggerRevealItem(gameState state.State, itemName string) error {
+func triggerRevealItem(gameState *state.State, itemName string) error {
 	io.ActiveInputOutputHandler.NewLinef("Revealing item %v", itemName)
 	item := area.CheckItems(gameState.CurrentArea, itemName)
 	if item != nil {
@@ -51,7 +58,7 @@ func triggerRevealItem(gameState state.State, itemName string) error {
 	return nil
 }
 
-func triggerAddItem(gameState state.State, itemName string) error {
+func triggerAddItem(gameState *state.State, itemName string) error {
 	i := items.Get(itemName)
 	if i != nil {
 		gameState.Inventory.StoreItem(i)
@@ -59,8 +66,30 @@ func triggerAddItem(gameState state.State, itemName string) error {
 	return nil
 }
 
+func triggerAddExit(gameState *state.State, input string) error {
+	stringSlice := strings.Split(input, ",")
+	areaName := strings.TrimSpace(stringSlice[1])
+	a := areas.Get(areaName)
+	if a != nil {
+		dir := area.StringToDirection[strings.TrimSpace(stringSlice[0])]
+		exit := area.Exit{
+			To:   a,
+			From: gameState.CurrentArea,
+		}
+		gameState.CurrentArea.Exits[dir] = exit
+		reverseExit := area.Exit{
+			To:   gameState.CurrentArea,
+			From: a,
+		}
+		a.Exits[area.OppositeDirection[strings.TrimSpace(stringSlice[0])]] = reverseExit
+		return nil
+	}
+	return fmt.Errorf("could not find area %s", stringSlice[1])
+}
+
 var triggerStringsMap = map[string]triggerFn{
 	"reveal-item": triggerRevealItem,
 	"remove-item": triggerRemoveItem,
 	"add-item":    triggerAddItem,
+	"add-exit":    triggerAddExit,
 }

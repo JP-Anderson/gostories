@@ -7,21 +7,17 @@ import (
 
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
-	"gostories/engine/state"
 	"gostories/engine/store"
 	"gostories/gen/items"
-	"gostories/things/area"
+	tutils "gostories/utils/testing"
 )
 
 func TestLookCommandWithValidTarget(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
-	testArea := &area.Area{}
-	testGameState := &state.State{
-		CurrentArea: testArea,
-	}
-
+	testGameState := tutils.TestState()
+	testArea := testGameState.CurrentArea
 	t.Run("valid item target", func(t *testing.T) {
 		testItem := items.Get("sardines")
 		testArea.Items = store.NewItemStore()
@@ -34,17 +30,14 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 			1,
 		)
 	})
-
 }
 
 func TestLookCommandWithInvalidTarget(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
-	testArea := &area.Area{}
-	testGameState := &state.State{
-		CurrentArea: testArea,
-	}
+	testGameState := tutils.TestState()
+	testArea := testGameState.CurrentArea
 	testArea.Items = store.NewItemStore()
 
 	result := ExecuteLookCommand("sardines", testGameState)

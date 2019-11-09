@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/state"
 	"gostories/things/area"
+	tutils "gostories/utils/testing"
 )
 
 func TestTravelCommandWithValidTarget(t *testing.T) {
@@ -22,9 +22,8 @@ func TestTravelCommandWithValidTarget(t *testing.T) {
 		area.North: area1To2Exit,
 	}
 
-	testGameState := &state.State{
-		CurrentArea: testArea,
-	}
+	testGameState := tutils.TestState()
+	testGameState.CurrentArea = testArea
 
 	t.Run("valid exit to north", func(t *testing.T) {
 		result := ExecuteTravelCommand("north", testGameState)
@@ -33,13 +32,9 @@ func TestTravelCommandWithValidTarget(t *testing.T) {
 }
 
 func TestTravelCommandWithInvalidTarget(t *testing.T) {
-	testArea := &area.Area{}
-
+	testGameState := tutils.TestState()
+	testArea := testGameState.CurrentArea
 	testArea.Exits = map[area.Direction]area.Exit{}
-
-	testGameState := &state.State{
-		CurrentArea: testArea,
-	}
 
 	t.Run("invalid exit to north", func(t *testing.T) {
 		result := ExecuteTravelCommand("north", testGameState)

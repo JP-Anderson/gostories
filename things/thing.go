@@ -1,5 +1,9 @@
 package things
 
+import (
+	"fmt"
+)
+
 // A Thing is anything in the game that can be interacted with in some way. All Things have
 // a Name (identifying string), LookText (text which is output when the player executes the
 // Look action on the Thing, a Visible attribute (is the Thing currently revealed to the
@@ -10,7 +14,19 @@ type Thing struct {
 	LookText string
 	Visible  bool
 	// Triggers maps verb command strings to trigger functions. See trigger.go for trigger functions.
-	Triggers map[string]string
+	Triggers map[string]Trigger
+}
+
+// A Trigger contains an Action string corresponding to the name of the action to trigger,
+// e.g. "take-item", and a Target string corresponding to the target of the action, if any, e.g. "sword".
+type Trigger struct {
+	Target string
+	Action string
+}
+
+// String returns the string representation of a trigger in the format TRIGGER(TARGET).
+func (t *Trigger) String() string {
+	return fmt.Sprintf("%s(%s)", t.Action, t.Target)
 }
 
 // Show sets the Visible attribute of the Thing to true, revealing it to the player.

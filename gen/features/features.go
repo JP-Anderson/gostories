@@ -32,9 +32,12 @@ func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
 	}
 	m := make(map[string]things.Feature, len(t.Feature))
 	for _, f := range t.Feature {
-		triggers := make(map[string]string)
+		triggers := make(map[string]things.Trigger)
 		for _, trigger := range f.XTriggerStrings.XTriggerString {
-			triggers[trigger.Action] = trigger.Trigger
+			triggers[trigger.Action] = things.Trigger{
+				Target: trigger.ActionTarget,
+				Action: trigger.Trigger,
+			}
 		}
 		newFeature := &feature{
 			&things.Thing{
@@ -68,8 +71,9 @@ type XTriggerStrings struct {
 // XTriggerString specifies the xml schema for an action trigger on a feature, which maps verb Action to a
 // trigger string (Trigger), to be executed.
 type XTriggerString struct {
-	Action  string
-	Trigger string
+	Action       string
+	ActionTarget string
+	Trigger      string
 }
 
 type feature struct {
