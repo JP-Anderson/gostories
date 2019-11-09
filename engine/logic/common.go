@@ -7,6 +7,5 @@ func parseFuncParam(input string) string {
 }
 
 func parseFuncName(input string) string {
-	println(input)
 	return input[:strings.Index(input, "(")]
 }

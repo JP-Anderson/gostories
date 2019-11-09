@@ -1,12 +1,10 @@
 package action
 
 import (
-	"fmt"
 	"testing"
 
 	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
-	"gostories/engine/logic"
 	"gostories/gen/features"
 	"gostories/gen/items"
 	tutils "gostories/utils/testing"
@@ -50,18 +48,11 @@ func TestPlaceShrubberyOnStand(t *testing.T) {
 	testGameState := tutils.TestState()
 	shrubbery := items.Get("shrubbery")
 	testGameState.Inventory.StoreItem(shrubbery)
-
 	stand := features.Get("stand")
 	standName := stand.GetName()
 	testGameState.CurrentArea.AddFeature(stand)
 
-	println(fmt.Sprintf("%#v", stand.GetThing().Triggers["put"]))
-
 	ExecutePlaceCommand("shrubbery", &standName, testGameState)
-	
-	trigger := stand.GetThing().Triggers["put"]
-
-	logic.EvaluateTrigger(testGameState, trigger.String())
 	
 	mockedHandler.ExpectedStringEqualsNthOutputString(
 		t,

@@ -23,7 +23,6 @@ func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
 	targets = []string{}
 	action = unknownAction
 	for _, token := range ts {
-		println(token)
 		token := strings.TrimSuffix(strings.TrimSpace(token), "\n")
 		_, isArticle := articles[token]
 		if isArticle {

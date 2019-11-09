@@ -41,14 +41,12 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 		onFirstRun = false
 		io.Handler.NewLine(curr.Speech)
 		if curr.Trigger != "" {
-			io.Handler.NewLine(curr.Trigger)
 			err := logic.EvaluateTrigger(&gameState, curr.Trigger)
 			if err != nil {
 				io.Handler.NewLinef("%v", err)
 			}
 		}
 		if curr.Checkpoint != nil {
-			io.Handler.NewLinef("New checkpoint!")
 			tree.SetStart(curr.Checkpoint)
 		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
@@ -56,7 +54,6 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 			response := curr.Responses[choice]
 			io.Handler.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
-				io.Handler.NewLine(response.Trigger)
 				err := logic.EvaluateTrigger(&gameState, response.Trigger)
 				if err != nil {
 					io.Handler.NewLinef("%v", err)

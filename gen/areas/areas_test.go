@@ -1,7 +1,6 @@
 package areas
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -38,7 +37,6 @@ func TestLoadFromXMLLoadsFeatures(t *testing.T) {
 	assert.Equal(t, 0, len(catRoom.Features))
 	kitchen := _areas["kitchen"]
 	assert.Equal(t, 1, len(kitchen.Features))
-	println(fmt.Sprintf("%#v", kitchen))
 	fridge := kitchen.Features[0]
 	assert.Equal(t, "fridge", fridge.GetName())
 	assert.Equal(t, "The fridge is empty apart from a tin of sardines.", fridge.GetLookText())

@@ -27,7 +27,6 @@ func EvaluateTrigger(gameState *state.State, triggerStr string) error {
 func evaluateMultiple(gameState *state.State, triggerStr string) {
 	subTriggers := strings.Split(triggerStr, ";")
 	for _, trigger := range subTriggers {
-		println(fmt.Sprintf("trigger is %s", trigger))
 		EvaluateTrigger(gameState, trigger)
 	}
 }
@@ -41,22 +40,22 @@ func getTrigger(triggerStr string) triggerFn {
 type triggerFn func(*state.State, string) error
 
 func triggerRemoveItem(gameState *state.State, itemName string) error {
-	_, err := gameState.Inventory.RemoveItemWithName(itemName)
-	_, err = gameState.EquippedItems.RemoveItemWithName(itemName)
-	if err != nil {
-		return err
+	_, err1 := gameState.Inventory.RemoveItemWithName(itemName)
+	_, err2 := gameState.EquippedItems.RemoveItemWithName(itemName)
+	if err1 != nil && err2 != nil {
+		return err1
 	}
 	return nil
 }
 
 func triggerRevealItem(gameState *state.State, itemName string) error {
-	io.Handler.NewLinef("Revealing item %v", itemName)
 	item := area.CheckItems(gameState.CurrentArea, itemName)
 	if item != nil {
 		if item.Visible {
 			io.Handler.NewLine(itemName + "is already visible")
 		} else {
 			item.Show()
+			io.Handler.NewLinef("Revealing item %v", itemName)
 		}
 	}
 	return nil
@@ -66,6 +65,7 @@ func triggerAddItem(gameState *state.State, itemName string) error {
 	i := items.Get(itemName)
 	if i != nil {
 		gameState.Inventory.StoreItem(i)
+		io.Handler.NewLinef("You now have the %v", itemName)
 	}
 	return nil
 }
