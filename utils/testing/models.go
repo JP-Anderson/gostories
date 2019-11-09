@@ -10,7 +10,7 @@ import (
 // (empty) store of equipped items.
 func TestState() *state.State {
 	return &state.State{
-		CurrentArea:   &area.Area{},
+		CurrentArea:   area.NewArea(),
 		Inventory:     store.NewInventory(),
 		EquippedItems: store.NewEquippedItems(),
 	}

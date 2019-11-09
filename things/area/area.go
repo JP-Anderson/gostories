@@ -7,6 +7,13 @@ import (
 	"gostories/things"
 )
 
+// NewArea builds an Area.
+func NewArea() *Area {
+	return &Area{
+		Exits: map[Direction]Exit{},
+	}
+}
+
 // Area represents an in-game location. It can be connected to other Areas by exits, and it contains
 // game objects (Items, Beings, Features, etc.) which the player can interact with if they are within
 // the Area.
@@ -61,15 +68,15 @@ func (a *Area) AddFeature(feature things.Feature) {
 	a.Features = append(a.Features, feature)
 }
 
-// Checker is a func which given an *Area and string, returns any things.Thing that has a name matching the
+// checker is a func which given an *Area and string, returns any things.Thing that has a name matching the
 // provided string.
-type Checker func(*Area, string) *things.Thing
+type checker func(*Area, string) *things.Thing
 
 // CheckAreaForThing takes a thing name string, and a variable number of Checker functions. It will return a
 // pointer to any Thing (matching the provided name) that has been yielded by the checkers.
-func (a *Area) CheckAreaForThing(thingName string, checkers ...Checker) *things.Thing {
-	for _, checker := range checkers {
-		res := checker(a, thingName)
+func (a *Area) CheckAreaForThing(thingName string, checkers ...checker) *things.Thing {
+	for _, c := range checkers {
+		res := c(a, thingName)
 		if res != nil {
 			return res
 		}
