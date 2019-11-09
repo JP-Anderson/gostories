@@ -9,7 +9,7 @@ import (
 )
 
 func TestLoadFromXML(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
 	assert.Equal(t, 3, len(_features))
 }
@@ -29,7 +29,7 @@ func TestLoadTriggerStringsWithAndWithoutTarget(t *testing.T) {
 }
 
 func TestLoadPutActionTrigger(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
 	stand := _features["stand"].GetThing()
 	assert.NotNil(t, stand)

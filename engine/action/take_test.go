@@ -13,8 +13,8 @@ import (
 )
 
 func TestTakeCommandWithValidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 	testArea := testGameState.CurrentArea
@@ -25,7 +25,7 @@ func TestTakeCommandWithValidTarget(t *testing.T) {
 		testArea.Items = store.NewItemStore()
 		testArea.Items.StoreItem(testItem)
 		ExecuteTakeCommand("sardines", testGameState)
-		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		mockedHandler.ExpectedStringEqualsNthOutputString(
 			t,
 			"You take the sardines.",
 			1,

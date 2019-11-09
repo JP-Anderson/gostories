@@ -12,7 +12,7 @@ import (
 )
 
 func TestLoadFromXML(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
 	assert.Equal(t, 5, len(_areas))
 	assert.Equal(
@@ -23,14 +23,14 @@ func TestLoadFromXML(t *testing.T) {
 }
 
 func TestLoadFromXMLLoadsBeings(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
 	catRoom := _areas["cat_room"]
 	assert.Equal(t, 1, len(catRoom.Beings))
 }
 
 func TestLoadFromXMLLoadsFeatures(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
 	storeRoom := _areas["store_room"]
 	assert.Equal(t, 1, len(storeRoom.Features))
@@ -45,7 +45,7 @@ func TestLoadFromXMLLoadsFeatures(t *testing.T) {
 }
 
 func TestLoadFromXMLLoadsExits(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
 	storeRoom := _areas["store_room"]
 	catRoom := _areas["cat_room"]
@@ -68,7 +68,7 @@ func TestLoadFromXMLLoadsExits(t *testing.T) {
 }
 
 func TestLoadFromXMLLoadsItems(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()
 	storeRoom := _areas["store_room"]
 

@@ -39,27 +39,27 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 			}
 		}
 		onFirstRun = false
-		io.ActiveInputOutputHandler.NewLine(curr.Speech)
+		io.Handler.NewLine(curr.Speech)
 		if curr.Trigger != "" {
-			io.ActiveInputOutputHandler.NewLine(curr.Trigger)
+			io.Handler.NewLine(curr.Trigger)
 			err := logic.EvaluateTrigger(&gameState, curr.Trigger)
 			if err != nil {
-				io.ActiveInputOutputHandler.NewLinef("%v", err)
+				io.Handler.NewLinef("%v", err)
 			}
 		}
 		if curr.Checkpoint != nil {
-			io.ActiveInputOutputHandler.NewLinef("New checkpoint!")
+			io.Handler.NewLinef("New checkpoint!")
 			tree.SetStart(curr.Checkpoint)
 		}
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameState)
 			response := curr.Responses[choice]
-			io.ActiveInputOutputHandler.NewLine(response.ResponseStr)
+			io.Handler.NewLine(response.ResponseStr)
 			if response.Trigger != "" {
-				io.ActiveInputOutputHandler.NewLine(response.Trigger)
+				io.Handler.NewLine(response.Trigger)
 				err := logic.EvaluateTrigger(&gameState, response.Trigger)
 				if err != nil {
-					io.ActiveInputOutputHandler.NewLinef("%v", err)
+					io.Handler.NewLinef("%v", err)
 				}
 			}
 			curr = &curr.Responses[choice].Next
@@ -82,17 +82,17 @@ func printResponsesAndGetChoice(speechEvent *speech.Event, gameState state.State
 
 	speechEvent.Responses = availableResponses
 	for i, option := range speechEvent.Responses {
-		io.ActiveInputOutputHandler.NewLinef("%v - \"%v\"", i, option.ResponseStr)
+		io.Handler.NewLinef("%v - \"%v\"", i, option.ResponseStr)
 	}
 
 	last := len(speechEvent.Responses) - 1
 	for {
-		selection, err := io.ActiveInputOutputHandler.ReadInt()
+		selection, err := io.Handler.ReadInt()
 		if err != nil {
-			io.ActiveInputOutputHandler.NewLinef("%v", err)
+			io.Handler.NewLinef("%v", err)
 		}
 		if selection < 0 || selection > last {
-			io.ActiveInputOutputHandler.NewLinef("Enter option number from %v to %v", 0, last)
+			io.Handler.NewLinef("Enter option number from %v to %v", 0, last)
 		}
 		return selection
 	}

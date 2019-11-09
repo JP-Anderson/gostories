@@ -29,8 +29,8 @@ func NewMockInputOutputHandler() *MockInputOutputHandler {
 	}
 }
 
-// NewMockIOHandler creates a MockIOHandler which also outputs to the console in tests.
-func NewMockIOHandler() *MockInputOutputHandler {
+// NewMockHandler creates a MockHandler which also outputs to the console in tests.
+func NewMockHandler() *MockInputOutputHandler {
 	return &MockInputOutputHandler {
 		suppressOutput: false,
 	}

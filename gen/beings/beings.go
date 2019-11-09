@@ -31,7 +31,7 @@ func beingsFromXML(xmlBytes []byte) map[string]*things.Being {
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
-		io.ActiveInputOutputHandler.NewLinef("beingsFromXML failed: %v", err)
+		io.Handler.NewLinef("beingsFromXML failed: %v", err)
 	}
 	m := make(map[string]*things.Being, len(t.Being))
 	for _, b := range t.Being {

@@ -39,10 +39,10 @@ func NewEquippedItems() *EquippedItems {
 func (e *EquippedItems) StoreItem(newItem things.Item) bool {
 	_, ok := newItem.(things.Equippable)
 	if ok {
-		io.ActiveInputOutputHandler.NewLinef("You equipped the %v.", newItem.GetName())
+		io.Handler.NewLinef("You equipped the %v.", newItem.GetName())
 		e.ItemStore.StoreItem(newItem)
 	} else {
-		io.ActiveInputOutputHandler.NewLinef("How do you expect to equip the %v?", newItem.GetName())
+		io.Handler.NewLinef("How do you expect to equip the %v?", newItem.GetName())
 	}
 	return ok
 }
@@ -64,10 +64,10 @@ func NewItemStore() *ItemStore {
 func (i *ItemStore) PrintContents() {
 	if i.Size() > 0 {
 		for _, item := range i.items {
-			io.ActiveInputOutputHandler.NewLine(item.GetName())
+			io.Handler.NewLine(item.GetName())
 		}
 	} else {
-		io.ActiveInputOutputHandler.NewLinef("Empty.")
+		io.Handler.NewLinef("Empty.")
 	}
 }
 

@@ -28,7 +28,7 @@ func itemsFromXML(xmlBytes []byte) map[string]things.Item {
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
-		io.ActiveInputOutputHandler.NewLinef("itemsFromXML failed: %v", err)
+		io.Handler.NewLinef("itemsFromXML failed: %v", err)
 	}
 	m := make(map[string]things.Item, len(t.Item))
 	for _, i := range t.Item {

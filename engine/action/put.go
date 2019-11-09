@@ -16,7 +16,7 @@ import (
 func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameState *state.State) *things.Thing {
 	notAnItem := gameState.CurrentArea.CheckAreaForThing(placeTarget, area.CheckBeings, area.CheckFeatures)
 	if notAnItem != nil {
-		io.ActiveInputOutputHandler.NewLine("How do you expect to place the " + notAnItem.Name + "!?")
+		io.Handler.NewLine("How do you expect to place the " + notAnItem.Name + "!?")
 		return nil
 	}
 
@@ -24,7 +24,7 @@ func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameStat
 	if err != nil {
 		item, err = gameState.EquippedItems.GetItemWithName(placeTarget)
 		if err != nil {
-			io.ActiveInputOutputHandler.NewLinef("Do not have a %s to put anywhere.", placeTarget)
+			io.Handler.NewLinef("Do not have a %s to put anywhere.", placeTarget)
 			return nil
 		}
 	}
@@ -33,7 +33,7 @@ func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameStat
 
 	if placeSecondTarget == nil {
 		// TODO: does this need to be handled differently for triggers?
-		io.ActiveInputOutputHandler.NewLinef("Are you sure you want to drop the %s?", placeTarget)
+		io.Handler.NewLinef("Are you sure you want to drop the %s?", placeTarget)
 		return nil
 	}
 
@@ -41,17 +41,17 @@ func ExecutePlaceCommand(placeTarget string, placeSecondTarget *string, gameStat
 	secondTarget := gameState.CurrentArea.CheckAreaForThing(secondTargetString, area.CheckBeings, area.CheckFeatures)
 	// TODO run triggers off certain action interactions
 	if secondTarget != nil {
-		io.ActiveInputOutputHandler.NewLinef("placed %s on %s", actualItem.GetName(), secondTarget.Name)
+		io.Handler.NewLinef("placed %s on %s", actualItem.GetName(), secondTarget.Name)
 		trigger, ok := secondTarget.Triggers["put"]
 		if ok {
 			err = logic.EvaluateTrigger(gameState, trigger.Action)
 			if err != nil {
-				io.ActiveInputOutputHandler.NewLinef("trigger error %v", err)
+				io.Handler.NewLinef("trigger error %v", err)
 			}
 		}
 		return secondTarget
 	}
 
-	io.ActiveInputOutputHandler.NewLinef("Not sure how to place the %s on the %s!", actualItem.GetName(), secondTargetString)
+	io.Handler.NewLinef("Not sure how to place the %s on the %s!", actualItem.GetName(), secondTargetString)
 	return nil
 }

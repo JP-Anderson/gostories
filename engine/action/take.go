@@ -13,7 +13,7 @@ import (
 func ExecuteTakeCommand(takeTarget string, state *state.State) {
 	item := state.CurrentArea.FindItemByName(takeTarget)
 	if item != nil && item.GetThing().Visible {
-		io.ActiveInputOutputHandler.NewLinef("You take the %v.", item.GetName())
+		io.Handler.NewLinef("You take the %v.", item.GetName())
 		state.Inventory.StoreItem(item)
 		state.CurrentArea.Items.RemoveItem(item)
 		return
@@ -21,8 +21,8 @@ func ExecuteTakeCommand(takeTarget string, state *state.State) {
 
 	feature := state.CurrentArea.CheckAreaForThing(takeTarget, area.CheckFeatures)
 	if feature != nil && strings.ToLower(feature.Name) == strings.ToLower(takeTarget) {
-		io.ActiveInputOutputHandler.NewLinef("You can't really take the %v...", feature.Name)
+		io.Handler.NewLinef("You can't really take the %v...", feature.Name)
 		return
 	}
-	io.ActiveInputOutputHandler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
+	io.Handler.NewLinef("Couldn't find a %v to pick up.", takeTarget)
 }

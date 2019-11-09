@@ -33,7 +33,7 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
-		io.ActiveInputOutputHandler.NewLinef("areasFromXML failed: %v", err)
+		io.Handler.NewLinef("areasFromXML failed: %v", err)
 	}
 	m := make(map[string]*area.Area, len(t.Area))
 	for _, a := range t.Area {

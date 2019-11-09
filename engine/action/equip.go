@@ -11,7 +11,7 @@ import (
 func ExecuteEquipCommand(equipTarget string, state *state.State) {
 	item, err := state.Inventory.GetItemWithName(equipTarget)
 	if err != nil {
-		io.ActiveInputOutputHandler.NewLinef("Do not have a %v to equip.", equipTarget)
+		io.Handler.NewLinef("Do not have a %v to equip.", equipTarget)
 		return
 	}
 	equipped := state.EquippedItems.StoreItem(*item)

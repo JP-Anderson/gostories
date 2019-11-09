@@ -29,11 +29,11 @@ func (s Stage) loopUntilExit() {
 	isNewArea := true
 	for {
 		if isNewArea {
-			io.ActiveInputOutputHandler.NewLine(s.state.CurrentArea.Look)
+			io.Handler.NewLine(s.state.CurrentArea.Look)
 			isNewArea = false
 		}
 		// TODO: move the action parsing to another file/function
-		inputAction, targets := io.ActiveInputOutputHandler.SimpleParse()
+		inputAction, targets := io.Handler.SimpleParse()
 		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if inputAction.Name == "look" {
@@ -54,14 +54,14 @@ func (s Stage) loopUntilExit() {
 				targetedThing = action.ExecutePlaceCommand(targets[0], &targets[1], s.state)
 			}
 		} else if inputAction.Name == "inventory" {
-			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
+			io.Handler.NewLine("You take stock of your store.")
 			s.state.Inventory.PrintContents()
-			io.ActiveInputOutputHandler.NewLine("You have the following equipped:")
+			io.Handler.NewLine("You have the following equipped:")
 			s.state.EquippedItems.PrintContents()
 		} else if inputAction.Name == "exit" {
 			break
 		} else {
-			io.ActiveInputOutputHandler.NewLine("Unknown action")
+			io.Handler.NewLine("Unknown action")
 		}
 		if targetedThing == nil {
 			continue
@@ -70,7 +70,7 @@ func (s Stage) loopUntilExit() {
 		if ok {
 			err := logic.EvaluateTrigger(s.state, trigger.Action)
 			if err != nil {
-				io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
+				io.Handler.NewLinef("Error evaluating trigger: %v", trigger)
 			}
 		}
 	}

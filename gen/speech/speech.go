@@ -17,7 +17,7 @@ func speechFromXML(xmlBytes []byte) speech.Tree {
 	t := &speech.Tree{}
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
-		io.ActiveInputOutputHandler.NewLinef("speechFromXML failed: %v", err)
+		io.Handler.NewLinef("speechFromXML failed: %v", err)
 	}
 	return *t
 }

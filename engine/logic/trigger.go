@@ -17,15 +17,19 @@ import (
 // the provided game State. All trigger funcs can also return an error.
 func EvaluateTrigger(gameState *state.State, triggerStr string) error {
 	if strings.Contains(triggerStr, ";") {
-		subTriggers := strings.Split(triggerStr, ";")
-		for _, trigger := range subTriggers {
-			println(fmt.Sprintf("trigger is %s", trigger))
-			EvaluateTrigger(gameState, trigger)
-		}
+		evaluateMultiple(gameState, triggerStr)
 	}
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
 	return triggerFunc(gameState, targetStr)
+}
+
+func evaluateMultiple(gameState *state.State, triggerStr string) {
+	subTriggers := strings.Split(triggerStr, ";")
+	for _, trigger := range subTriggers {
+		println(fmt.Sprintf("trigger is %s", trigger))
+		EvaluateTrigger(gameState, trigger)
+	}
 }
 
 func getTrigger(triggerStr string) triggerFn {
@@ -46,11 +50,11 @@ func triggerRemoveItem(gameState *state.State, itemName string) error {
 }
 
 func triggerRevealItem(gameState *state.State, itemName string) error {
-	io.ActiveInputOutputHandler.NewLinef("Revealing item %v", itemName)
+	io.Handler.NewLinef("Revealing item %v", itemName)
 	item := area.CheckItems(gameState.CurrentArea, itemName)
 	if item != nil {
 		if item.Visible {
-			io.ActiveInputOutputHandler.NewLine(itemName + "is already visible")
+			io.Handler.NewLine(itemName + "is already visible")
 		} else {
 			item.Show()
 		}

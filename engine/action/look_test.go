@@ -13,8 +13,8 @@ import (
 )
 
 func TestLookCommandWithValidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 	testArea := testGameState.CurrentArea
@@ -24,7 +24,7 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 		testArea.Items.StoreItem(testItem)
 		result := ExecuteLookCommand("sardines", testGameState)
 		assert.Equal(t, testItem.GetThing(), result)
-		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		mockedHandler.ExpectedStringEqualsNthOutputString(
 			t,
 			"A tin of tasty sardines preserved in olive oil.",
 			1,
@@ -33,8 +33,8 @@ func TestLookCommandWithValidTarget(t *testing.T) {
 }
 
 func TestLookCommandWithInvalidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 	testArea := testGameState.CurrentArea
@@ -42,7 +42,7 @@ func TestLookCommandWithInvalidTarget(t *testing.T) {
 
 	result := ExecuteLookCommand("sardines", testGameState)
 	assert.Nil(t, result)
-	mockedIOHandler.ExpectedStringEqualsNthOutputString(
+	mockedHandler.ExpectedStringEqualsNthOutputString(
 		t,
 		"Couldn't find a sardines to look at!",
 		1,

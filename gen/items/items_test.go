@@ -9,7 +9,7 @@ import (
 )
 
 func TestLoadFromXML(t *testing.T) {
-	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
+	io.Handler = console.NewConsoleInputOutputHandler()
 	_items := loadFromXML()
 	assert.Equal(t, 3, len(_items))
 }

@@ -13,14 +13,14 @@ import (
 )
 
 func TestPlaceItemNotInInventory(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 
 	str := ""
 	ExecutePlaceCommand("collar", &str, testGameState)
-	mockedIOHandler.ExpectedStringEqualsNthOutputString(
+	mockedHandler.ExpectedStringEqualsNthOutputString(
 		t,
 		"Do not have a collar to put anywhere.",
 		1,
@@ -28,15 +28,15 @@ func TestPlaceItemNotInInventory(t *testing.T) {
 }
 
 func TestPlaceItemInvalidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 
 	str := "lion"
 	testGameState.Inventory.StoreItem(items.Get("collar"))
 	ExecutePlaceCommand("collar", &str, testGameState)
-	mockedIOHandler.ExpectedStringEqualsNthOutputString(
+	mockedHandler.ExpectedStringEqualsNthOutputString(
 		t,
 		"Not sure how to place the collar on the lion!",
 		1,
@@ -44,8 +44,8 @@ func TestPlaceItemInvalidTarget(t *testing.T) {
 }
 
 func TestPlaceShrubberyOnStand(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 	shrubbery := items.Get("shrubbery")
@@ -63,7 +63,7 @@ func TestPlaceShrubberyOnStand(t *testing.T) {
 
 	logic.EvaluateTrigger(testGameState, trigger.String())
 	
-	mockedIOHandler.ExpectedStringEqualsNthOutputString(
+	mockedHandler.ExpectedStringEqualsNthOutputString(
 		t,
 		"placed shrubbery on stand",
 		1,

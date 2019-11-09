@@ -19,6 +19,6 @@ func ExecuteTravelCommand(travelTarget string, state *state.State) bool {
 		state.CurrentArea = exit.To
 		return true
 	}
-	io.ActiveInputOutputHandler.NewLinef("Could not find an exit to the %v", trimmed)
+	io.Handler.NewLinef("Could not find an exit to the %v", trimmed)
 	return false
 }

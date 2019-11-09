@@ -12,12 +12,12 @@ import (
 // initiate conversation with that Being, if possible.
 func ExecuteTalkCommand(talkTarget string, state *state.State) {
 	for _, being := range state.CurrentArea.Beings {
-		io.ActiveInputOutputHandler.NewLine(being.Name)
+		io.Handler.NewLine(being.Name)
 		if strings.ToLower(being.Name) == strings.ToLower(talkTarget) {
-			io.ActiveInputOutputHandler.NewLinef("You speak to %v.", being.Name)
+			io.Handler.NewLinef("You speak to %v.", being.Name)
 			runner.RunWithAlt(&being.Speech, being.AltSpeech, *state)
 			return
 		}
 	}
-	io.ActiveInputOutputHandler.NewLinef("Could not find a %v to talk to!", talkTarget)
+	io.Handler.NewLinef("Could not find a %v to talk to!", talkTarget)
 }

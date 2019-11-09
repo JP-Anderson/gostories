@@ -28,7 +28,7 @@ func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
 	err := xml.Unmarshal(xmlBytes, t)
 	if err != nil {
 		print("err here")
-		io.ActiveInputOutputHandler.NewLinef("featuresFromXML failed: %v", err)
+		io.Handler.NewLinef("featuresFromXML failed: %v", err)
 	}
 	m := make(map[string]things.Feature, len(t.Feature))
 	for _, f := range t.Feature {

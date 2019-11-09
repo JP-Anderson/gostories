@@ -12,8 +12,8 @@ import (
 )
 
 func TestEquipCommandWithValidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 
@@ -21,7 +21,7 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 		testGameState.Inventory.StoreItem(items.Get("collar"))
 		assert.Equal(t, 1, testGameState.Inventory.Size())
 		ExecuteEquipCommand("collar", testGameState)
-		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		mockedHandler.ExpectedStringEqualsNthOutputString(
 			t,
 			"You equipped the collar.",
 			1,
@@ -32,14 +32,14 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 }
 
 func TestEquipCommandWithInvalidTarget(t *testing.T) {
-	mockedIOHandler := mockio.NewMockInputOutputHandler()
-	io.ActiveInputOutputHandler = mockedIOHandler
+	mockedHandler := mockio.NewMockInputOutputHandler()
+	io.Handler = mockedHandler
 
 	testGameState := tutils.TestState()
 
 	t.Run("missing item", func(t *testing.T) {
 		ExecuteEquipCommand("collar", testGameState)
-		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		mockedHandler.ExpectedStringEqualsNthOutputString(
 			t,
 			"Do not have a collar to equip.",
 			1,
@@ -51,7 +51,7 @@ func TestEquipCommandWithInvalidTarget(t *testing.T) {
 	t.Run("non-equippable item", func(t *testing.T) {
 		testGameState.Inventory.StoreItem(items.Get("sardines"))
 		ExecuteEquipCommand("sardines", testGameState)
-		mockedIOHandler.ExpectedStringEqualsNthOutputString(
+		mockedHandler.ExpectedStringEqualsNthOutputString(
 			t,
 			"How do you expect to equip the sardines?",
 			2,
