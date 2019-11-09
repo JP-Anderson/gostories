@@ -13,6 +13,7 @@ import (
 // has been Output from the engine.
 type MockInputOutputHandler struct {
 	output []string
+	suppressOutput bool
 }
 
 // ExpectedStringEqualsNthOutputString returns true if the string output value created on the Nth call
@@ -23,12 +24,25 @@ func (c *MockInputOutputHandler) ExpectedStringEqualsNthOutputString(t *testing.
 
 // NewMockInputOutputHandler creates a new MockInputOutputHandler for use in testing.
 func NewMockInputOutputHandler() *MockInputOutputHandler {
-	return &MockInputOutputHandler{}
+	return &MockInputOutputHandler{
+		suppressOutput: true,
+	}
+}
+
+// NewMockIOHandler creates a MockIOHandler which also outputs to the console in tests.
+func NewMockIOHandler() *MockInputOutputHandler {
+	return &MockInputOutputHandler {
+		suppressOutput: false,
+	}
 }
 
 // NewLine takes a string and adds it to the internal output tracker for assertions.
 func (c *MockInputOutputHandler) NewLine(newOutput string) error {
 	c.output = append(c.output, newOutput)
+	if c.suppressOutput {
+		return nil
+	}
+	println(newOutput)
 	return nil
 }
 

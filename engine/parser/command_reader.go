@@ -1,5 +1,9 @@
 package parser
 
+import (
+	"strings"
+)
+
 // ParseInput takes a slice of strings from the user input (which will already have been split on spaces). It will pass
 // into a token parsing function based on the number of tokens in the slice.
 func ParseInput(tokens ...string) (Action, []string) {
@@ -20,6 +24,7 @@ func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
 	action = unknownAction
 	for _, token := range ts {
 		println(token)
+		token := strings.TrimSuffix(strings.TrimSpace(token), "\n")
 		_, isArticle := articles[token]
 		if isArticle {
 			continue

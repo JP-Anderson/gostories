@@ -53,6 +53,14 @@ var OppositeDirection = map[string]Direction{
 	West:  East,
 }
 
+// AddFeature adds a feature to the Area.
+func (a *Area) AddFeature(feature things.Feature) {
+	if a.Features == nil {
+		a.Features = []things.Feature{}
+	}
+	a.Features = append(a.Features, feature)
+}
+
 // Checker is a func which given an *Area and string, returns any things.Thing that has a name matching the
 // provided string.
 type Checker func(*Area, string) *things.Thing

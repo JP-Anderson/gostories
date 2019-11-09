@@ -48,9 +48,10 @@ func (s Stage) loopUntilExit() {
 			action.ExecuteEquipCommand(targets[0], s.state)
 		} else if inputAction.Name == "place" {
 			if len(targets) == 1 {
+				// TODO: can actually change the trigger here to "drop" if we want to have a different trigger for put and drop.
 				action.ExecutePlaceCommand(targets[0], nil, s.state)
 			} else if len(targets) == 2 {
-				action.ExecutePlaceCommand(targets[1], &targets[1], s.state)
+				targetedThing = action.ExecutePlaceCommand(targets[0], &targets[1], s.state)
 			}
 		} else if inputAction.Name == "inventory" {
 			io.ActiveInputOutputHandler.NewLine("You take stock of your store.")
@@ -67,7 +68,7 @@ func (s Stage) loopUntilExit() {
 		}
 		trigger, ok := targetedThing.Triggers[inputAction.Name]
 		if ok {
-			err := logic.EvaluateTrigger(s.state, trigger)
+			err := logic.EvaluateTrigger(s.state, trigger.Action)
 			if err != nil {
 				io.ActiveInputOutputHandler.NewLinef("Error evaluating trigger: %v", trigger)
 			}

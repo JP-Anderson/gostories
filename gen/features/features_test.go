@@ -12,8 +12,20 @@ func TestLoadFromXML(t *testing.T) {
 	io.ActiveInputOutputHandler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
 	assert.Equal(t, 3, len(_features))
-	shelf := _features["shelf"].GetThing()
-	assert.Equal(t, "reveal-item(collar)", shelf.Triggers["look"])
+}
+
+func TestLoadTriggerStringsWithAndWithoutTarget(t *testing.T) {
+	_features := loadFromXML()
+	stand := _features["stand"].GetThing()
+	triggers := stand.Triggers
+	putTrigger := triggers["put"]
+	assert.Equal(t, "shrubbery", putTrigger.Target)
+	assert.NotEqual(t, "", putTrigger.Action)
+
+	fridge := features["fridge"].GetThing()
+	fTriggers := fridge.Triggers
+	lookTrigger := fTriggers["look"]
+	assert.Equal(t, "", lookTrigger.Target)
 }
 
 func TestLoadPutActionTrigger(t *testing.T) {
