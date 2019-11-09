@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"gostories/engine/io"
 	"gostories/engine/parser"
 )
 
@@ -22,18 +23,13 @@ func (c *MockInputOutputHandler) ExpectedStringEqualsNthOutputString(t *testing.
 	assert.Equal(t, expected, c.output[n-1])
 }
 
-// NewMockInputOutputHandler creates a new MockInputOutputHandler for use in testing.
-func NewMockInputOutputHandler() *MockInputOutputHandler {
-	return &MockInputOutputHandler{
-		suppressOutput: true,
-	}
-}
-
 // NewMockHandler creates a MockHandler which also outputs to the console in tests.
 func NewMockHandler() *MockInputOutputHandler {
-	return &MockInputOutputHandler {
+	mock := &MockInputOutputHandler {
 		suppressOutput: false,
 	}
+	io.Handler = mock
+	return mock
 }
 
 // NewLine takes a string and adds it to the internal output tracker for assertions.

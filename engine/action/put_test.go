@@ -3,7 +3,6 @@ package action
 import (
 	"testing"
 
-	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/gen/features"
 	"gostories/gen/items"
@@ -11,8 +10,7 @@ import (
 )
 
 func TestPlaceItemNotInInventory(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
+	mockedHandler := mockio.NewMockHandler()
 
 	testGameState := tutils.TestState()
 
@@ -26,8 +24,7 @@ func TestPlaceItemNotInInventory(t *testing.T) {
 }
 
 func TestPlaceItemInvalidTarget(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
+	mockedHandler := mockio.NewMockHandler()
 
 	testGameState := tutils.TestState()
 
@@ -42,8 +39,7 @@ func TestPlaceItemInvalidTarget(t *testing.T) {
 }
 
 func TestPlaceShrubberyOnStand(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
+	mockedHandler := mockio.NewMockHandler()
 
 	testGameState := tutils.TestState()
 	shrubbery := items.Get("shrubbery")

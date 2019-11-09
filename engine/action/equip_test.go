@@ -5,16 +5,13 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/gen/items"
 	tutils "gostories/utils/testing"
 )
 
 func TestEquipCommandWithValidTarget(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
-
+	mockedHandler := mockio.NewMockHandler()
 	testGameState := tutils.TestState()
 
 	t.Run("valid item target", func(t *testing.T) {
@@ -32,9 +29,7 @@ func TestEquipCommandWithValidTarget(t *testing.T) {
 }
 
 func TestEquipCommandWithInvalidTarget(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
-
+	mockedHandler := mockio.NewMockHandler()
 	testGameState := tutils.TestState()
 
 	t.Run("missing item", func(t *testing.T) {

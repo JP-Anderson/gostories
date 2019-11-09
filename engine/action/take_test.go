@@ -5,7 +5,6 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"gostories/engine/io"
 	mockio "gostories/engine/io/mock"
 	"gostories/engine/store"
 	"gostories/gen/items"
@@ -13,8 +12,7 @@ import (
 )
 
 func TestTakeCommandWithValidTarget(t *testing.T) {
-	mockedHandler := mockio.NewMockInputOutputHandler()
-	io.Handler = mockedHandler
+	mockedHandler := mockio.NewMockHandler()
 
 	testGameState := tutils.TestState()
 	testArea := testGameState.CurrentArea
