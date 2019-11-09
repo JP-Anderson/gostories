@@ -9,6 +9,7 @@ import (
 	"gostories/engine/logic"
 	"gostories/gen/features"
 	"gostories/gen/items"
+	"gostories/things/area"
 	tutils "gostories/utils/testing"
 )
 
@@ -47,9 +48,16 @@ func TestPlaceShrubberyOnStand(t *testing.T) {
 	mockedIOHandler := mockio.NewMockInputOutputHandler()
 	io.ActiveInputOutputHandler = mockedIOHandler
 
+	// TODO: make a test area builder method
+	testArea := &area.Area{
+		Look: "some area",
+		Exits: map[area.Direction]area.Exit{},
+	}
+
 	testGameState := tutils.TestState()
 	shrubbery := items.Get("shrubbery")
 	testGameState.Inventory.StoreItem(shrubbery)
+	testGameState.CurrentArea = testArea
 
 	stand := features.Get("stand")
 	standName := stand.GetName()

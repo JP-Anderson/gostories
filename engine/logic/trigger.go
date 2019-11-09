@@ -16,6 +16,13 @@ import (
 // apply the trigger function on the noun/named object TARGET, which will have some side-effects on
 // the provided game State. All trigger funcs can also return an error.
 func EvaluateTrigger(gameState *state.State, triggerStr string) error {
+	if strings.Contains(triggerStr, ";") {
+		subTriggers := strings.Split(triggerStr, ";")
+		for _, trigger := range subTriggers {
+			println(fmt.Sprintf("trigger is %s", trigger))
+			EvaluateTrigger(gameState, trigger)
+		}
+	}
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
 	return triggerFunc(gameState, targetStr)
@@ -60,11 +67,10 @@ func triggerAddItem(gameState *state.State, itemName string) error {
 }
 
 func triggerAddExit(gameState *state.State, input string) error {
-	stringSlice := strings.Split(parseFuncParam(input), ",")
+	stringSlice := strings.Split(input, ",")
 	areaName := strings.TrimSpace(stringSlice[1])
 	a := areas.Get(areaName)
 	if a != nil {
-		println("here")
 		dir := area.StringToDirection[strings.TrimSpace(stringSlice[0])]
 		exit := area.Exit{
 			To:   a,
