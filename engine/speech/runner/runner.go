@@ -52,7 +52,7 @@ func Run(tree *speech.Tree, gameState state.State) bool {
 		if curr.Responses != nil && len(curr.Responses) > 0 {
 			choice := printResponsesAndGetChoice(curr, gameState)
 			response := curr.Responses[choice]
-			io.Handler.NewLine(response.ResponseStr)
+			io.Handler.NewLinef(">> %s", response.ResponseStr)
 			if response.Trigger != "" {
 				err := logic.EvaluateTrigger(&gameState, response.Trigger)
 				if err != nil {

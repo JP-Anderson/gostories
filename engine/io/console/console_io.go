@@ -42,7 +42,7 @@ func (c *ConsoleInputOutputHandler) ReadInt() (i int, e error) {
 }
 
 // ReadIntInRange tries to parse console input as an int in an inclusive range. It will continuously prompt the
-// user until a valid integer with the desired range is provided.
+// user until a valid integer within the desired range is provided.
 func (c *ConsoleInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) {
 	valid := false
 	for !valid {
@@ -52,12 +52,11 @@ func (c *ConsoleInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) 
 			continue
 		}
 		if input < lowest || input > highest {
-			c.NewLinef("Please enter an int in range %v -> %v", lowest, highest)
+			c.NewLinef("Please enter an int in range %v <= x <= %v", lowest, highest)
 			continue
 		}
 		valid = true
 		i = input
-
 	}
 	return i
 }
@@ -80,6 +79,7 @@ func (c *ConsoleInputOutputHandler) SimpleParse() (parser.Action, []string) {
 }
 
 func (c *ConsoleInputOutputHandler) readString() string {
+	print(">> ")
 	input, err := c.reader.ReadString('\n')
 	if err != nil {
 		c.NewLinef("ReadString error: %v", err)
