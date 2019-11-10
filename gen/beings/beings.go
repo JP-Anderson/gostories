@@ -49,6 +49,7 @@ type Beings struct {
 // Being specifies the xml schema for a Being in-game.
 type Being struct {
 	Name      string
+	Names     string
 	LookText  string
 	Species   string
 	IsVisible string
@@ -62,9 +63,11 @@ func newBeing(in Being) *things.Being {
 	if in.AltSpeech != "" {
 		altSpeech = generator.Tree(in.AltSpeech)
 	}
+	names := strings.Split(in.Names, "|")
 	being := &things.Being{
 		Thing: things.Thing{
 			Name:     in.Name,
+			Names:    names,
 			LookText: in.LookText,
 		},
 		Species:   in.Species,

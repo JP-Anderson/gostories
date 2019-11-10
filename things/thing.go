@@ -2,6 +2,7 @@ package things
 
 import (
 	"fmt"
+	"strings"
 )
 
 // A Thing is anything in the game that can be interacted with in some way. All Things have
@@ -11,6 +12,7 @@ import (
 // interactions the player makes with the object.
 type Thing struct {
 	Name     string
+	Names []string
 	LookText string
 	Visible  bool
 	// Triggers maps verb command strings to trigger functions. See trigger.go for trigger functions.
@@ -27,6 +29,16 @@ type Trigger struct {
 // String returns the string representation of a trigger in the format TRIGGER(TARGET).
 func (t *Trigger) String() string {
 	return fmt.Sprintf("%s(%s)", t.Action, t.Target)
+}
+
+// MatchesName returns true if the provided string matches any value in []Names.
+func (t *Thing) MatchesName(inputName string) bool {
+	for _, name := range t.Names {
+		if strings.ToLower(inputName) == strings.ToLower(name) {
+			return true
+		}
+	}
+	return false
 }
 
 // Show sets the Visible attribute of the Thing to true, revealing it to the player.

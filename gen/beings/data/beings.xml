@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Beings>
     <Being>
-        <Name>Bubbles</Name>
-        <LookText>The cat is reasonably small, ginger, and chunky.</LookText>
+	<Name>Bubbles</Name>
+	<Names>Bubbles|Cat</Names>
+	<LookText>The cat is reasonably small, ginger, and chunky.</LookText>
         <Species>Cat</Species>
         <IsVisible>y</IsVisible>
         <Speech>bubbles_human</Speech>
