@@ -53,6 +53,9 @@ func (c *MockInputOutputHandler) ReadInt() (i int, e error) {
 	return -1, nil
 }
 
+// ReadIntInRange is implemented for the interface
+func (c *MockInputOutputHandler) ReadIntInRange(x, y int) int { return -1 }
+
 // SimpleParse isn't yet used
 func (c *MockInputOutputHandler) SimpleParse() (parser.Action, []string) {
 	// TODO: provide a method for pre-loading with a series of Action/string returns

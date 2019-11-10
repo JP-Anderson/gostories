@@ -82,16 +82,5 @@ func printResponsesAndGetChoice(speechEvent *speech.Event, gameState state.State
 		io.Handler.NewLinef("%v - \"%v\"", i, option.ResponseStr)
 	}
 
-	last := len(speechEvent.Responses) - 1
-	for {
-		selection, err := io.Handler.ReadInt()
-		if err != nil {
-			io.Handler.NewLinef("%v", err)
-		}
-		if selection < 0 || selection > last {
-			io.Handler.NewLinef("Enter option number from %v to %v", 0, last)
-			continue
-		}
-		return selection
-	}
+	return io.Handler.ReadIntInRange(0, len(speechEvent.Responses)-1)
 }
