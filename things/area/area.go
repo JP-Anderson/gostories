@@ -1,8 +1,6 @@
 package area
 
 import (
-	"strings"
-
 	"gostories/engine/store"
 	"gostories/things"
 )
@@ -10,7 +8,11 @@ import (
 // NewArea builds an Area.
 func NewArea() *Area {
 	return &Area{
+		Look: "",
 		Exits: map[Direction]Exit{},
+		Items: store.NewItemStore(),
+		Beings: []*things.Being{},
+		Features: []things.Feature{},
 	}
 }
 
@@ -108,7 +110,7 @@ func CheckItems(a *Area, targetName string) *things.Thing {
 // CheckBeings is a Checker func which checks the Beings in an Area matching the targetName.
 func CheckBeings(a *Area, targetName string) *things.Thing {
 	for _, b := range a.Beings {
-		if strings.ToLower(b.GetName()) == strings.ToLower(targetName) {
+		if b.MatchesName(targetName) {
 			t := b.GetThing()
 			return &t
 		}
@@ -119,7 +121,7 @@ func CheckBeings(a *Area, targetName string) *things.Thing {
 // CheckFeatures is a Checker func which checks the Features in an Area matching the targetName.
 func CheckFeatures(a *Area, targetName string) *things.Thing {
 	for _, f := range a.Features {
-		if strings.ToLower(f.GetName()) == strings.ToLower(targetName) {
+		if f.GetThing().MatchesName(targetName) {
 			t := f.GetThing()
 			return t
 		}

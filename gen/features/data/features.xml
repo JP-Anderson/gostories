@@ -2,6 +2,7 @@
 <Features>
 	<Feature>
 		<Name>shelf</Name>
+		<Names>shelf</Names>
 		<LookText>The shelf seems to contain a few old magazines and a cat collar.</LookText>
 		<XTriggerStrings>
 			<XTriggerString>
@@ -12,6 +13,7 @@
 	</Feature>
 	<Feature>
 		<Name>fridge</Name>
+		<Names>fridge</Names>
 		<LookText>The fridge is empty apart from a tin of sardines.</LookText>
 		<XTriggerStrings>
 			<XTriggerString>
@@ -22,6 +24,7 @@
 	</Feature>
 	<Feature>
 		<Name>stand</Name>
+		<Names>stand|table</Names>
 		<LookText>The stand is a small square table which reaches around waist height. There is a small circular imprint on top of the table.</LookText>
 		<XTriggerStrings>
 			<XTriggerString>

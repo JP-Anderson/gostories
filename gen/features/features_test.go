@@ -28,10 +28,16 @@ func TestLoadTriggerStringsWithAndWithoutTarget(t *testing.T) {
 	assert.Equal(t, "", lookTrigger.Target)
 }
 
+func TestLoadNames(t *testing.T) {
+	_features := loadFromXML()
+	stand := _features["stand"].GetThing()
+	assert.True(t, stand.MatchesName("stand"))
+	assert.True(t, stand.MatchesName("table"))
+}
+
 func TestLoadPutActionTrigger(t *testing.T) {
 	io.Handler = console.NewConsoleInputOutputHandler()
 	_features := loadFromXML()
 	stand := _features["stand"].GetThing()
 	assert.NotNil(t, stand)
-	// TODO: actually test the put action with shrubbery on stand.
 }

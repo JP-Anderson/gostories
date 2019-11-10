@@ -2,6 +2,7 @@ package features
 
 import (
 	"encoding/xml"
+	"strings"
 
 	"gostories/engine/io"
 	"gostories/things"
@@ -32,6 +33,7 @@ func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
 	}
 	m := make(map[string]things.Feature, len(t.Feature))
 	for _, f := range t.Feature {
+		names := strings.Split(f.Names, "|")
 		triggers := make(map[string]things.Trigger)
 		for _, trigger := range f.XTriggerStrings.XTriggerString {
 			triggers[trigger.Action] = things.Trigger{
@@ -42,6 +44,7 @@ func featuresFromXML(xmlBytes []byte) map[string]things.Feature {
 		newFeature := &feature{
 			&things.Thing{
 				Name:     f.Name,
+				Names:    names,
 				LookText: f.LookText,
 				Triggers: triggers,
 			},
@@ -59,6 +62,7 @@ type Features struct {
 // Feature specifies the xml schema for a feature (area/item/feature of interest in-game).
 type Feature struct {
 	Name            string
+	Names           string
 	LookText        string
 	XTriggerStrings XTriggerStrings
 }

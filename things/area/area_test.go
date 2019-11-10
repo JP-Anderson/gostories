@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
+	"gostories/gen/features"
 	"gostories/gen/items"
 	"gostories/things"
 )
@@ -28,6 +29,27 @@ func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 
 	assert.True(t, ref1.GetThing().Visible)
 	assert.True(t, ref2.GetThing().Visible)
+}
+
+func TestFeaturesChecker(t *testing.T) {
+	area := NewArea()
+	stand := features.Get("stand")
+	area.Features = append(area.Features, stand)
+
+	t.Run("matches name", func (t *testing.T) {
+		output := area.CheckAreaForThing("stand", CheckFeatures)
+		assert.NotNil(t, output)
+	})
+
+	t.Run("case insensitive", func (t *testing.T) {
+		output := area.CheckAreaForThing("sTAnd", CheckFeatures)
+		assert.NotNil(t, output)
+	})
+
+	t.Run("no match for missing feature", func (t *testing.T) {
+		output := area.CheckAreaForThing("shelf", CheckFeatures)
+		assert.Nil(t, output)
+	})
 }
 
 func getTestItem() things.Item {
