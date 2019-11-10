@@ -90,6 +90,7 @@ func printResponsesAndGetChoice(speechEvent *speech.Event, gameState state.State
 		}
 		if selection < 0 || selection > last {
 			io.Handler.NewLinef("Enter option number from %v to %v", 0, last)
+			continue
 		}
 		return selection
 	}
