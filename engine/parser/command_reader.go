@@ -63,17 +63,15 @@ func actionFromString(in string) Action {
 // Actions returns the Action names mapped to a []string containing the commands to trigger the Action, primarily
 // for printing the actions and commands in the Help command.
 func Actions() map[string][]string {
-	setOfActionNames := map[string]*struct{}{}
 	actionStrings := map[string][]string{}
 	for command, a := range actions {
 		name := a.Name
-		_, ok := setOfActionNames[name]
+		_, ok := actionStrings[name]
 		if !ok {
 			actionStrings[name] = []string{ command }
 		} else {
 			actionStrings[name] = append(actionStrings[name], command) 
 		}
-		setOfActionNames[name] = nil
 	}
 	return actionStrings
 }
