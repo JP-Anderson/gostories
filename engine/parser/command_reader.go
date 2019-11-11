@@ -48,7 +48,9 @@ func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
 
 // Action is a type representing an action the player can execute in the game. Currently it just wraps a string
 // which matches the verb the player types to carry out the action.
-type Action struct{ Name string }
+type Action struct{
+	Name string
+}
 
 func actionFromString(in string) Action {
 	action, found := actions[in]
@@ -56,6 +58,24 @@ func actionFromString(in string) Action {
 		return action
 	}
 	return unknownAction
+}
+
+// Actions returns the Action names mapped to a []string containing the commands to trigger the Action, primarily
+// for printing the actions and commands in the Help command.
+func Actions() map[string][]string {
+	setOfActionNames := map[string]*struct{}{}
+	actionStrings := map[string][]string{}
+	for command, a := range actions {
+		name := a.Name
+		_, ok := setOfActionNames[name]
+		if !ok {
+			actionStrings[name] = []string{ command }
+		} else {
+			actionStrings[name] = append(actionStrings[name], command) 
+		}
+		setOfActionNames[name] = nil
+	}
+	return actionStrings
 }
 
 var actions = map[string]Action{
@@ -97,6 +117,10 @@ var actions = map[string]Action{
 	"open":   unlockAction,
 	"access": unlockAction,
 
+	"help": helpAction,
+	"h":    helpAction,
+
+
 	"quit": quitAction,
 }
 
@@ -109,6 +133,7 @@ var equipAction = Action{"equip"}
 var inventoryAction = Action{"inventory"}
 var placeAction = Action{"place"}
 var unlockAction = Action{"unlock"}
+var helpAction = Action{"help"}
 var quitAction = Action{"quit"}
 
 // Unknown returns an unknownAction, which is used when user input cannot be parsed.

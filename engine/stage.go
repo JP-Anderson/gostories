@@ -58,7 +58,10 @@ func (s Stage) loopUntilExit() {
 			s.state.Inventory.PrintContents()
 			io.Handler.NewLine("You have the following equipped:")
 			s.state.EquippedItems.PrintContents()
-		} else if inputAction.Name == "exit" {
+		} else if inputAction.Name == "help" {
+			action.ExecuteHelpCommand(s.state)
+			continue
+		} else if inputAction.Name == "quit" {
 			break
 		} else {
 			io.Handler.NewLine("Unknown action")
