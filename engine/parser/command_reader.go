@@ -82,6 +82,7 @@ var actions = map[string]Action{
 	"chat":  talkAction,
 	"t":     talkAction,
 
+	// TODO: review splitting look and examine.
 	"look":    lookAction,
 	"examine": lookAction,
 	"search":  lookAction,
@@ -120,6 +121,7 @@ var actions = map[string]Action{
 
 
 	"quit": quitAction,
+	"q":    quitAction,
 }
 
 var unknownAction = Action{"unknown"}
