@@ -2,10 +2,11 @@ package areas
 
 import (
 	"encoding/xml"
+	"strings"
 
 	"gostories/engine/io"
 	"gostories/engine/store"
-	"gostories/gen/beings"
+	beingspkg "gostories/gen/beings"
 	"gostories/gen/features"
 	"gostories/gen/items"
 	"gostories/things"
@@ -40,10 +41,16 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		newArea := &area.Area{
 			Look: a.LookText,
 		}
-		if len(a.Beings) > 0 {
-			//hardcoding the only being for now. TODO generate with XML
-			newArea.Beings = []*things.Being{
-				beings.Get("bubbles"),
+		if len(a.Beings.Being) > 0 {
+			newArea.Beings = []*things.Being{}
+			for _, being := range a.Beings.Being {
+				name := strings.ToLower(being.Name)
+				beingPtr := beingspkg.Get(name)
+				if beingPtr != nil {
+					newArea.Beings = append(newArea.Beings, beingPtr)
+				} else {
+					io.Handler.NewLinef("Could not find being of name [%s]", being.Name)
+				}
 			}
 		}
 		newArea.Features = []things.Feature{}
@@ -100,7 +107,7 @@ type Area struct {
 	LookText string
 	Exits    Exits
 	Features Features
-	Beings   []Being
+	Beings   Beings
 	Items    Items
 }
 
@@ -132,6 +139,11 @@ type Items struct {
 // a full item object, but contains a string ID of an item to be linked from the loaded items.
 type Item struct {
 	Name string
+}
+
+// TODO: probably want all structs in here to be private.
+type Beings struct {
+	Being []Being
 }
 
 // Being specifies the xml schema for a Being reference in an Area. Note a Being reference is not

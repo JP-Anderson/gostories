@@ -26,6 +26,9 @@ func TestLoadFromXMLLoadsBeings(t *testing.T) {
 	_areas := loadFromXML()
 	catRoom := _areas["cat_room"]
 	assert.Equal(t, 1, len(catRoom.Beings))
+
+	bubbles := catRoom.Beings[0]
+	assert.Equal(t, "Bubbles", bubbles.Name)
 }
 
 func TestLoadFromXMLLoadsFeatures(t *testing.T) {

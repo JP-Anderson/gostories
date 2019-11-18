@@ -26,3 +26,9 @@ func TestLoadFromXML(t *testing.T) {
 		bubbles.Speech.Event.Speech,
 	)
 }
+
+// TODO: make this (and all Get model funcs) case insensitive
+func TestLoadFromPackageFunc(t *testing.T) {
+	bubbles := Get("bubbles")
+	assert.NotNil(t, bubbles)
+}
