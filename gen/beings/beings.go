@@ -14,7 +14,7 @@ import (
 
 // Get returns a *Being matching the provided name.
 func Get(name string) *things.Being {
-	return beings[name]
+	return beings[gstring.ToIDString(name)]
 }
 
 var beings = getBeings()

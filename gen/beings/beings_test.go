@@ -27,8 +27,18 @@ func TestLoadFromXML(t *testing.T) {
 	)
 }
 
-// TODO: make this (and all Get model funcs) case insensitive
-func TestLoadFromPackageFunc(t *testing.T) {
-	bubbles := Get("bubbles")
-	assert.NotNil(t, bubbles)
+func TestGet(t *testing.T) {
+	
+	t.Run("lower case name", func (t *testing.T) {
+		being := Get("bubbles")
+		assert.NotNil(t, being)
+		assert.Equal(t, "Bubbles", being.GetThing().Name)
+	})
+
+	t.Run("upper case name", func (t *testing.T) {
+		being := Get("Bubbles")
+		assert.NotNil(t, being)
+		assert.Equal(t, "Bubbles", being.GetThing().Name)
+	})
+
 }

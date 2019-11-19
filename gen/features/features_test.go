@@ -14,6 +14,20 @@ func TestLoadFromXML(t *testing.T) {
 	assert.Equal(t, 3, len(_features))
 }
 
+func TestGet(t *testing.T) {
+	lowerCaseName := "stand"
+	upperCaseName := "Fridge"
+
+	stand := Get(lowerCaseName)
+	assert.NotNil(t, stand)
+	assert.Equal(t, "stand", stand.GetThing().Name)
+
+	fridge := Get(upperCaseName)
+
+	assert.NotNil(t, fridge)
+	assert.Equal(t, "fridge", fridge.GetThing().Name)
+}
+
 func TestLoadTriggerStringsWithAndWithoutTarget(t *testing.T) {
 	_features := loadFromXML()
 	stand := _features["stand"].GetThing()

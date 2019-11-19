@@ -6,12 +6,13 @@ import (
 
 	"gostories/engine/io"
 	"gostories/things"
+	gstring "gostories/utils/strings"
 	gxml "gostories/xml"
 )
 
 // Get returns any feature which has a name matching the provided name.
 func Get(name string) things.Feature {
-	return features[name]
+	return features[gstring.ToIDString(name)]
 }
 
 var features = getFeatures()

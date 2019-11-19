@@ -1,6 +1,7 @@
 package areas
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -19,6 +20,22 @@ func TestLoadFromXML(t *testing.T) {
 		"You are in some kind of stockroom. There is one shelf stacked high against one wall, across from the entrance. There's an exit to the North, and East.",
 		_areas["store_room"].Look,
 	)
+}
+
+func TestGet(t *testing.T) {
+	
+	t.Run("lower case name", func (t *testing.T) {
+		room := Get("cat_room")
+		assert.NotNil(t, room)
+		assert.True(t, strings.Contains(room.Look, "cat"))
+	})
+
+	t.Run("upper case name", func (t *testing.T) {
+		room := Get("Store_Room")
+		assert.NotNil(t, room)
+		assert.True(t, strings.Contains(room.Look, "stockroom"))
+	})
+
 }
 
 func TestLoadFromXMLLoadsBeings(t *testing.T) {

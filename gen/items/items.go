@@ -5,12 +5,13 @@ import (
 
 	"gostories/engine/io"
 	"gostories/things"
+	"gostories/utils/strings"
 	gxml "gostories/xml"
 )
 
 // Get returns any item which has a name matching the provided name.
 func Get(name string) things.Item {
-	return items[name]
+	return items[strings.ToIDString(name)]
 }
 
 var items = getItems()
