@@ -32,9 +32,7 @@ func (s Stage) loopUntilExit() {
 			io.Handler.NewLine(s.state.CurrentArea.Look)
 			isNewArea = false
 		}
-		// TODO: move the action parsing to another file/function
 		inputAction, targets := io.Handler.SimpleParse()
-		// TODO: set targetedThing to every noun item. Refactor in the process!
 		var targetedThing *things.Thing
 		if inputAction.Name == "look" {
 			targetedThing = action.ExecuteLookCommand(targets[0], s.state)
