@@ -2,7 +2,6 @@ package areas
 
 import (
 	"encoding/xml"
-	"strings"
 
 	"gostories/engine/io"
 	"gostories/engine/store"
@@ -11,6 +10,7 @@ import (
 	"gostories/gen/items"
 	"gostories/things"
 	"gostories/things/area"
+	"gostories/utils/strings"
 	gxml "gostories/xml"
 )
 
@@ -44,7 +44,7 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 		if len(a.Beings.Being) > 0 {
 			newArea.Beings = []*things.Being{}
 			for _, being := range a.Beings.Being {
-				name := strings.ToLower(being.Name)
+				name := strings.ToIDString(being.Name)
 				beingPtr := beingspkg.Get(name)
 				if beingPtr != nil {
 					newArea.Beings = append(newArea.Beings, beingPtr)

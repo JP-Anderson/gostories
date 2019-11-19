@@ -8,7 +8,7 @@ import (
 
 func TestLoadFromXML(t *testing.T) {
 	_beings := loadFromXML()
-	assert.Equal(t, 1, len(_beings))
+	assert.Equal(t, 2, len(_beings))
 	bubbles := _beings["bubbles"]
 	assert.Equal(
 		t,

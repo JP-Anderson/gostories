@@ -62,9 +62,14 @@
     </Area>
     <Area>
         <Name>final_room</Name>
-        <LookText>TODO: Make final room.</LookText>
+        <LookText>The door opens outside into a forest. It's dark and you can only see the trees a short distance in front of you to the north. There is a tall imposing figure</LookText>
         <Exits>
             <South>table_room</South>
-        </Exits>
+    </Exits>
+    <Beings>
+	    <Being>
+		    <Name>KnightOfNi</Name>
+	    </Being>
+	</Beings>
     </Area>
 </Areas>

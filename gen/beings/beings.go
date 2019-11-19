@@ -8,6 +8,7 @@ import (
 	"gostories/engine/speech"
 	generator "gostories/gen/speech"
 	"gostories/things"
+	gstring "gostories/utils/strings"
 	gxml "gostories/xml"
 )
 
@@ -36,7 +37,7 @@ func beingsFromXML(xmlBytes []byte) map[string]*things.Being {
 	m := make(map[string]*things.Being, len(t.Being))
 	for _, b := range t.Being {
 		being := newBeing(b)
-		m[strings.ToLower(being.Name)] = being
+		m[gstring.ToIDString(being.Name)] = being
 	}
 	return m
 }

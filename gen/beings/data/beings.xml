@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Beings>
-    <Being>
-	<Name>Bubbles</Name>
-	<Names>Bubbles|Cat</Names>
-	<LookText>The cat is reasonably small, ginger, and chunky.</LookText>
-        <Species>Cat</Species>
-        <IsVisible>y</IsVisible>
-        <Speech>bubbles_human</Speech>
-        <AltSpeech>bubbles</AltSpeech>
-    </Being>
+    	<Being>
+		<Name>Bubbles</Name>
+		<Names>Bubbles|Cat</Names>
+		<LookText>The cat is reasonably small, ginger, and chunky.</LookText>
+		<Species>Cat</Species>
+		<IsVisible>y</IsVisible>
+		<Speech>bubbles_human</Speech>
+		<AltSpeech>bubbles</AltSpeech>
+	</Being>
+	<Being>
+		<Name>Knight of Ni</Name>
+		<Names>knight|knightofni</Names>
+		<LookText>A tall Knight, wearing dark black armour, with a fearsome, partially opened horned helmet. He looks angry</LookText>
+		<Species>Human</Species>
+		<IsVisible>y</IsVisible>
+		<Speech>knight_of_ni</Speech>
+	</Being>
 </Beings>
