@@ -38,6 +38,26 @@ func TestGet(t *testing.T) {
 
 }
 
+func TestLoadLookTexts(t *testing.T) {
+	room := Get("table_room")
+	assert.Equal(
+		t,
+		"You are in a small room which is empty apart from a small wooden stand in the corner across from the only exit, back to the south.",
+		room.LookText(),
+	)
+	assert.Len(t, room.LookTexts, 2)
+}
+
+func TestLoadLookText(t *testing.T) {
+	room := Get("cat_room")
+	assert.Equal(
+		t,
+		"You are in a small room, which is totally empty apart from a fat ginger cat, and a door to the west.",
+		room.LookText(),
+	)
+	assert.Nil(t, room.LookTexts)
+}
+
 func TestLoadFromXMLLoadsBeings(t *testing.T) {
 	io.Handler = console.NewConsoleInputOutputHandler()
 	_areas := loadFromXML()

@@ -38,8 +38,20 @@ func areasFromXML(xmlBytes []byte) map[string]*area.Area {
 	}
 	m := make(map[string]*area.Area, len(t.Area))
 	for _, a := range t.Area {
-		newArea := &area.Area{
-			Look: a.LookText,
+		
+		var newArea *area.Area
+		if len(a.LookTexts.LookText) > 0 {
+			texts := []string{}
+			for _, text := range a.LookTexts.LookText {
+				texts = append(texts, text.Text)
+			}
+			newArea = &area.Area{
+				LookTexts: texts,
+			}
+		} else {
+			newArea = &area.Area{
+				Look: a.LookText,
+			}
 		}
 		if len(a.Beings.Being) > 0 {
 			newArea.Beings = []*things.Being{}
@@ -104,6 +116,7 @@ type Areas struct {
 // Area specifies the xml schema for an area in-game.
 type Area struct {
 	Name     string
+	LookTexts LookTexts
 	LookText string
 	Exits    Exits
 	Features Features
@@ -124,6 +137,16 @@ type Features struct {
 	Feature []Feature
 }
 
+// LookTexts specifies the xml schema for a list of LookText strings.
+type LookTexts struct {
+	LookText []LookText
+}
+
+// LookText specifies the xml schema for a LookText string.
+type LookText struct {
+	Text string
+}
+
 // Feature specifies the xml schema for a Feature reference in an Area. Note a Feature reference is not
 // a full feature object, but contains a string ID of a feature to be linked from the loaded features.
 type Feature struct {
@@ -142,6 +165,8 @@ type Item struct {
 }
 
 // TODO: probably want all structs in here to be private.
+
+// Beings specifies the xml schema for a list of Being references.
 type Beings struct {
 	Being []Being
 }

@@ -50,8 +50,15 @@
     </Area>
     <Area>
         <Name>table_room</Name>
-        <LookText>You are in a small room which is empty apart from a small wooden stand in the corner across from the only exit, back to the south.</LookText>
-        <Exits>
+	<LookTexts>
+		<LookText>
+			<Text>You are in a small room which is empty apart from a small wooden stand in the corner across from the only exit, back to the south.</Text>
+		</LookText>
+		<LookText>
+			<Text>You are in a small room which is empty apart from a small wooden stand in the corner. To the north, a door has magically appeared since placing the shrubbery on the stand. Another door leads back south.</Text>
+		</LookText>
+	</LookTexts>
+	<Exits>
             <South>kitchen</South>
         </Exits>
         <Features>

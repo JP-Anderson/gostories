@@ -21,6 +21,7 @@ func NewArea() *Area {
 // the Area.
 type Area struct {
 	Look     string
+	LookTexts []string
 	Exits    map[Direction]Exit
 	Items    *store.ItemStore
 	Beings   []*things.Being
@@ -60,6 +61,15 @@ var OppositeDirection = map[string]Direction{
 	East:  West,
 	South: North,
 	West:  East,
+}
+
+// LookText returns the current LookText string for the environment.
+func (a *Area) LookText() string {
+	if a.LookTexts == nil {
+		return a.Look
+	}
+	return a.LookTexts[0]
+	// TODO: review if want to specify default LookText in a different way to using the first in the list.
 }
 
 // AddFeature adds a feature to the Area.
