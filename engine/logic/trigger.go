@@ -97,6 +97,7 @@ func triggerChangeLookText(gameState *state.State, input string) error {
 		currentArea := gameState.CurrentArea
 		currentArea.ChangeLookText(i)
 		io.Handler.NewLine(currentArea.LookText())
+		return nil
 	}
 	return fmt.Errorf("input must be an integer")
 }

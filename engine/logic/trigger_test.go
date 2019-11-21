@@ -59,3 +59,15 @@ func TestAddExit(t *testing.T) {
 	assert.NotNil(t, reverseExit)
 	assert.Equal(t, area1, reverseExit.To)
 }
+
+func TestChangeLookText(t *testing.T) {
+	testGameState := tutils.TestState()
+	testGameState.CurrentArea.LookTexts = []string{
+		"one",
+		"two",
+	}
+	assert.NotEqual(t, "two", testGameState.CurrentArea.LookText())	
+	err := EvaluateTrigger(testGameState, "change-look-text(1)")
+	assert.NoError(t, err)
+	assert.Equal(t, "two", testGameState.CurrentArea.LookText())
+}
