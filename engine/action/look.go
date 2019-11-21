@@ -13,7 +13,7 @@ import (
 // to run any optional post Action triggers attached to the Thing.
 func ExecuteLookCommand(lookTarget string, gameState *state.State) (target *things.Thing) {
 	if lookTarget == "" {
-		io.Handler.NewLine(gameState.CurrentArea.Look)
+		io.Handler.NewLine(gameState.CurrentArea.LookText())
 		return nil
 	}
 	target = gameState.CurrentArea.CheckAreaForThing(lookTarget, area.CheckBeings, area.CheckItems, area.CheckFeatures)

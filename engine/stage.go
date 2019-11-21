@@ -29,7 +29,7 @@ func (s Stage) loopUntilExit() {
 	isNewArea := true
 	for {
 		if isNewArea {
-			io.Handler.NewLine(s.state.CurrentArea.Look)
+			io.Handler.NewLine(s.state.CurrentArea.LookText())
 			isNewArea = false
 		}
 		inputAction, targets := io.Handler.SimpleParse()
