@@ -19,6 +19,8 @@ import (
 func EvaluateTrigger(gameState *state.State, triggerStr string) error {
 	if strings.Contains(triggerStr, ";") {
 		evaluateMultiple(gameState, triggerStr)
+		// TODO: potentially want to return wrapped errors here or a struct with all errors
+		return nil
 	}
 	triggerFunc := getTrigger(triggerStr)
 	targetStr := parseFuncParam(triggerStr)
@@ -45,6 +47,9 @@ func triggerRemoveItem(gameState *state.State, itemName string) error {
 	_, err2 := gameState.EquippedItems.RemoveItemWithName(itemName)
 	if err1 != nil && err2 != nil {
 		return err1
+	}
+	if err2 != nil {
+		return err2
 	}
 	return nil
 }
