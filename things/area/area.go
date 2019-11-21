@@ -21,6 +21,7 @@ func NewArea() *Area {
 // the Area.
 type Area struct {
 	Look     string
+	lookTextPointer int
 	LookTexts []string
 	Exits    map[Direction]Exit
 	Items    *store.ItemStore
@@ -68,8 +69,19 @@ func (a *Area) LookText() string {
 	if a.LookTexts == nil {
 		return a.Look
 	}
-	return a.LookTexts[0]
-	// TODO: review if want to specify default LookText in a different way to using the first in the list.
+	// lookTextPointer initialised as 0, so we use the first LookText in the list.
+	return a.LookTexts[a.lookTextPointer]
+}
+
+// ChangeLookText sets the current Areas LookText to the LookText at the provided index (if it exists).
+func (a *Area) ChangeLookText(index int) {
+	if a.LookTexts == nil {
+		return
+	}
+	if index < 0 || index > len(a.LookTexts)-1 {
+		return
+	}
+	a.lookTextPointer = index
 }
 
 // AddFeature adds a feature to the Area.

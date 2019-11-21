@@ -11,6 +11,20 @@ import (
 	"gostories/things"
 )
 
+func TestChangeLookText(t *testing.T) {
+	room := Area{
+		LookTexts: []string{
+			"one",
+			"two",
+		},
+	}
+	assert.Contains(t, room.LookText(), "one")
+	assert.NotContains(t, room.LookText(), "two")
+	room.ChangeLookText(1)
+	assert.Contains(t, room.LookText(), "two")
+	assert.NotContains(t, room.LookText(), "one")
+}
+
 func TestItemMadeVisibleInAreaStaysVisible(t *testing.T) {
 	item := getTestItem()
 	assert.NotNil(t, item)
