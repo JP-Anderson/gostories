@@ -2,6 +2,7 @@ package logic
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"gostories/engine/io"
@@ -91,9 +92,19 @@ func triggerAddExit(gameState *state.State, input string) error {
 	return fmt.Errorf("could not find area %s", stringSlice[1])
 }
 
+func triggerChangeLookText(gameState *state.State, input string) error {
+	if i, err := strconv.Atoi(input); err == nil {
+		currentArea := gameState.CurrentArea
+		currentArea.ChangeLookText(i)
+		io.Handler.NewLine(currentArea.LookText())
+	}
+	return fmt.Errorf("input must be an integer")
+}
+
 var triggerStringsMap = map[string]triggerFn{
 	"reveal-item": triggerRevealItem,
 	"remove-item": triggerRemoveItem,
 	"add-item":    triggerAddItem,
 	"add-exit":    triggerAddExit,
+	"change-look-text": triggerChangeLookText,
 }

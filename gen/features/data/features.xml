@@ -30,7 +30,7 @@
 			<XTriggerString>
 				<Action>put</Action>
 				<ActionTarget>shrubbery</ActionTarget>
-				<Trigger>remove-item(shrubbery);add-exit(north,final_room)</Trigger>
+				<Trigger>remove-item(shrubbery);add-exit(north,final_room);change-look-text(1)</Trigger>
 			</XTriggerString>
 		</XTriggerStrings>
 	</Feature>
