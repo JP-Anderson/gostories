@@ -30,7 +30,7 @@
 			<XTriggerString>
 				<Action>put</Action>
 				<ActionTarget>shrubbery</ActionTarget>
-				<Trigger>remove-item(shrubbery);add-exit(north,final_room);change-look-text(1)</Trigger>
+				<Trigger>remove-item(shrubbery);add-exit(north,final_room);change-look-text(1, You put the shrubbery on the stand, and a door magically appears in the North wall of the room!)</Trigger>
 			</XTriggerString>
 		</XTriggerStrings>
 	</Feature>

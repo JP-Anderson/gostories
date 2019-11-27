@@ -98,13 +98,20 @@ func triggerAddExit(gameState *state.State, input string) error {
 }
 
 func triggerChangeLookText(gameState *state.State, input string) error {
-	if i, err := strconv.Atoi(input); err == nil {
-		currentArea := gameState.CurrentArea
-		currentArea.ChangeLookText(i)
-		io.Handler.NewLine(currentArea.LookText())
-		return nil
+	strs := strings.SplitN(input, ",", 2)
+	if len(strs) != 2 {
+		return fmt.Errorf("input must be of format (int, string). was: %s", input)
 	}
-	return fmt.Errorf("input must be an integer")
+	str1 := strings.TrimSpace(strs[0])
+	var i int
+	i, err := strconv.Atoi(str1)
+	if err != nil {
+		return fmt.Errorf("first param must be an integer. was: %s", str1)
+	}
+	currentArea := gameState.CurrentArea
+	currentArea.ChangeLookText(i)
+	io.Handler.NewLine(strings.TrimSpace(strs[1]))
+	return nil
 }
 
 var triggerStringsMap = map[string]triggerFn{

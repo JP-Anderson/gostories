@@ -1,11 +1,13 @@
 package logic
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
+	mockio "gostories/engine/io/mock"
 	"gostories/things/area"
 	tutils "gostories/utils/testing"
 )
@@ -60,14 +62,38 @@ func TestAddExit(t *testing.T) {
 	assert.Equal(t, area1, reverseExit.To)
 }
 
-func TestChangeLookText(t *testing.T) {
-	testGameState := tutils.TestState()
-	testGameState.CurrentArea.LookTexts = []string{
-		"one",
-		"two",
+func TestChangeLookTextParameters(t *testing.T) {
+	io := mockio.NewMockHandler()
+	expectedOutputText0 := "Print this"
+	expectedOutputText1 := "Some other text"
+	inputs := []string{
+		fmt.Sprintf("0, %s", expectedOutputText0),
+		fmt.Sprintf("1, %s", expectedOutputText1),
 	}
-	assert.NotEqual(t, "two", testGameState.CurrentArea.LookText())	
-	err := EvaluateTrigger(testGameState, "change-look-text(1)")
-	assert.NoError(t, err)
-	assert.Equal(t, "two", testGameState.CurrentArea.LookText())
+	testGameState := tutils.TestState()
+
+	for _, input := range inputs {
+		err := EvaluateTrigger(testGameState, fmt.Sprintf("change-look-text(%s)", input))
+		assert.NoError(t, err)
+	}
+	io.ExpectedStringEqualsNthOutputString(
+		t,
+		expectedOutputText0,
+		1,
+	)
+	io.ExpectedStringEqualsNthOutputString(
+		t,
+		expectedOutputText1,
+		2,
+	)
 }
+
+func TestChangeLookTextWithCommasInText(t *testing.T) {
+	io := mockio.NewMockHandler()
+	input := "1, hello, this is a test."
+	testGameState := tutils.TestState()
+
+	assert.NoError(t, EvaluateTrigger(testGameState, fmt.Sprintf("change-look-text(%s)", input)))
+	io.ExpectedStringEqualsNthOutputString(t, "hello, this is a test.", 1)
+}
+
