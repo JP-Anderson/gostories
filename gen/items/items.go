@@ -6,7 +6,7 @@ import (
 	"gostories/engine/io"
 	"gostories/things"
 	"gostories/utils/strings"
-	gxml "gostories/xml"
+	gxml "gostories/utils/xml"
 )
 
 // Get returns any item which has a name matching the provided name.

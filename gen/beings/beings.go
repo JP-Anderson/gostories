@@ -9,7 +9,7 @@ import (
 	generator "gostories/gen/speech"
 	"gostories/things"
 	gstring "gostories/utils/strings"
-	gxml "gostories/xml"
+	gxml "gostories/utils/xml"
 )
 
 // Get returns a *Being matching the provided name.

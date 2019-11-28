@@ -11,7 +11,7 @@ import (
 	"gostories/things"
 	"gostories/things/area"
 	"gostories/utils/strings"
-	gxml "gostories/xml"
+	gxml "gostories/utils/xml"
 )
 
 // Get returns any area which has a name matching the provided name.

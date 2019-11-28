@@ -5,7 +5,7 @@ import (
 
 	"gostories/engine/io"
 	"gostories/engine/speech"
-	gxml "gostories/xml"
+	gxml "gostories/utils/xml"
 )
 
 // Tree loads a conversation speech Tree from bytes.

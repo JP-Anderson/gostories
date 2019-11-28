@@ -7,7 +7,7 @@ import (
 	"gostories/engine/io"
 	"gostories/things"
 	gstring "gostories/utils/strings"
-	gxml "gostories/xml"
+	gxml "gostories/utils/xml"
 )
 
 // Get returns any feature which has a name matching the provided name.
