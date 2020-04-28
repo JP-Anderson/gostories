@@ -9,12 +9,14 @@ import (
 	"strings"
 )
 
-const (
-	itemsXMLPath    = "/gen/items/data/items.xml"
-	featuresXMLPath = "/gen/features/data/features.xml"
-	areasXMLPath    = "/gen/areas/data/areas.xml"
-	speechXMLPath   = "/gen/speech/data/"
-	beingsXMLPath   = "/gen/beings/data/beings.xml"
+const dataDir = "demo"
+
+var (
+	itemsXMLPath    = fmt.Sprintf("/gen/%s/items/data/items.xml", dataDir)
+	featuresXMLPath = fmt.Sprintf("/gen/%s/features/data/features.xml", dataDir)
+	areasXMLPath    = fmt.Sprintf("/gen/%s/areas/data/areas.xml", dataDir)
+	speechXMLPath   = fmt.Sprintf("/gen/%s/speech/data/", dataDir)
+	beingsXMLPath   = fmt.Sprintf("/gen/%s/beings/data/beings.xml", dataDir)
 
 	rootFolderName = "gostories"
 )
