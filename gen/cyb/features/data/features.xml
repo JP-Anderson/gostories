@@ -7,7 +7,7 @@
 	<XTriggerStrings>
 		<XTriggerString>
 			<Action>unlock</Action>
-			<Trigger>print(Good morning! It is 08:30 AM, 3rd of April, 3,000,2108 AD);print(It has been 3 million years, 4 hours and 23 minutes since your last log-in.);print(You have 53,232,996 unread email messages)</Trigger>	
+			<Trigger>print(terminal$ Good morning! It is 08:30 AM, 3rd of April, 3,000,2108 AD);print(terminal$ It has been 3 million years, 4 hours and 23 minutes since your last log-in.);print(terminal$ You have 53,232,996 unread email messages)</Trigger>	
 		</XTriggerString>
 	</XTriggerStrings>
 	</Feature>
