@@ -59,6 +59,8 @@ func (s Stage) loopUntilExit() {
 		} else if inputAction.Name == "help" {
 			action.ExecuteHelpCommand(s.state)
 			continue
+		} else if inputAction.Name == "unlock" {
+		       action.ExecuteUnlockCommand(targets[0], s.state)
 		} else if inputAction.Name == "quit" {
 			break
 		} else {

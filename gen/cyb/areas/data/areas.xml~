@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Areas>
+    <Area>
+        <Name>stasis_pod</Name>
+        <LookText>
+	  You wake up slowly in an enclosed pod.
+	  The Statis pod! But why was I in here again?
+	  The door clicks as it unlocks and slides open.
+	  Gas escapes from the pod and begins to clear as the stasis bay appears.
+	</LookText>
+        <Exits> </Exits>
+        <Beings></Beings>
+    </Area>
+</Areas>
