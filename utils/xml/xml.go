@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const dataDir = "cyb"
+const dataDir = "demo"
 
 var (
 	itemsXMLPath    = fmt.Sprintf("/gen/%s/items/data/items.xml", dataDir)
