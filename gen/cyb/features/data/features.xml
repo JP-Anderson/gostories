@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Features>
+	<Feature>
+		<Name>terminal</Name>
+		<Names>terminal</Names>
+		<LookText>The data terminal is flashing at the log-on screen. Looks functional.</LookText>
+	<XTriggerStrings>
+		<XTriggerString>
+			<Action>unlock</Action>
+			<Trigger>print(terminal$ Good morning! It is 08:30 AM, 3rd of April, 3,000,2108 AD);print(terminal$ It has been 3 million years, 4 hours and 23 minutes since your last log-in.);print(terminal$ You have 53,232,996 unread email messages)</Trigger>	
+		</XTriggerString>
+	</XTriggerStrings>
+	</Feature>
+</Features>

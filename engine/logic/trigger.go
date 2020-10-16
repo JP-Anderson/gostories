@@ -97,6 +97,12 @@ func triggerAddExit(gameState *state.State, input string) error {
 	return fmt.Errorf("could not find area %s", stringSlice[1])
 }
 
+func triggerPrint(gameState *state.State, input string) error {
+     io.Handler.NewLine(input)
+     io.Handler.NewLine("")
+     return nil
+}
+
 func triggerChangeLookText(gameState *state.State, input string) error {
 	strs := strings.SplitN(input, ",", 2)
 	if len(strs) != 2 {
@@ -120,4 +126,5 @@ var triggerStringsMap = map[string]triggerFn{
 	"add-item":    triggerAddItem,
 	"add-exit":    triggerAddExit,
 	"change-look-text": triggerChangeLookText,
+	"print": triggerPrint,
 }

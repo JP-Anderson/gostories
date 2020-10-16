@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Areas>
+    <Area>
+        <Name>stasis_pod</Name>
+        <LookText>
+You wake up slowly in an enclosed pod.
+The Statis pod! But why was I in here again?
+The door clicks as it unlocks and slides open.
+Gas escapes from the pod and begins to clear as the stasis bay appears to the north.
+	</LookText>
+        <Exits>
+		<North>statis_bay</North>
+	 </Exits>
+        <Beings></Beings>
+    </Area>
+    <Area>
+	<Name>statis_bay</Name>
+	<LookText>
+The stasis bay is small, there are only two stasis pods.
+The exit to the rest of the ship to the East is locked.
+There is a computer terminal flashing on the wall.
+	</LookText>
+	<Features>
+		<Feature>
+			<Name>terminal</Name>
+		</Feature>
+	</Features>
+    </Area>
+</Areas>
