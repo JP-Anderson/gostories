@@ -1,54 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tree>
     <Event>
-        <Condition>item-equipped(collar)</Condition>
-        <Speech>Good day! I don't suppose you have any food I could eat do you? I'm famished!</Speech>
+	<Speech>Halt! You have entered the realm of Ni! I order you to stop at once!</Speech>
         <Responses>
             <Response>
-                <ResponseStr>Sorry, I couldn't find any.</ResponseStr>
+                <ResponseStr>No one gives me orders! Move aside!</ResponseStr>
                 <Event>
-                    <Speech>Have you tried up there?</Speech>
+                    <Speech>*The Knight draws his sword* Halt or face the full wroth and fury of Ni!</Speech>
                 </Event>
-            </Response>
-            <Response>
-                <ResponseStr>Scram! Get away kitty!</ResponseStr>
+	</Response>
+	<Response>
+                <ResponseStr>What is Ni?</ResponseStr>
                 <Event>
-                    <Speech>Well you are quite the ignoramus, aren't you...</Speech>
-                </Event>
-            </Response>
-            <Response>
-                <Condition>inventory-contains-item(sardines)</Condition>
-                <ResponseStr>Do you like fish?</ResponseStr>
-                <Event>
-                    <Speech>Yes. Please give me the fish.</Speech>
-                    <Responses>
-                        <Response>
-                            <ResponseStr>Sure, here you go [GIVE FISH TO BUBBLES]</ResponseStr>
-                            <Trigger>remove-item(sardines)</Trigger>
-                            <Event>
-                                <Speech>Mmm... Mmpph..! Thanks so much. Here, take this</Speech>
-                                <Trigger>add-item(shrubbery)</Trigger>
-                                <Checkpoint>
-                                    <Event>
-                                        <Speech>Ah, hello again, old friend!</Speech>
-                                    </Event>
-                                </Checkpoint>
-                            </Event>
-                        </Response>
-                        <Response>
-                            <ResponseStr>Sorry, No.</ResponseStr>
-                            <Event>
-                                <Speech>Hmph.</Speech>
-                            </Event>
-                        </Response>
-                    </Responses>
-                </Event>
-            </Response>
-            <Response>
-                <ResponseStr>Meow?</ResponseStr>
-                <Event>
-                    <Speech>Sorry old chap, didn't quite catch that. Once again?</Speech>
-                </Event>
+                    <Speech>*GASPS* You must not utter the sacred word!</Speech>
+	    	</Event>
+		<Responses>
+            		<Response>
+               			<ResponseStr>What? Ni?</ResponseStr>
+                		<Event>
+					<Speech>Aaaagh! You said it again!</Speech>
+                		</Event>
+			</Response>
+			<Response>
+				<ResponseStr>Sorry, I won't say the N-word again. What are you doing in these parts?</ResponseStr>
+                		<Event>
+                    			<Speech>AAAGH!! Again and again you assault me with the sacred word!</Speech>
+                		</Event>
+            		</Response>
+        	</Responses>
             </Response>
         </Responses>
     </Event>
