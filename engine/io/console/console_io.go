@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"gostories/engine/parser"
+	"gostories/server"
 )
 
 // ConsoleInputOutputHandler manages the games user Input and Output through some "standard" Go
@@ -26,6 +27,7 @@ func NewConsoleInputOutputHandler() *ConsoleInputOutputHandler {
 // NewLine takes a string and prints it to the console.
 func (c *ConsoleInputOutputHandler) NewLine(output string) error {
 	fmt.Println(output)
+	server.Write(output)
 	return nil
 }
 
