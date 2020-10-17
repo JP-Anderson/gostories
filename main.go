@@ -12,9 +12,7 @@ import (
 )
 
 func main() {
-	serverReadyChan := make(chan bool, 1)
-	go initServer(serverReadyChan)
-	<-serverReadyChan
+	initServer()
 	startRoom := areas.Get("cat_room")
 	stage := engine.Stage{}
 	stage.Start(*startRoom)
@@ -25,19 +23,23 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-func initServer(ready chan bool) {
-	http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
-		conn, err := upgrader.Upgrade(w, r, nil)
-		if err != nil {
-			panic(fmt.Sprintf("failed call to web socket Upgrade: %v", err))
-		}
-		server.Conn = conn
-		ready <- true
-		server.ReadForever()
-	})
+func initServer() {
+	webSocketReadyChan := make(chan bool, 1)
+	go func() {
+		http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
+			conn, err := upgrader.Upgrade(w, r, nil)
+			if err != nil {
+				panic(fmt.Sprintf("failed call to web socket Upgrade: %v", err))
+			}
+			server.Conn = conn
+			webSocketReadyChan <- true
+			server.ReadForever()
+		})
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "websockets.html")
-	})
-	http.ListenAndServe(":8080", nil)
+		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+			http.ServeFile(w, r, "websockets.html")
+		})
+		http.ListenAndServe(":8080", nil)
+	}()
+	<-webSocketReadyChan
 }
