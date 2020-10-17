@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"gostories/engine/parser"
-	"gostories/server"
+	"gostories/socket"
 )
 
 // SocketInputOutputHandler manages the games user Input and Output through the gorilla
@@ -20,7 +20,7 @@ func NewSocketInputOutputHandler() *SocketInputOutputHandler {
 
 // NewLine takes a string and prints it to the console.
 func (s *SocketInputOutputHandler) NewLine(output string) error {
-	server.Write(output)
+	socket.Write(output)
 	return nil
 }
 
@@ -73,7 +73,7 @@ func (s *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
 }
 
 func (s *SocketInputOutputHandler) readString() string {
-	return server.Read()
+	return socket.Read()
 }
 
 const linuxCutset = "\n"

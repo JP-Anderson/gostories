@@ -5,7 +5,7 @@ import (
 
 	"gostories/engine"
 	"gostories/gen/areas"
-	"gostories/server"
+	"gostories/socket"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func initServer() {
 	webSocketReadyChan := make(chan bool, 1)
 	go func() {
 		http.HandleFunc("/sock", func(w http.ResponseWriter, r *http.Request) {
-			server.Start(webSocketReadyChan, w, r)
+			socket.Start(webSocketReadyChan, w, r)
 		})
 
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
