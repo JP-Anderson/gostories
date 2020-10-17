@@ -26,14 +26,13 @@ var upgrader = websocket.Upgrader{
 func initServer() {
 	webSocketReadyChan := make(chan bool, 1)
 	go func() {
-		http.HandleFunc("/echo", func(w http.ResponseWriter, r *http.Request) {
+		http.HandleFunc("/sock", func(w http.ResponseWriter, r *http.Request) {
 			conn, err := upgrader.Upgrade(w, r, nil)
 			if err != nil {
 				panic(fmt.Sprintf("failed call to web socket Upgrade: %v", err))
 			}
 			server.Conn = conn
-			webSocketReadyChan <- true
-			server.ReadForever()
+			server.Start(webSocketReadyChan)
 		})
 
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {

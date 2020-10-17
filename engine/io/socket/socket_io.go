@@ -73,9 +73,7 @@ func (s *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
 }
 
 func (s *SocketInputOutputHandler) readString() string {
-	msg := <-server.Out
-	cmsg := msg.(server.ChanMessage)
-	return cmsg.Message
+	return server.Read()
 }
 
 const linuxCutset = "\n"

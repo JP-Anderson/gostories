@@ -18,19 +18,40 @@ func Write(msg string) {
 	}
 }
 
-// Channels used to block the game engine to wait for user input from a web socket.
-var In chan<- interface{}
-var Out <-chan interface{}
+// Read will block execution until a message (from the web socket) is delivered by channel.
+func Read() string {
+	msg := <-out
+	cmsg := msg.(chanMessage)
+	return cmsg.Message
+}
 
-type ChanMessage struct {
+// The in channel is continuously populated by the web socket connection ReadMessage() call.
+var in chan<- interface{}
+
+// The out channel will output messages taken from the in channel above. It can be accessed in a blocking
+// manner through the Read() method.
+var out <-chan interface{}
+
+// chanMessage is used internally to satisfy the interface{} method required for a buffered channel.
+type chanMessage struct {
 	Message string
 }
 
-func InitChans() {
-	In, Out = initChans()
+// Start performs the required work to intitialise the buffered channel used for reading messages from the
+// web socket from the game engine, in a blocking manner. It takes bool channel it uses to indicate when
+// it is ready for the game engine to start (once the channels are set up)
+func Start(done chan bool) {
+	initChans()
+	done <- true
+	readForever()
 }
 
-func initChans() (chan<- interface{}, <-chan interface{}) {
+// InitChans sets up the buffered channel used to recieve messages from the web socket and block on reads.
+func initChans() {
+	in, out = setUpBufferedChannel()
+}
+
+func setUpBufferedChannel() (chan<- interface{}, <-chan interface{}) {
 	in := make(chan interface{})
 	out := make(chan interface{})
 	go func() {
@@ -65,8 +86,7 @@ func initChans() (chan<- interface{}, <-chan interface{}) {
 	return in, out
 }
 
-func ReadForever() {
-	InitChans()
+func readForever() {
 	for {
 		// Read message from browser
 		_, msg, err := Conn.ReadMessage()
@@ -74,9 +94,9 @@ func ReadForever() {
 			fmt.Printf("failed to Read Message: %v", err)
 			return
 		}
-		cmsg := ChanMessage{
+		cmsg := chanMessage{
 			Message: string(msg),
 		}
-		In <- cmsg
+		in <- cmsg
 	}
 }
