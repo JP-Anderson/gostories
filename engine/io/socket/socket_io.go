@@ -1,9 +1,7 @@
 package socketio
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
@@ -13,48 +11,42 @@ import (
 
 // SocketInputOutputHandler manages the games user Input and Output through the gorilla
 // websocket interface.
-type SocketInputOutputHandler struct {
-	reader *bufio.Reader
-}
+type SocketInputOutputHandler struct{}
 
 // NewSocketInputOutputHandler creates a simple Input Output Handler for playing the game via console.
 func NewSocketInputOutputHandler() *SocketInputOutputHandler {
-	return &SocketInputOutputHandler{
-		reader: bufio.NewReader(os.Stdin),
-	}
+	return &SocketInputOutputHandler{}
 }
 
 // NewLine takes a string and prints it to the console.
-func (c *SocketInputOutputHandler) NewLine(output string) error {
-	fmt.Println(output)
+func (s *SocketInputOutputHandler) NewLine(output string) error {
 	server.Write(output)
 	return nil
 }
 
 // NewLinef takes a format string and a series of values to interpolate in the format string.
-func (c *SocketInputOutputHandler) NewLinef(output string, args ...interface{}) error {
-	c.NewLine(fmt.Sprintf(output, args...))
-	return nil
+func (s *SocketInputOutputHandler) NewLinef(output string, args ...interface{}) error {
+	return s.NewLine(fmt.Sprintf(output, args...))
 }
 
 // ReadInt tries to parse console input as an int. It returns the int or errors.
-func (c *SocketInputOutputHandler) ReadInt() (i int, e error) {
-	input := Trim(c.readString())
+func (s *SocketInputOutputHandler) ReadInt() (i int, e error) {
+	input := Trim(s.readString())
 	return strconv.Atoi(input)
 }
 
 // ReadIntInRange tries to parse console input as an int in an inclusive range. It will continuously prompt the
 // user until a valid integer within the desired range is provided.
-func (c *SocketInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) {
+func (s *SocketInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) {
 	valid := false
 	for !valid {
-		input, err := c.ReadInt()
+		input, err := s.ReadInt()
 		if err != nil {
-			c.NewLine("Please enter an int")
+			s.NewLine("Please enter an int")
 			continue
 		}
 		if input < lowest || input > highest {
-			c.NewLinef("Please enter an int in range %v <= x <= %v", lowest, highest)
+			s.NewLinef("Please enter an int in range %v <= x <= %v", lowest, highest)
 			continue
 		}
 		valid = true
@@ -66,8 +58,8 @@ func (c *SocketInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) {
 // SimpleParse parses input from the user. Currently only one or two (space-separated) strings can
 // be parsed. SimpleParse returns the first string as an action (if recognised), and the second
 // string (the target verb) as is.
-func (c *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
-	input := c.readString()
+func (s *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
+	input := s.readString()
 	split := strings.Split(input, " ")
 	len := len(split)
 	if len > 2 {
@@ -80,10 +72,9 @@ func (c *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
 	return parser.Unknown(), []string{""}
 }
 
-func (c *SocketInputOutputHandler) readString() string {
-	print(">> ")
-	s := <-server.Out
-	cmsg := s.(server.ChanMessage)
+func (s *SocketInputOutputHandler) readString() string {
+	msg := <-server.Out
+	cmsg := msg.(server.ChanMessage)
 	return cmsg.Message
 }
 

@@ -31,8 +31,7 @@ func (c *ConsoleInputOutputHandler) NewLine(output string) error {
 
 // NewLinef takes a format string and a series of values to interpolate in the format string.
 func (c *ConsoleInputOutputHandler) NewLinef(output string, args ...interface{}) error {
-	c.NewLine(fmt.Sprintf(output, args...))
-	return nil
+	return c.NewLine(fmt.Sprintf(output, args...))
 }
 
 // ReadInt tries to parse console input as an int. It returns the int or errors.
