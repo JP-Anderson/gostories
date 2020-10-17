@@ -1,7 +1,7 @@
 <!-- websockets.html -->
+<pre id="output"></pre>
 <input id="input" type="text" />
 <button onclick="send()">Send</button>
-<pre id="output"></pre>
 <script>
     var input = document.getElementById("input");
     var output = document.getElementById("output");
@@ -12,7 +12,7 @@
     };
 
     socket.onmessage = function (e) {
-        output.innerHTML += "Server: " + e.data + "\n";
+        output.innerHTML += e.data + "\n";
     };
 
     function send() {
