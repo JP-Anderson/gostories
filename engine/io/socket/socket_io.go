@@ -3,10 +3,10 @@ package socketio
 import (
 	"fmt"
 	"strconv"
-	"strings"
 
 	"gostories/engine/parser"
 	"gostories/socket"
+	"gostories/utils/strings"
 )
 
 // SocketInputOutputHandler manages the games user Input and Output through the gorilla
@@ -31,7 +31,7 @@ func (s *SocketInputOutputHandler) NewLinef(output string, args ...interface{}) 
 
 // ReadInt tries to parse console input as an int. It returns the int or errors.
 func (s *SocketInputOutputHandler) ReadInt() (i int, e error) {
-	input := Trim(s.readString())
+	input := strings.Trim(s.readString())
 	return strconv.Atoi(input)
 }
 
@@ -55,31 +55,11 @@ func (s *SocketInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) {
 	return i
 }
 
-// SimpleParse parses input from the user. Currently only one or two (space-separated) strings can
-// be parsed. SimpleParse returns the first string as an action (if recognised), and the second
-// string (the target verb) as is.
+// SimpleParse passes input from a web socket to the command parser.
 func (s *SocketInputOutputHandler) SimpleParse() (parser.Action, []string) {
-	input := s.readString()
-	split := strings.Split(input, " ")
-	len := len(split)
-	if len > 2 {
-		return parser.ParseInput(split...)
-	} else if len == 2 {
-		return parser.ParseInput(Trim(split[0]), Trim(split[1]))
-	} else if len == 1 {
-		return parser.ParseInput(Trim(split[0]), "")
-	}
-	return parser.Unknown(), []string{""}
+	return parser.SimpleParse(s.readString)
 }
 
 func (s *SocketInputOutputHandler) readString() string {
 	return socket.Read()
-}
-
-const linuxCutset = "\n"
-const windowsCutset = "\r" + linuxCutset
-
-// Trim returns a string with spaces to the right trimmed, and a line ending.
-func Trim(input string) string {
-	return strings.TrimRight(input, linuxCutset)
 }

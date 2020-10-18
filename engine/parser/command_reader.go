@@ -2,7 +2,26 @@ package parser
 
 import (
 	"strings"
+
+	gstrings "gostories/utils/strings"
 )
+
+// SimpleParse parses input from the user. Currently only one or two (space-separated) strings can
+// be parsed. SimpleParse returns the first string as an action (if recognised), and the second
+// string (the target verb) as is.
+func SimpleParse(getStringFunc func() string) (Action, []string) {
+	input := getStringFunc()
+	split := strings.Split(input, " ")
+	len := len(split)
+	if len > 2 {
+		return ParseInput(split...)
+	} else if len == 2 {
+		return ParseInput(gstrings.Trim(split[0]), gstrings.Trim(split[1]))
+	} else if len == 1 {
+		return ParseInput(gstrings.Trim(split[0]), "")
+	}
+	return Unknown(), []string{""}
+}
 
 // ParseInput takes a slice of strings from the user input (which will already have been split on spaces). It will pass
 // into a token parsing function based on the number of tokens in the slice.
@@ -48,7 +67,7 @@ func parseMultiTokenInput(ts ...string) (action Action, targets []string) {
 
 // Action is a type representing an action the player can execute in the game. Currently it just wraps a string
 // which matches the verb the player types to carry out the action.
-type Action struct{
+type Action struct {
 	Name string
 }
 
@@ -68,9 +87,9 @@ func Actions() map[string][]string {
 		name := a.Name
 		_, ok := actionStrings[name]
 		if !ok {
-			actionStrings[name] = []string{ command }
+			actionStrings[name] = []string{command}
 		} else {
-			actionStrings[name] = append(actionStrings[name], command) 
+			actionStrings[name] = append(actionStrings[name], command)
 		}
 	}
 	return actionStrings
@@ -118,7 +137,6 @@ var actions = map[string]Action{
 
 	"help": helpAction,
 	"h":    helpAction,
-
 
 	"quit": quitAction,
 	"q":    quitAction,

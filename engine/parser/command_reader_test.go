@@ -6,6 +6,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestSimpleParse(t *testing.T) {
+
+	t.Run("parse verb action and noun", func(t *testing.T) {
+		action, strings := SimpleParse(func() string { return "talk person" })
+		require.Equal(t, talkAction, action)
+		require.Equal(t, []string{"person"}, strings)
+	})
+
+	t.Run("parse single verb action", func(t *testing.T) {
+		action, strings := SimpleParse(func() string { return "quit" })
+		require.Equal(t, quitAction, action)
+		require.Equal(t, []string{""}, strings)
+	})
+
+	t.Run("parse verb action and nouns", func(t *testing.T) {
+		action, strings := SimpleParse(func() string { return "put coffee on table" })
+		require.Equal(t, placeAction, action)
+		require.Equal(t, []string{"coffee", "table"}, strings)
+	})
+}
+
 func TestParseTwoTokenInputWithValidActions(t *testing.T) {
 	validActionStrings := []struct {
 		action         string

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"strings"
 
 	"gostories/engine/parser"
+	gstring "gostories/utils/strings"
 )
 
 // ConsoleInputOutputHandler manages the games user Input and Output through some "standard" Go
@@ -36,7 +36,7 @@ func (c *ConsoleInputOutputHandler) NewLinef(output string, args ...interface{})
 
 // ReadInt tries to parse console input as an int. It returns the int or errors.
 func (c *ConsoleInputOutputHandler) ReadInt() (i int, e error) {
-	input := Trim(c.readString())
+	input := gstring.Trim(c.readString())
 	return strconv.Atoi(input)
 }
 
@@ -64,17 +64,7 @@ func (c *ConsoleInputOutputHandler) ReadIntInRange(lowest, highest int) (i int) 
 // be parsed. SimpleParse returns the first string as an action (if recognised), and the second
 // string (the target verb) as is.
 func (c *ConsoleInputOutputHandler) SimpleParse() (parser.Action, []string) {
-	input := c.readString()
-	split := strings.Split(input, " ")
-	len := len(split)
-	if len > 2 {
-		return parser.ParseInput(split...)
-	} else if len == 2 {
-		return parser.ParseInput(Trim(split[0]), Trim(split[1]))
-	} else if len == 1 {
-		return parser.ParseInput(Trim(split[0]), "")
-	}
-	return parser.Unknown(), []string{""}
+	return parser.SimpleParse(c.readString)
 }
 
 func (c *ConsoleInputOutputHandler) readString() string {
@@ -84,12 +74,4 @@ func (c *ConsoleInputOutputHandler) readString() string {
 		c.NewLinef("ReadString error: %v", err)
 	}
 	return input
-}
-
-const linuxCutset = "\n"
-const windowsCutset = "\r" + linuxCutset
-
-// Trim returns a string with spaces to the right trimmed, and a line ending.
-func Trim(input string) string {
-	return strings.TrimRight(input, linuxCutset)
 }
