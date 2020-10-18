@@ -4,12 +4,24 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 
+	"gostories/engine/io"
+	mockio "gostories/engine/io/mock"
 	"gostories/gen/items"
 	"gostories/things"
 )
 
-func TestStoreItemIncrementsSize(t *testing.T) {
+type StoreTestSuite struct {
+	suite.Suite
+}
+
+func (s *StoreTestSuite) SetupSuite() {
+	io.Handler = mockio.NewMockHandler()
+	println("HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+}
+
+func (s *StoreTestSuite) TestStoreItemIncrementsSize(t *testing.T) {
 	i := NewInventory()
 	item := getTestItem()
 	assert.Equal(t, 0, i.Size())
@@ -17,14 +29,14 @@ func TestStoreItemIncrementsSize(t *testing.T) {
 	assert.Equal(t, 1, i.Size())
 }
 
-func TestContainsFindsStoredItem(t *testing.T) {
+func (s *StoreTestSuite) TestContainsFindsStoredItem(t *testing.T) {
 	i := NewInventory()
 	item := getTestItem()
 	i.StoreItem(item)
 	assert.True(t, i.Contains(item))
 }
 
-func TestCannotAddSameItemTwice(t *testing.T) {
+func (s *StoreTestSuite) TestCannotAddSameItemTwice(t *testing.T) {
 	i := NewInventory()
 	item := getTestItem()
 	assert.Equal(t, 0, i.Size())
@@ -36,7 +48,7 @@ func TestCannotAddSameItemTwice(t *testing.T) {
 	assert.True(t, i.Contains(item))
 }
 
-func TestRemoveItemRemovesItem(t *testing.T) {
+func (s *StoreTestSuite) TestRemoveItemRemovesItem(t *testing.T) {
 	i := NewInventory()
 	item := getTestItem()
 	assert.Equal(t, 0, i.Size())
@@ -50,7 +62,7 @@ func TestRemoveItemRemovesItem(t *testing.T) {
 	assert.False(t, i.Contains(item))
 }
 
-func TestRemoveItemRemovesCorrectItem(t *testing.T) {
+func (s *StoreTestSuite) TestRemoveItemRemovesCorrectItem(t *testing.T) {
 	i := NewInventory()
 	item := getTestItem()
 	item2 := getAnotherTestItem()
@@ -73,7 +85,7 @@ func TestRemoveItemRemovesCorrectItem(t *testing.T) {
 	assert.True(t, i.Contains(item2))
 }
 
-func TestContainsMatchWithTextMatcher(t *testing.T) {
+func (s *StoreTestSuite) TestContainsMatchWithTextMatcher(t *testing.T) {
 	i := NewInventory()
 	shrubbery := getAnotherTestItem()
 	shrubberyMatcher := func(item things.Item) bool {
@@ -93,7 +105,7 @@ func TestContainsMatchWithTextMatcher(t *testing.T) {
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))
 }
 
-func TestContainsMatchNegative(t *testing.T) {
+func (s *StoreTestSuite) TestContainsMatchNegative(t *testing.T) {
 	i := NewInventory()
 	collar := getTestItem()
 	shrubberyMatcher := func(item things.Item) bool {
@@ -109,14 +121,14 @@ func TestContainsMatchNegative(t *testing.T) {
 	assert.False(t, i.ContainsMatch(shrubberyMatcher))
 }
 
-func TestEquippedItemsStoreItemDoesNotStoreNonEquippables(t *testing.T) {
+func (s *StoreTestSuite) TestEquippedItemsStoreItemDoesNotStoreNonEquippables(t *testing.T) {
 	equippedItems := NewEquippedItems()
 	output := equippedItems.StoreItem(getAnotherTestItem())
 	assert.False(t, output)
 	assert.Equal(t, 0, equippedItems.Size())
 }
 
-func TestEquippedItemsStoreItemCanStoreEquippables(t *testing.T) {
+func (s *StoreTestSuite) TestEquippedItemsStoreItemCanStoreEquippables(t *testing.T) {
 	equippedItems := NewEquippedItems()
 	output := equippedItems.StoreItem(getTestItem())
 	assert.True(t, output)
