@@ -55,6 +55,7 @@ func Start(done chan bool, w http.ResponseWriter, r *http.Request) {
 
 func initWebSocket(w http.ResponseWriter, r *http.Request) {
 	var err error
+	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	conn, err = upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		panic(fmt.Sprintf("failed call to web socket Upgrade: %v", err))
