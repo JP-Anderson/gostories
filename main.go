@@ -1,7 +1,9 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"gostories/engine"
 	"gostories/gen/areas"
@@ -16,6 +18,11 @@ func main() {
 }
 
 func initServer() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Deploying to %s", port)
+	}
 	webSocketReadyChan := make(chan bool, 1)
 	go func() {
 		http.HandleFunc("/sock", func(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +32,7 @@ func initServer() {
 		http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 			http.ServeFile(w, r, "websockets.html")
 		})
-		http.ListenAndServe(":8080", nil)
+		http.ListenAndServe(":"+port, nil)
 	}()
 	<-webSocketReadyChan
 }
