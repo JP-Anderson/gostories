@@ -62,7 +62,7 @@ func TestAddExit(t *testing.T) {
 	assert.Equal(t, area1, reverseExit.To)
 }
 
-func TestChangeLookTextParameters(t *testing.T) {
+func TestChangeLookText(t *testing.T) {
 	io := mockio.NewMockHandler()
 	expectedOutputText0 := "Print this"
 	expectedOutputText1 := "Some other text"
@@ -71,9 +71,14 @@ func TestChangeLookTextParameters(t *testing.T) {
 		fmt.Sprintf("1, %s", expectedOutputText1),
 	}
 	testGameState := tutils.TestState()
-
-	for _, input := range inputs {
+	testArea := testGameState.CurrentArea
+	testArea.LookTexts = []string{
+		"initial look text",
+		"final look text",
+	}
+	for i, input := range inputs {
 		err := EvaluateTrigger(testGameState, fmt.Sprintf("change-look-text(%s)", input))
+		assert.Equal(t, testArea.LookTexts[i], testArea.LookText())
 		assert.NoError(t, err)
 	}
 	io.ExpectedStringEqualsNthOutputString(
