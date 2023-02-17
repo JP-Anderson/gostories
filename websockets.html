@@ -1,5 +1,5 @@
 <!-- websockets.html -->
-<pre id="output"></pre>
+<pre style="height: 400px; overflow-y: scroll;"  id="output"></pre>
 <input id="input" type="text" />
 <button onclick="send()">Send</button>
 <script>
@@ -13,6 +13,7 @@
 
     socket.onmessage = function (e) {
         output.innerHTML += e.data + "\n";
+	output.scrollTop = output.scrollHeight;
     };
 
     document.getElementById('input').onkeypress = function(e){
