@@ -1,14 +1,26 @@
 package io
 
 import (
+	console "gostories/engine/io/console"
 	socketio "gostories/engine/io/socket"
 	"gostories/engine/parser"
 )
 
+const ConsoleIOMode = 0
+const SocketIOMode = 1
+
+func SetIOMode(mode int) {
+	if mode == SocketIOMode {
+		Handler = socketio.NewSocketInputOutputHandler()	
+	} else {
+		Handler = console.NewConsoleInputOutputHandler()
+	}
+}
+
 // Handler bridges the game engine with whatever Input/Output handler is in use. For unit
 // testing, this variable is monkey patched. In the future, will review if this should be injected rather
 // than monkey patched.
-var Handler InputOutputHandler = socketio.NewSocketInputOutputHandler()
+var Handler InputOutputHandler
 
 // InputOutputHandler specifies the behaviour a component must implement in order to pass input into
 // the game engine, and receive output.

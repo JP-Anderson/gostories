@@ -1,20 +1,37 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
 
 	"gostories/engine"
+	"gostories/engine/io"
 	"gostories/gen/areas"
 	"gostories/socket"
 )
 
 func main() {
-	initServer()
+	mode := getRunMode()
+	io.SetIOMode(mode)
+	if mode == io.SocketIOMode {
+		initServer()
+	}
 	startRoom := areas.Get("cat_room")
 	stage := engine.Stage{}
 	stage.Start(*startRoom)
+}
+
+func getRunMode() int {
+	if len(os.Args) > 1 {
+		if os.Args[1] == "cmd" {
+			fmt.Println("Running CONSOLE IO Mode")
+			return io.ConsoleIOMode
+		}
+	}
+	fmt.Println("Running SOCKET IO Mode")
+	return io.SocketIOMode
 }
 
 func initServer() {
